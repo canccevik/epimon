@@ -1,7 +1,12 @@
 {
   "name": "epimon",
   "version": "1.0.0",
-  "scripts": {},
+  "scripts": {
+    "build": "lerna run build --stream",
+    "start": "lerna run start --stream",
+    "start:dev": "lerna run start:dev --stream",
+    "lint": "lerna run lint --stream"
+  },
   "devDependencies": {
     "lerna": "^7.4.2"
   }
