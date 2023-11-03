@@ -4,7 +4,8 @@
       "@config/*": ["src/config/*"],
       "@common/*": ["src/common/*"],
       "@core/*": ["src/core/*"],
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["src/modules/*"],
+      "@features/*": ["src/features/*"]
     },
     "module": "commonjs",
     "declaration": true,
