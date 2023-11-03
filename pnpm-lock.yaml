@@ -23,6 +23,15 @@ importers:
       '@nestjs/platform-express':
         specifier: ^10.0.0
         version: 10.2.8(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
+      envalid:
+        specifier: ^7.0.0
+        version: 7.0.0
+      nestjs-envalid:
+        specifier: 1.3.0
+        version: 1.3.0(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)(envalid@7.0.0)
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
@@ -3172,7 +3181,6 @@ packages:
   /dotenv@16.3.1:
     resolution: {integrity: sha512-IPzF4w4/Rd94bA9imS68tZBaYyBWSCE47V1RGuMrB94iyTOIEwRmVL2x/4An+6mETpLrKJ5hQkB8W4kFAadeIQ==}
     engines: {node: '>=12'}
-    dev: true
 
   /duplexer@0.1.2:
     resolution: {integrity: sha512-jtD6YG370ZCIi/9GTaJKQxWTZD045+4R4hTk/x1UyoqadyJ9x9CgSi1RlVDQF8U2sxLLSnFkCaMihqljHIWgMg==}
@@ -3247,6 +3255,11 @@ packages:
     resolution: {integrity: sha512-+h1lkLKhZMTYjog1VEpJNG7NZJWcuc2DDk/qsqSTRRCOXiLjeQ1d1/udrUGhqMxUgAlwKNZ0cf2uqan5GLuS2A==}
     engines: {node: '>=6'}
     dev: true
+
+  /envalid@7.0.0:
+    resolution: {integrity: sha512-uyHMNJqxr44ILkK4SEPJ+cPZ5e+xyj6wP0zvJulXg5r6ITGbyfri8AUlJ6nwD3W8/6fIzvheybkSqiW2sRi3GQ==}
+    engines: {node: '>=8.12'}
+    dev: false
 
   /envinfo@7.8.1:
     resolution: {integrity: sha512-/o+BXHmB7ocbHEAs6F2EnG0ogybVVUdkRunTT2glZU9XAaGmhqskrvKwqXuDfNjEO0LZKWdejEEpnq8aM0tOaw==}
@@ -5696,6 +5709,19 @@ packages:
   /neo-async@2.6.2:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: true
+
+  /nestjs-envalid@1.3.0(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)(envalid@7.0.0):
+    resolution: {integrity: sha512-UOjQ+KIV853tmZ4BEfntYS4RJopTyn2esG0hCp+1ztc2jE5bJca3dKF5Zy6DnTxuLwk9Ak/0TQ4bPD+4NvVSAA==}
+    engines: {node: '>=8.12'}
+    peerDependencies:
+      '@nestjs/common': '>=7 <=10'
+      '@nestjs/core': '>=7 <=10'
+      envalid: 7.x.x
+    dependencies:
+      '@nestjs/common': 10.2.8(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      '@nestjs/core': 10.2.8(@nestjs/common@10.2.8)(@nestjs/platform-express@10.2.8)(reflect-metadata@0.1.13)(rxjs@7.8.1)
+      envalid: 7.0.0
+    dev: false
 
   /node-abort-controller@3.1.1:
     resolution: {integrity: sha512-AGK2yQKIjRuqnc6VkX2Xj5d+QW8xZ87pa1UK6yA6ouUyuxfHuMP6umE5QK7UmTeOAymo+Zx1Fxiuw9rVx8taHQ==}
