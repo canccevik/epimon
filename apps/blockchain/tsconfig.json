@@ -2,6 +2,7 @@
   "compilerOptions": {
     "paths": {
       "@config/*": ["src/config/*"],
+      "@common/*": ["src/common/*"],
       "@modules/*": ["src/modules/*"]
     },
     "module": "commonjs",
