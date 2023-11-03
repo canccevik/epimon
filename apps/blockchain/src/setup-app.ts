@@ -4,6 +4,7 @@ import mongoSanitize from 'express-mongo-sanitize'
 import { Config, ENV } from './config'
 import { INestApplication } from '@nestjs/common'
 import { HttpExceptionFilter } from './core'
+import { ValidationPipe } from '@core/pipes'
 
 export function setupApp(app: INestApplication): void {
   const config = app.get<Config>(ENV)
@@ -15,5 +16,6 @@ export function setupApp(app: INestApplication): void {
   app.use(compression())
   app.use(mongoSanitize())
 
+  app.useGlobalPipes(new ValidationPipe())
   app.useGlobalFilters(new HttpExceptionFilter())
 }
