@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common'
 import { BlockchainController } from './controllers'
-import { BlockchainService } from './services'
+import { BlockService, BlockchainService } from './services'
 import { MongooseModule } from '@nestjs/mongoose'
 import { Block, BlockSchema } from './schemas'
 import { BlockRepository } from './repositories'
@@ -8,6 +8,6 @@ import { BlockRepository } from './repositories'
 @Module({
   imports: [MongooseModule.forFeature([{ name: Block.name, schema: BlockSchema }])],
   controllers: [BlockchainController],
-  providers: [BlockchainService, BlockRepository]
+  providers: [BlockchainService, BlockService, BlockRepository]
 })
 export class BlockchainModule {}
