@@ -8,6 +8,7 @@ import { BlockRepository } from './repositories'
 @Module({
   imports: [MongooseModule.forFeature([{ name: Block.name, schema: BlockSchema }])],
   controllers: [BlockchainController],
-  providers: [BlockchainService, BlockService, BlockRepository]
+  providers: [BlockchainService, BlockService, BlockRepository],
+  exports: [BlockchainService]
 })
 export class BlockchainModule {}

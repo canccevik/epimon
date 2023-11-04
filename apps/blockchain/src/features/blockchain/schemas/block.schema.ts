@@ -1,4 +1,4 @@
-import { TransactionDocument } from '@features/transaction/schemas'
+import { Transaction, TransactionDocument } from '@features/transaction/schemas'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument, SchemaTypes } from 'mongoose'
 
@@ -30,8 +30,7 @@ export class Block {
   public timestamp: number
 
   @Prop({
-    type: SchemaTypes.ObjectId,
-    ref: 'transaction',
+    type: Transaction,
     required: true
   })
   public transactions: TransactionDocument[]
