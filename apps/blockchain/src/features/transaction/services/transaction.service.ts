@@ -81,6 +81,22 @@ export class TransactionService {
     return genesisTransaction
   }
 
+  public async createTransaction(transaction: Transaction): Promise<TransactionDocument> {
+    if (transaction.senderAddress) {
+      if (!this.isTransactionValid(transaction)) {
+        throw new BadRequestException('Transaction is not valid.')
+      }
+      await this.validateBalanceForTransaction(transaction)
+    }
+
+    const isChainValid = await this.blockchainService.isChainValid()
+
+    if (!isChainValid) {
+      throw new BadRequestException('Blockchain is not valid.')
+    }
+    return this.transactionRepository.create(transaction)
+  }
+
   private async validateBalanceForTransaction(transaction: Transaction): Promise<void> {
     const walletBalance = await this.walletService.getBalanceOfWallet(transaction.senderAddress)
 
