@@ -1,10 +1,11 @@
 import { Inject, Injectable } from '@nestjs/common'
-import { Block } from '../schemas'
+import { Block, BlockDocument } from '../schemas'
 import crypto from 'crypto'
 import { Config, ENV } from '@config/index'
 import { mnemonicToEntropy } from 'bip39'
 import { ec as EC } from 'elliptic'
 import { TransactionService } from '@features/transaction/services'
+import { BlockRepository } from '../repositories'
 
 @Injectable()
 export class BlockService {
@@ -12,8 +13,17 @@ export class BlockService {
 
   constructor(
     @Inject(ENV) private readonly config: Config,
+    private readonly blockRepository: BlockRepository,
     private readonly transactionService: TransactionService
   ) {}
+
+  public async getBlocks(): Promise<BlockDocument[]> {
+    return this.blockRepository.find({})
+  }
+
+  public async getLastBlock(): Promise<BlockDocument> {
+    return this.blockRepository.findOne({}).sort({ _id: -1 }).limit(1)
+  }
 
   public calculateHash(block: Block): string {
     return crypto
