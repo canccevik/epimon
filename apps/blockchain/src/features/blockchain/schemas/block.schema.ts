@@ -33,7 +33,7 @@ export class Block {
     type: Transaction,
     required: true
   })
-  public transactions: TransactionDocument[]
+  public transactions: Transaction[]
 
   @Prop({
     type: String,
