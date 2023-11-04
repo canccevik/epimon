@@ -1,4 +1,4 @@
-import { BadRequestException, Inject, Injectable } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable, forwardRef } from '@nestjs/common'
 import { Transaction, TransactionDocument } from '../schemas'
 import crypto from 'crypto'
 import { TransactionRepository } from '../repositories'
@@ -15,7 +15,9 @@ export class TransactionService {
   constructor(
     @Inject(ENV) private readonly config: Config,
     private readonly transactionRepository: TransactionRepository,
+    @Inject(forwardRef(() => BlockchainService))
     private readonly blockchainService: BlockchainService,
+    @Inject(forwardRef(() => WalletService))
     private readonly walletService: WalletService
   ) {}
 

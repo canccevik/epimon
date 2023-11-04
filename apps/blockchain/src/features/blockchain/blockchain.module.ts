@@ -13,6 +13,6 @@ import { TransactionModule } from '@features/transaction/transaction.module'
   ],
   controllers: [BlockchainController],
   providers: [BlockchainService, BlockService, BlockRepository],
-  exports: [BlockchainService]
+  exports: [BlockchainService, BlockService]
 })
 export class BlockchainModule {}

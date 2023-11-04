@@ -2,13 +2,13 @@ import { Injectable } from '@nestjs/common'
 import { ec as EC } from 'elliptic'
 import { generateMnemonic, mnemonicToEntropy } from 'bip39'
 import { Wallet } from '../interfaces'
-import { BlockchainService } from '@features/blockchain/services'
+import { BlockService } from '@features/blockchain/services'
 
 @Injectable()
 export class WalletService {
   private readonly ec = new EC('secp256k1')
 
-  constructor(private readonly blockchainService: BlockchainService) {}
+  constructor(private readonly blockService: BlockService) {}
 
   public createWallet(): Wallet {
     const secretPhrase = generateMnemonic()
@@ -27,7 +27,7 @@ export class WalletService {
 
   public async getBalanceOfWallet(walletAddress: string): Promise<number> {
     let balance = 0
-    const blocks = await this.blockchainService.getBlocks()
+    const blocks = await this.blockService.getBlocks()
 
     for (const block of blocks) {
       for (const transaction of block.transactions) {
