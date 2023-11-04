@@ -81,6 +81,17 @@ export class TransactionService {
     return genesisTransaction
   }
 
+  public async createRewardTransaction(minerAddress: string): Promise<TransactionDocument> {
+    const rewardTransaction = new Transaction()
+
+    rewardTransaction.amount = this.config.MINING_REWARD
+    rewardTransaction.receiverAddress = minerAddress
+    rewardTransaction.senderAddress = null
+    rewardTransaction.timestamp = Date.now()
+
+    return this.createTransaction(rewardTransaction)
+  }
+
   public async createTransaction(transaction: Transaction): Promise<TransactionDocument> {
     if (transaction.senderAddress) {
       if (!this.isTransactionValid(transaction)) {
