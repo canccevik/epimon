@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { BadRequestException, Inject, Injectable } from '@nestjs/common'
 import { Block, BlockDocument } from '../schemas'
 import crypto from 'crypto'
 import { Config, ENV } from '@config/index'
@@ -6,6 +6,7 @@ import { mnemonicToEntropy } from 'bip39'
 import { ec as EC } from 'elliptic'
 import { TransactionService } from '@features/transaction/services'
 import { BlockRepository } from '../repositories'
+import { BlockchainService } from './blockchain.service'
 
 @Injectable()
 export class BlockService {
@@ -14,6 +15,7 @@ export class BlockService {
   constructor(
     @Inject(ENV) private readonly config: Config,
     private readonly blockRepository: BlockRepository,
+    private readonly blockchainService: BlockchainService,
     private readonly transactionService: TransactionService
   ) {}
 
@@ -52,5 +54,36 @@ export class BlockService {
     genesisBlock.hash = this.calculateHash(genesisBlock)
 
     return genesisBlock
+  }
+
+  public async mineBlock(privateKey: string): Promise<BlockDocument> {
+    const isChainValid = await this.blockchainService.isChainValid()
+
+    if (!isChainValid) {
+      throw new BadRequestException('Blockchain is not valid.')
+    }
+
+    const minerAddress = this.ec.keyFromPrivate(privateKey).getPublic('hex')
+    const difficulty = this.config.DIFFICULTY
+    const lastBlock = await this.getLastBlock()
+
+    await this.transactionService.createRewardTransaction(minerAddress)
+
+    const transactionPool = await this.transactionService.getTransactionPool()
+
+    const block = new Block()
+    block.hash = null
+    block.nonce = 0
+    block.timestamp = Date.now()
+    block.previousBlockHash = lastBlock.hash
+    block.transactions = transactionPool
+
+    while (block.hash.substring(0, difficulty) !== Array(difficulty + 1).join('0')) {
+      block.nonce++
+      block.hash = this.calculateHash(block)
+    }
+    await this.transactionService.cleanTransactionPool()
+
+    return this.blockRepository.create(block)
   }
 }

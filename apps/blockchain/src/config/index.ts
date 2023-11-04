@@ -7,7 +7,8 @@ export const config = {
   DATABASE_URI: str(),
   OWNER_WALLET_SECRET_PHRASE: str(),
   OWNER_WALLET_INITIAL_BALANCE: num({ default: 10000 }),
-  MINING_REWARD: num({ default: 100 })
+  MINING_REWARD: num({ default: 100 }),
+  DIFFICULTY: num({ default: 4 })
 }
 
 export const validators = makeValidators(config)
