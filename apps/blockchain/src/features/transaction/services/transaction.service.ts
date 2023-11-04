@@ -50,4 +50,14 @@ export class TransactionService {
     const signature = signingKey.sign(transactionHash, 'base64')
     transaction.signature = signature.toDER('hex')
   }
+
+  public isTransactionValid(transaction: Transaction): boolean {
+    if (!transaction.signature || transaction.signature.length === 0) {
+      return false
+    }
+
+    const transactionHash = this.calculateHash(transaction)
+    const signingKey = this.ec.keyFromPublic(transaction.senderAddress, 'hex')
+    return signingKey.verify(transactionHash, transaction.signature)
+  }
 }
