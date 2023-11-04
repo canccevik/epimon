@@ -5,6 +5,8 @@ import { TransactionRepository } from '../repositories'
 import { ec as EC } from 'elliptic'
 import { isPublicKeyValid } from '@common/utils'
 import { Config, ENV } from '@config/index'
+import { WalletService } from '@features/wallet/services'
+import { BlockchainService } from '@features/blockchain/services'
 
 @Injectable()
 export class TransactionService {
@@ -12,7 +14,9 @@ export class TransactionService {
 
   constructor(
     @Inject(ENV) private readonly config: Config,
-    private readonly transactionRepository: TransactionRepository
+    private readonly transactionRepository: TransactionRepository,
+    private readonly blockchainService: BlockchainService,
+    private readonly walletService: WalletService
   ) {}
 
   public async getTransactionPool(): Promise<TransactionDocument[]> {
@@ -23,7 +27,7 @@ export class TransactionService {
     await this.transactionRepository.deleteMany({})
   }
 
-  public calculateHash(transaction: Transaction): string {
+  private calculateHash(transaction: Transaction): string {
     return crypto
       .createHash('sha256')
       .update(
@@ -75,5 +79,30 @@ export class TransactionService {
     genesisTransaction.timestamp = 0
 
     return genesisTransaction
+  }
+
+  private async validateBalanceForTransaction(transaction: Transaction): Promise<void> {
+    const walletBalance = await this.walletService.getBalanceOfWallet(transaction.senderAddress)
+
+    if (walletBalance < transaction.amount) {
+      throw new BadRequestException('Your balance is not enough for this transaction.')
+    }
+
+    const pendingTransactionsForSender = await this.transactionRepository.find({
+      senderAddress: transaction.senderAddress
+    })
+
+    if (pendingTransactionsForSender.length <= 0) return
+
+    const totalPendingAmount = pendingTransactionsForSender
+      .map((transaction) => transaction.amount)
+      .reduce((total, amount) => total + amount)
+    const totalAmount = totalPendingAmount + transaction.amount
+
+    if (totalAmount > walletBalance) {
+      throw new BadRequestException(
+        "Pending transactions for this wallet is higher than it's balance."
+      )
+    }
   }
 }

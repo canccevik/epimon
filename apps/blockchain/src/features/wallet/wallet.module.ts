@@ -6,6 +6,7 @@ import { BlockchainModule } from '@features/blockchain/blockchain.module'
 @Module({
   imports: [BlockchainModule],
   controllers: [WalletController],
-  providers: [WalletService]
+  providers: [WalletService],
+  exports: [WalletService]
 })
 export class WalletModule {}
