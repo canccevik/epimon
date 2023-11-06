@@ -6,12 +6,14 @@ import { Transaction, TransactionSchema } from './schemas'
 import { TransactionRepository } from './repositories'
 import { WalletModule } from '@features/wallet/wallet.module'
 import { BlockchainModule } from '@features/blockchain/blockchain.module'
+import { P2PModule } from '@features/p2p/p2p.module'
 
 @Module({
   imports: [
     MongooseModule.forFeature([{ name: Transaction.name, schema: TransactionSchema }]),
     forwardRef(() => WalletModule),
-    forwardRef(() => BlockchainModule)
+    forwardRef(() => BlockchainModule),
+    P2PModule
   ],
   controllers: [TransactionController],
   providers: [TransactionService, TransactionRepository],

@@ -8,12 +8,15 @@ import { Config, ENV } from '@config/index'
 import { WalletService } from '@features/wallet/services'
 import { BlockchainService } from '@features/blockchain/services'
 import { CreateTransactionDto } from '../dto'
+import { P2PGateway } from '@features/p2p/gateways'
+import { NEW_TRANSACTION } from '@features/p2p/constants'
 
 @Injectable()
 export class TransactionService {
   private readonly ec = new EC('secp256k1')
 
   constructor(
+    private readonly p2pGateway: P2PGateway,
     @Inject(ENV) private readonly config: Config,
     private readonly transactionRepository: TransactionRepository,
     @Inject(forwardRef(() => BlockchainService))
@@ -111,7 +114,10 @@ export class TransactionService {
     if (!isChainValid) {
       throw new BadRequestException('Blockchain is not valid.')
     }
-    return this.transactionRepository.create(transaction)
+
+    const createdTransaction = await this.transactionRepository.create(transaction)
+    this.p2pGateway.server.emit(NEW_TRANSACTION, createdTransaction)
+    return createdTransaction
   }
 
   private async validateBalanceForTransaction(transaction: Transaction): Promise<void> {
