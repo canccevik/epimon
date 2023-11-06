@@ -2,6 +2,7 @@
   "extends": "@epimon/tsconfig/nest.json",
   "compilerOptions": {
     "paths": {
+      "@config/*": ["src/config/*"],
       "@modules/*": ["src/modules/*"]
     },
     "outDir": "./dist",

@@ -1,0 +1,12 @@
+import { str, url } from 'envalid'
+import { Static, makeValidators } from 'nestjs-envalid'
+
+export const config = {
+  MINING_WALLET_SECRET_PHRASE: str(),
+  ROOT_NODE_URI: url(),
+  ROOT_SOCKET_URI: url()
+}
+
+export const validators = makeValidators(config)
+export type Config = Static<typeof validators>
+export const ENV = 'EnvalidModuleEnv'

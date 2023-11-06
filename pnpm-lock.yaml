@@ -277,6 +277,15 @@ importers:
       '@nestjs/platform-express':
         specifier: ^10.0.0
         version: 10.2.8(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)
+      dotenv:
+        specifier: ^16.3.1
+        version: 16.3.1
+      envalid:
+        specifier: ^7.0.0
+        version: 7.0.0
+      nestjs-envalid:
+        specifier: 1.3.0
+        version: 1.3.0(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)(envalid@7.0.0)
       reflect-metadata:
         specifier: ^0.1.13
         version: 0.1.13
