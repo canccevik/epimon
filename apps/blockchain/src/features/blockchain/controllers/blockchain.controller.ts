@@ -35,4 +35,10 @@ export class BlockchainController {
   ): Promise<BlockDocument> {
     return this.blockService.mineBlock(privateKey)
   }
+
+  @Post('sync')
+  @Message('Chain synced successfully.')
+  public async syncChain(): Promise<void> {
+    await this.blockchainService.syncChainWithRoot()
+  }
 }
