@@ -8,6 +8,7 @@
     "lint": "lerna run lint --stream"
   },
   "devDependencies": {
+    "@epimon/prettier-config": "workspace:^",
     "lerna": "^7.4.2"
   }
 }

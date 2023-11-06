@@ -8,15 +8,15 @@ importers:
 
   .:
     devDependencies:
+      '@epimon/prettier-config':
+        specifier: workspace:^
+        version: link:packages/prettier-config
       lerna:
         specifier: ^7.4.2
         version: 7.4.2
 
   apps/blockchain:
     dependencies:
-      '@epimon/eslint-config':
-        specifier: workspace:^
-        version: link:../../packages/eslint-config
       '@nestjs/common':
         specifier: ^10.0.0
         version: 10.2.8(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
@@ -87,6 +87,12 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
     devDependencies:
+      '@epimon/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
+      '@epimon/prettier-config':
+        specifier: workspace:^
+        version: link:../../packages/prettier-config
       '@nestjs/cli':
         specifier: ^10.0.0
         version: 10.2.1
@@ -253,9 +259,6 @@ importers:
 
   apps/node:
     dependencies:
-      '@epimon/eslint-config':
-        specifier: workspace:^
-        version: link:../../packages/eslint-config
       '@nestjs/common':
         specifier: ^10.0.0
         version: 10.2.8(class-transformer@0.5.1)(class-validator@0.14.0)(reflect-metadata@0.1.13)(rxjs@7.8.1)
@@ -272,6 +275,12 @@ importers:
         specifier: ^7.8.1
         version: 7.8.1
     devDependencies:
+      '@epimon/eslint-config':
+        specifier: workspace:^
+        version: link:../../packages/eslint-config
+      '@epimon/prettier-config':
+        specifier: workspace:^
+        version: link:../../packages/prettier-config
       '@nestjs/cli':
         specifier: ^10.0.0
         version: 10.2.1
@@ -337,6 +346,8 @@ importers:
         version: 5.2.2
 
   packages/eslint-config: {}
+
+  packages/prettier-config: {}
 
 packages:
 
