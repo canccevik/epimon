@@ -1,11 +1,18 @@
-import { Injectable } from '@nestjs/common'
+import { Inject, Injectable } from '@nestjs/common'
 import { BlockService } from './block.service'
 import { TransactionService } from '@features/transaction/services'
+import { Block, BlockDocument } from '../schemas'
+import axios from 'axios'
+import { Config, ENV } from '@config/index'
+import { Payload } from '@core/interceptors'
+import { BlockRepository } from '../repositories'
 
 @Injectable()
 export class BlockchainService {
   constructor(
+    @Inject(ENV) private readonly config: Config,
     private readonly blockService: BlockService,
+    private readonly blockRepository: BlockRepository,
     private readonly transactionService: TransactionService
   ) {}
 
@@ -39,5 +46,17 @@ export class BlockchainService {
       }
     }
     return isChainValid
+  }
+
+  public async fetchOrCreateGenesisBlock(): Promise<Block> {
+    const rootNodeUri = this.config.ROOT_NODE_URI
+    const { data } = await axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
+
+    if (data.statusCode === 200 && data.data.length > 0) {
+      return data.data.find(
+        (block) => block.nonce === 0 && block.previousBlockHash === null && block.timestamp === 0
+      )
+    }
+    return this.blockService.createGenesisBlock()
   }
 }

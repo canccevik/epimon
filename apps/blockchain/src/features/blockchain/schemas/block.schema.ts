@@ -1,4 +1,4 @@
-import { Transaction, TransactionDocument } from '@features/transaction/schemas'
+import { Transaction } from '@features/transaction/schemas'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument, SchemaTypes } from 'mongoose'
 
@@ -7,6 +7,7 @@ export type BlockDocument = HydratedDocument<Block>
 @Schema({
   versionKey: false,
   timestamps: {
+    createdAt: false,
     updatedAt: false
   }
 })
@@ -18,8 +19,7 @@ export class Block {
   public nonce: number
 
   @Prop({
-    type: String,
-    required: true
+    type: String
   })
   public previousBlockHash: string
 
@@ -30,7 +30,7 @@ export class Block {
   public timestamp: number
 
   @Prop({
-    type: Transaction,
+    type: SchemaTypes.Array,
     required: true
   })
   public transactions: Transaction[]

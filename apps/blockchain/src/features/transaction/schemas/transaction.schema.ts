@@ -7,6 +7,7 @@ export type TransactionDocument = HydratedDocument<Transaction>
   collection: 'transaction-pool',
   versionKey: false,
   timestamps: {
+    createdAt: false,
     updatedAt: false
   }
 })
