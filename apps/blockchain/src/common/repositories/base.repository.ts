@@ -4,6 +4,7 @@ import {
   DeleteResult,
   FindAllResult,
   FindResult,
+  InsertManyResult,
   UpdateResult
 } from './types/queries.type'
 
@@ -12,6 +13,10 @@ export class BaseRepository<T> {
 
   public async create(object: Partial<T>): Promise<CreateResult<T>> {
     return this.model.create(object)
+  }
+
+  public async insertMany(objects: T[]): Promise<InsertManyResult<T>> {
+    return this.model.insertMany(objects)
   }
 
   public find(query: FilterQuery<T>): FindAllResult<T> {

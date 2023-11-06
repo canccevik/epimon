@@ -1,6 +1,8 @@
-import { HydratedDocument, Query, UpdateWriteOpResult } from 'mongoose'
+import { Document, HydratedDocument, IfAny, Query, Require_id, UpdateWriteOpResult } from 'mongoose'
 
 export type CreateResult<T> = HydratedDocument<T>
+
+export type InsertManyResult<T> = IfAny<T, {}, Document<unknown, {}, T> & Require_id<T>>[]
 
 export type FindAllResult<T> = Query<HydratedDocument<T>[], HydratedDocument<T>>
 
