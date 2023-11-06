@@ -32,6 +32,7 @@
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "@epimon/tsconfig": "workspace:^",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",

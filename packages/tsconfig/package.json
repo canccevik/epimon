@@ -1,0 +1,9 @@
+{
+  "name": "@epimon/tsconfig",
+  "version": "1.0.0",
+  "files": [
+    "base.json",
+    "nest.json",
+    "next.json"
+  ]
+}

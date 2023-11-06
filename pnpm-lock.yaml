@@ -93,6 +93,9 @@ importers:
       '@epimon/prettier-config':
         specifier: workspace:^
         version: link:../../packages/prettier-config
+      '@epimon/tsconfig':
+        specifier: workspace:^
+        version: link:../../packages/tsconfig
       '@nestjs/cli':
         specifier: ^10.0.0
         version: 10.2.1
@@ -229,6 +232,9 @@ importers:
         specifier: ^3.22.4
         version: 3.22.4
     devDependencies:
+      '@epimon/tsconfig':
+        specifier: workspace:^
+        version: link:../../packages/tsconfig
       '@types/node':
         specifier: ^20
         version: 20.8.10
@@ -281,6 +287,9 @@ importers:
       '@epimon/prettier-config':
         specifier: workspace:^
         version: link:../../packages/prettier-config
+      '@epimon/tsconfig':
+        specifier: workspace:^
+        version: link:../../packages/tsconfig
       '@nestjs/cli':
         specifier: ^10.0.0
         version: 10.2.1
@@ -348,6 +357,8 @@ importers:
   packages/eslint-config: {}
 
   packages/prettier-config: {}
+
+  packages/tsconfig: {}
 
 packages:
 

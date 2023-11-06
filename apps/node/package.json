@@ -24,6 +24,7 @@
   "devDependencies": {
     "@epimon/eslint-config": "workspace:^",
     "@epimon/prettier-config": "workspace:^",
+    "@epimon/tsconfig": "workspace:^",
     "@nestjs/cli": "^10.0.0",
     "@nestjs/schematics": "^10.0.0",
     "@nestjs/testing": "^10.0.0",
