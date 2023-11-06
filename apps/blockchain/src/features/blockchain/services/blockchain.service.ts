@@ -20,7 +20,9 @@ export class BlockchainService {
   public async isChainValid(): Promise<boolean> {
     const originalGenesisBlock = this.blockService.createGenesisBlock()
     const savedBlocks = await this.blockService.getBlocks()
-    const savedGenesisBlock = savedBlocks[0]
+    const savedGenesisBlock = savedBlocks[0].toObject()
+
+    delete savedGenesisBlock._id
 
     if (JSON.stringify(originalGenesisBlock) !== JSON.stringify(savedGenesisBlock)) {
       return false

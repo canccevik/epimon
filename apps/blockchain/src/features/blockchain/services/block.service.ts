@@ -49,8 +49,8 @@ export class BlockService {
 
     const genesisBlock = new Block()
     genesisBlock.nonce = 0
-    genesisBlock.timestamp = 0
     genesisBlock.previousBlockHash = null
+    genesisBlock.timestamp = 0
     genesisBlock.transactions = [genesisTransaction]
     genesisBlock.hash = this.calculateHash(genesisBlock)
 
