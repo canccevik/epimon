@@ -7,12 +7,15 @@ import { ec as EC } from 'elliptic'
 import { TransactionService } from '@features/transaction/services'
 import { BlockRepository } from '../repositories'
 import { BlockchainService } from './blockchain.service'
+import { P2PGateway } from '@features/p2p/gateways'
+import { NEW_BLOCK } from '@features/p2p/constants'
 
 @Injectable()
 export class BlockService {
   private readonly ec = new EC('secp256k1')
 
   constructor(
+    private readonly p2pGateway: P2PGateway,
     @Inject(ENV) private readonly config: Config,
     private readonly blockRepository: BlockRepository,
     @Inject(forwardRef(() => BlockchainService))
@@ -101,7 +104,10 @@ export class BlockService {
       block.hash = this.calculateHash(block)
     }
 
+    const createdBlock = await this.blockRepository.create(block)
     await this.transactionService.cleanTransactionPool()
-    return this.blockRepository.create(block)
+
+    this.p2pGateway.server.emit(NEW_BLOCK, createdBlock)
+    return createdBlock
   }
 }
