@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { ApiHeader, ApiTags } from '@nestjs/swagger'
 import { TransactionDocument } from '../schemas'
 import { Message, RequestHeader } from '@common/decorators'
@@ -19,5 +19,11 @@ export class TransactionController {
   ): Promise<TransactionDocument> {
     await this.transactionService.signTransaction(privateKey, createTransactionDto)
     return this.transactionService.createTransaction(createTransactionDto)
+  }
+
+  @Get()
+  @Message('Transaction pool fetched successfully.')
+  public getTransactionPool(): Promise<TransactionDocument[]> {
+    return this.transactionService.getTransactionPool()
   }
 }
