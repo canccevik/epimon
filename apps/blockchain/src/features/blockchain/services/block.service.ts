@@ -72,9 +72,13 @@ export class BlockService {
 
   public async mineBlock(privateKey: string): Promise<BlockDocument> {
     const isChainValid = await this.blockchainService.isChainValid()
-
     if (!isChainValid) {
       throw new BadRequestException('Blockchain is not valid.')
+    }
+
+    const txPool = await this.transactionService.getTransactionPool()
+    if (!txPool.length) {
+      throw new BadRequestException('There is no transaction to mine.')
     }
 
     const minerAddress = this.ec.keyFromPrivate(privateKey).getPublic('hex')
@@ -86,7 +90,7 @@ export class BlockService {
     const transactionPool = await this.transactionService.getTransactionPool()
 
     const block = new Block()
-    block.hash = null
+    block.hash = ''
     block.nonce = 0
     block.timestamp = Date.now()
     block.previousBlockHash = lastBlock.hash
@@ -96,8 +100,8 @@ export class BlockService {
       block.nonce++
       block.hash = this.calculateHash(block)
     }
-    await this.transactionService.cleanTransactionPool()
 
+    await this.transactionService.cleanTransactionPool()
     return this.blockRepository.create(block)
   }
 }

@@ -30,8 +30,7 @@ export class Transaction {
   public amount: number
 
   @Prop({
-    type: String,
-    required: true
+    type: String
   })
   public signature: string
 
