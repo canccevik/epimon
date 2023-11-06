@@ -1,5 +1,5 @@
 {
-  "name": "episcan",
+  "name": "@epimon/episcan",
   "version": "1.0.0",
   "scripts": {
     "start:dev": "next dev",
