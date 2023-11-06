@@ -7,6 +7,7 @@ import { isPublicKeyValid } from '@common/utils'
 import { Config, ENV } from '@config/index'
 import { WalletService } from '@features/wallet/services'
 import { BlockchainService } from '@features/blockchain/services'
+import { CreateTransactionDto } from '../dto'
 
 @Injectable()
 export class TransactionService {
@@ -41,7 +42,7 @@ export class TransactionService {
       .digest('hex')
   }
 
-  public signTransaction(privateKey: string, transaction: Transaction): void {
+  public signTransaction(privateKey: string, transaction: CreateTransactionDto): void {
     const signingKey = this.ec.keyFromPrivate(privateKey)
     const publicAddress = signingKey.getPublic('hex')
 
@@ -51,7 +52,6 @@ export class TransactionService {
     if (!isPublicKeyValid(transaction.receiverAddress)) {
       throw new BadRequestException('Receiver address is not valid.')
     }
-
     if (publicAddress === transaction.receiverAddress) {
       throw new BadRequestException('You cannot make transactions on your own.')
     }
