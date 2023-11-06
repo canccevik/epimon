@@ -75,8 +75,8 @@ export class TransactionService {
     const publicAddress = this.ec.keyFromPrivate(privateKey).getPublic('hex')
 
     const genesisTransaction = new Transaction()
-    genesisTransaction.senderAddress = publicAddress
-    genesisTransaction.receiverAddress = null
+    genesisTransaction.senderAddress = null
+    genesisTransaction.receiverAddress = publicAddress
     genesisTransaction.amount = this.config.OWNER_WALLET_INITIAL_BALANCE
     genesisTransaction.timestamp = 0
 
@@ -133,5 +133,21 @@ export class TransactionService {
         "Pending transactions for this wallet is higher than it's balance."
       )
     }
+  }
+
+  public async addTransactionsToPool(transactions: TransactionDocument[]): Promise<void> {
+    const nonExistentTransactions: TransactionDocument[] = []
+
+    for (const transaction of transactions) {
+      if (transaction.senderAddress && !this.isTransactionValid(transaction)) {
+        throw new BadRequestException('Transaction is not valid.')
+      }
+
+      const isTransactionExists = await this.transactionRepository.findById(transaction.id)
+      if (!isTransactionExists) {
+        nonExistentTransactions.push(transaction)
+      }
+    }
+    await this.transactionRepository.insertMany(nonExistentTransactions)
   }
 }
