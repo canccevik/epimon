@@ -49,12 +49,25 @@ export class BlockService {
 
     const genesisBlock = new Block()
     genesisBlock.nonce = 0
+    genesisBlock.timestamp = 0
     genesisBlock.previousBlockHash = null
-    genesisBlock.timestamp = Date.now()
     genesisBlock.transactions = [genesisTransaction]
     genesisBlock.hash = this.calculateHash(genesisBlock)
 
     return genesisBlock
+  }
+
+  public async addGenesisBlockToChain(): Promise<void> {
+    const isGenesisBlockExists = await this.blockRepository.findOne({
+      previousBlockHash: null,
+      timestamp: 0,
+      nonce: 0
+    })
+
+    if (isGenesisBlockExists) return
+
+    const genesisBlock = await this.blockchainService.fetchOrCreateGenesisBlock()
+    await this.blockRepository.create(genesisBlock)
   }
 
   public async mineBlock(privateKey: string): Promise<BlockDocument> {
