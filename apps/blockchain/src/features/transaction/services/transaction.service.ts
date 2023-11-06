@@ -62,6 +62,10 @@ export class TransactionService {
   }
 
   public isTransactionValid(transaction: Transaction): boolean {
+    if (transaction.senderAddress === null) {
+      return true
+    }
+
     if (!transaction.signature || transaction.signature.length === 0) {
       return false
     }
