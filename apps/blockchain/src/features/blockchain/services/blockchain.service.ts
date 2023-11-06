@@ -5,6 +5,7 @@ import { Block, BlockDocument } from '../schemas'
 import axios from 'axios'
 import { Config, ENV } from '@config/index'
 import { Payload } from '@core/interceptors'
+import { TransactionDocument } from '@features/transaction/schemas'
 import { BlockRepository } from '../repositories'
 
 @Injectable()
@@ -58,5 +59,27 @@ export class BlockchainService {
       )
     }
     return this.blockService.createGenesisBlock()
+  }
+
+  public async syncChainWithRoot(): Promise<void> {
+    await this.blockService.addGenesisBlockToChain()
+
+    const rootNodeUri = this.config.ROOT_NODE_URI
+    const chainRequest = await axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
+    const transactionPoolRequest = await axios.get<Payload<TransactionDocument[]>>(
+      rootNodeUri + '/transactions'
+    )
+
+    if (chainRequest.status !== 200 || transactionPoolRequest.status !== 200) {
+      throw new Error('Something went wrong while syncing the chain.')
+    }
+
+    const transactionPool = transactionPoolRequest.data.data
+    await this.transactionService.cleanTransactionPool()
+    await this.transactionService.addTransactionsToPool(transactionPool)
+
+    const chain = chainRequest.data.data
+    await this.blockRepository.deleteMany({})
+    await this.blockRepository.insertMany(chain)
   }
 }
