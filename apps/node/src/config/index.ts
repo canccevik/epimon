@@ -4,7 +4,8 @@ import { Static, makeValidators } from 'nestjs-envalid'
 export const config = {
   MINING_WALLET_SECRET_PHRASE: str(),
   ROOT_NODE_URI: url(),
-  ROOT_SOCKET_URI: url()
+  ROOT_SOCKET_URI: url(),
+  LOCAL_API_URI: url()
 }
 
 export const validators = makeValidators(config)

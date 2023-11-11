@@ -1,6 +1,7 @@
-import { validators } from '@config/index'
+import { Config, ENV, validators } from '@config/index'
 import { Module } from '@nestjs/common'
 import { EnvalidModule } from 'nestjs-envalid'
+import { IoClientModule } from 'nestjs-io-client'
 
 @Module({
   imports: [
@@ -8,6 +9,14 @@ import { EnvalidModule } from 'nestjs-envalid'
       validators: validators,
       isGlobal: true,
       useDotenv: true
+    }),
+    IoClientModule.forRootAsync({
+      useFactory: (config: Config) => {
+        return {
+          uri: config.ROOT_SOCKET_URI
+        }
+      },
+      inject: [ENV]
     })
   ]
 })
