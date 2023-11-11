@@ -3,7 +3,8 @@
   "compilerOptions": {
     "paths": {
       "@config/*": ["src/config/*"],
-      "@modules/*": ["src/modules/*"]
+      "@modules/*": ["src/modules/*"],
+      "@features/*": ["src/features/*"]
     },
     "outDir": "./dist",
     "baseUrl": "./"

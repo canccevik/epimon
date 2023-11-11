@@ -1,7 +1,7 @@
-import { Config, ENV, validators } from '@config/index'
+import { validators } from '@config/index'
+import { FeaturesModule } from '@features/features.module'
 import { Module } from '@nestjs/common'
 import { EnvalidModule } from 'nestjs-envalid'
-import { IoClientModule } from 'nestjs-io-client'
 
 @Module({
   imports: [
@@ -10,14 +10,7 @@ import { IoClientModule } from 'nestjs-io-client'
       isGlobal: true,
       useDotenv: true
     }),
-    IoClientModule.forRootAsync({
-      useFactory: (config: Config) => {
-        return {
-          uri: config.ROOT_SOCKET_URI
-        }
-      },
-      inject: [ENV]
-    })
+    FeaturesModule
   ]
 })
 export class AppModule {}

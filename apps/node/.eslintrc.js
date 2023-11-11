@@ -10,5 +10,8 @@ module.exports = {
     '@epimon/eslint-config',
     'plugin:@typescript-eslint/recommended',
     'plugin:prettier/recommended'
-  ]
+  ],
+  rules: {
+    'no-console': 'off'
+  }
 }
