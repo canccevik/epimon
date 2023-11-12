@@ -1,0 +1,26 @@
+{
+  "name": "@epimon/common",
+  "version": "1.0.0",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "build": "tsc",
+    "build:dev": "tsc --watch",
+    "test": "jest",
+    "lint": "eslint --ext .js,.ts .",
+    "lint:fix": "eslint --fix --ext .js,.ts .",
+    "format": "prettier --ignore-path .gitignore --write \"**/*.+(js|ts|json)\""
+  },
+  "devDependencies": {
+    "@epimon/eslint-config": "workspace:^",
+    "@epimon/prettier-config": "workspace:^",
+    "@epimon/tsconfig": "workspace:^",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "prettier": "^3.0.0",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.0"
+  }
+}

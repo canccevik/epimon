@@ -372,6 +372,18 @@ importers:
         specifier: ^5.1.3
         version: 5.2.2
 
+  packages/common:
+    devDependencies:
+      '@epimon/eslint-config':
+        specifier: workspace:^
+        version: link:../eslint-config
+      '@epimon/prettier-config':
+        specifier: workspace:^
+        version: link:../prettier-config
+      '@epimon/tsconfig':
+        specifier: workspace:^
+        version: link:../tsconfig
+
   packages/eslint-config: {}
 
   packages/prettier-config: {}
