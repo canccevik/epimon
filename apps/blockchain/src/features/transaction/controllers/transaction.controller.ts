@@ -3,7 +3,7 @@ import { ApiHeader, ApiTags } from '@nestjs/swagger'
 import { TransactionDocument } from '../schemas'
 import { Message, RequestHeader } from '@common/decorators'
 import { TransactionService } from '../services'
-import { CreateTransactionDto } from '../dto'
+import { AddTransactionDto, CreateTransactionDto } from '../dto'
 
 @ApiTags('transactions')
 @Controller('transactions')
@@ -25,5 +25,13 @@ export class TransactionController {
   @Message('Transaction pool fetched successfully.')
   public getTransactionPool(): Promise<TransactionDocument[]> {
     return this.transactionService.getTransactionPool()
+  }
+
+  @Post()
+  @Message('Transaction added to the transaction pool successfully.')
+  public async addTransaction(@Body() transaction: AddTransactionDto): Promise<void> {
+    return this.transactionService.addTransactionsToPool([
+      transaction as unknown as TransactionDocument
+    ])
   }
 }

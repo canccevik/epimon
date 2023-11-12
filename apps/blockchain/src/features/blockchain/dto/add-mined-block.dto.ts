@@ -6,7 +6,7 @@ export class AddMinedBlockDto {
   @ApiProperty()
   @IsNotEmpty()
   @IsMongoId()
-  public id: string
+  public _id: string
 
   @ApiProperty()
   @IsNotEmpty()
