@@ -1,17 +1,44 @@
-import { Injectable } from '@nestjs/common'
-import { InjectIoClientProvider, IoClient, OnConnect, OnDisconnect } from 'nestjs-io-client'
+import { BlockchainService } from '@features/blockchain/blockchain.service'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
+import {
+  InjectIoClientProvider,
+  IoClient,
+  OnConnect,
+  OnDisconnect,
+  EventListener
+} from 'nestjs-io-client'
+import { NEW_BLOCK_EVENT } from './constants'
+import axios from 'axios'
+import { Config, ENV } from '@config/index'
+import { Block } from '@features/blockchain/interfaces'
 
 @Injectable()
 export class SocketService {
-  constructor(@InjectIoClientProvider() private readonly io: IoClient) {}
+  constructor(
+    @Inject(ENV) private readonly config: Config,
+    @InjectIoClientProvider() private readonly io: IoClient,
+    private readonly blockchainService: BlockchainService
+  ) {}
 
   @OnConnect()
-  public async connect(): Promise<void> {
-    console.log('✅ Connected to the network.')
+  public onConnect(): void {
+    console.info('✅ Connected to the network.')
   }
 
   @OnDisconnect()
-  public async disconnect(): Promise<void> {
-    console.log('❌ Network disconnected.')
+  public onDisconnect(): void {
+    console.error('❌ Network disconnected.')
+  }
+
+  @EventListener(NEW_BLOCK_EVENT)
+  public async onNewBlock(block: Block): Promise<void> {
+    const addBlockEndpoint = this.config.LOCAL_API_URI + '/chain'
+    const { status } = await axios.post(addBlockEndpoint, block)
+
+    if (status !== HttpStatus.CREATED) {
+      console.error('❌ Something went wrong while receiving new block.')
+      return this.blockchainService.syncChainWithRoot()
+    }
+    console.info('✅ New block received successfully.')
   }
 }
