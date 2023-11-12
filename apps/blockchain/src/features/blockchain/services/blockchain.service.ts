@@ -7,6 +7,7 @@ import { Config, ENV } from '@config/index'
 import { Payload } from '@core/interceptors'
 import { TransactionDocument } from '@features/transaction/schemas'
 import { BlockRepository } from '../repositories'
+import { AddMinedBlockDto } from '../dto'
 
 @Injectable()
 export class BlockchainService {
@@ -83,5 +84,14 @@ export class BlockchainService {
     const chain = chainRequest.data.data
     await this.blockRepository.deleteMany({})
     await this.blockRepository.insertMany(chain)
+  }
+
+  public async addMinedBlock(minedBlock: AddMinedBlockDto): Promise<void> {
+    const isBlockExists = await this.blockRepository.findOne({ hash: minedBlock.hash })
+
+    if (isBlockExists) return
+
+    await this.blockRepository.insertMany([minedBlock])
+    await this.transactionService.cleanTransactionPool()
   }
 }

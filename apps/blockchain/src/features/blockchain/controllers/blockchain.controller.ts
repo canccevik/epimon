@@ -1,9 +1,10 @@
-import { Controller, Get, Post } from '@nestjs/common'
+import { Body, Controller, Get, Post } from '@nestjs/common'
 import { ApiHeader, ApiTags } from '@nestjs/swagger'
 import { BlockDocument } from '../schemas'
 import { BlockRepository } from '../repositories'
 import { Message, RequestHeader } from '@common/decorators'
 import { BlockService, BlockchainService } from '../services'
+import { AddMinedBlockDto } from '../dto'
 
 @ApiTags('chain')
 @Controller('chain')
@@ -40,5 +41,11 @@ export class BlockchainController {
   @Message('Chain synced successfully.')
   public async syncChain(): Promise<void> {
     await this.blockchainService.syncChainWithRoot()
+  }
+
+  @Post()
+  @Message('Block added to chain successfully.')
+  public async addMinedBlock(@Body() minedBlock: AddMinedBlockDto): Promise<void> {
+    return this.blockchainService.addMinedBlock(minedBlock)
   }
 }
