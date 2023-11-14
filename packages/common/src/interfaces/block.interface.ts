@@ -1,10 +1,10 @@
 import { Transaction } from './transaction.interface'
 
 export interface Block {
-  _id: string
+  _id?: string
   timestamp: number
   nonce: number
   hash: string
-  previousHash: string
+  previousBlockHash: string
   transactions: Transaction[]
 }

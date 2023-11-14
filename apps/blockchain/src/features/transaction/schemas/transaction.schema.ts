@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument } from 'mongoose'
+import { Transaction as ITransaction } from '@epimon/common'
 
 export type TransactionDocument = HydratedDocument<Transaction>
 
@@ -11,7 +12,7 @@ export type TransactionDocument = HydratedDocument<Transaction>
     updatedAt: false
   }
 })
-export class Transaction {
+export class Transaction implements ITransaction {
   @Prop({
     type: String
   })

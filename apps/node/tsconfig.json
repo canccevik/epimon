@@ -1,5 +1,6 @@
 {
   "extends": "@epimon/tsconfig/nest.json",
+  "include": ["src"],
   "compilerOptions": {
     "paths": {
       "@config/*": ["src/config/*"],
@@ -9,5 +10,9 @@
     "outDir": "./dist",
     "baseUrl": "./"
   },
-  "include": ["src"]
+  "references": [
+    {
+      "path": "../../packages/common/tsconfig.json"
+    }
+  ]
 }

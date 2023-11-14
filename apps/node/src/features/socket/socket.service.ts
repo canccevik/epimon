@@ -10,7 +10,7 @@ import {
 import { NEW_BLOCK_EVENT } from './constants'
 import axios from 'axios'
 import { Config, ENV } from '@config/index'
-import { Block } from '@features/blockchain/interfaces'
+import { Block } from '@epimon/common'
 
 @Injectable()
 export class SocketService {

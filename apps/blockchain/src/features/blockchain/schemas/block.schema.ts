@@ -1,6 +1,7 @@
 import { Transaction } from '@features/transaction/schemas'
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument, SchemaTypes } from 'mongoose'
+import { Block as IBlock } from '@epimon/common'
 
 export type BlockDocument = HydratedDocument<Block>
 
@@ -11,7 +12,7 @@ export type BlockDocument = HydratedDocument<Block>
     updatedAt: false
   }
 })
-export class Block {
+export class Block implements IBlock {
   @Prop({
     type: Number,
     required: true
