@@ -1,5 +1,7 @@
 import { Config, ENV } from '@config/index'
-import { Inject, Injectable } from '@nestjs/common'
+import { Payload } from '@epimon/common'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
+import axios from 'axios'
 import { mnemonicToEntropy } from 'bip39'
 import { ec as EC } from 'elliptic'
 
@@ -20,5 +22,16 @@ export class WalletService {
     const publicAddress = keyPair.getPublic('hex')
 
     return { privateAddress, publicAddress }
+  }
+
+  public async getBalanceOfAddress(publicAddress: string): Promise<void | number> {
+    const balanceRequest = await axios.get<Payload<{ balance: number }>>(
+      this.config.LOCAL_API_URI + `/wallets/${publicAddress}/balance`
+    )
+
+    if (balanceRequest.status !== HttpStatus.OK) {
+      return console.error('❌ Something went wrong while fetching balance of wallet.')
+    }
+    return balanceRequest.data.data.balance
   }
 }
