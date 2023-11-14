@@ -11,6 +11,9 @@ importers:
       '@epimon/prettier-config':
         specifier: workspace:^
         version: link:packages/prettier-config
+      '@nx/nx-linux-x64-gnu':
+        specifier: ^17.1.2
+        version: 17.1.2
       lerna:
         specifier: ^7.4.2
         version: 7.4.2
@@ -1814,6 +1817,13 @@ packages:
     requiresBuild: true
     dev: true
     optional: true
+
+  /@nx/nx-linux-x64-gnu@17.1.2:
+    resolution: {integrity: sha512-3cC131hJ3VhuxjzzBlwIdVp46onykOo78EmnURNdLxcWOpmcKgYXn7OnVwjrglYi+JL7D0vABGKKUpt1cs6/rA==}
+    engines: {node: '>= 10'}
+    cpu: [x64]
+    os: [linux]
+    dev: true
 
   /@nx/nx-linux-x64-musl@16.10.0:
     resolution: {integrity: sha512-q8sINYLdIJxK/iUx9vRk5jWAWb/2O0PAbOJFwv4qkxBv4rLoN7y+otgCZ5v0xfx/zztFgk/oNY4lg5xYjIso2Q==}

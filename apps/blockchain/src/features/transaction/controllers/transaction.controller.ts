@@ -21,13 +21,13 @@ export class TransactionController {
     return this.transactionService.createTransaction(createTransactionDto)
   }
 
-  @Get()
+  @Get('pool')
   @Message('Transaction pool fetched successfully.')
   public getTransactionPool(): Promise<TransactionDocument[]> {
     return this.transactionService.getTransactionPool()
   }
 
-  @Post()
+  @Post('pool')
   @Message('Transaction added to the transaction pool successfully.')
   public async addTransaction(@Body() transaction: AddTransactionDto): Promise<void> {
     return this.transactionService.addTransactionsToPool([

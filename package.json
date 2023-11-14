@@ -9,6 +9,7 @@
   },
   "devDependencies": {
     "@epimon/prettier-config": "workspace:^",
+    "@nx/nx-linux-x64-gnu": "^17.1.2",
     "lerna": "^7.4.2"
   }
 }
