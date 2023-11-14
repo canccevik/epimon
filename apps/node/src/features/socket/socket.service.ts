@@ -1,5 +1,3 @@
-import { BlockchainService } from '@features/blockchain/blockchain.service'
-import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import {
   InjectIoClientProvider,
   IoClient,
@@ -7,9 +5,11 @@ import {
   OnDisconnect,
   EventListener
 } from 'nestjs-io-client'
+import { BlockchainService } from '@features/blockchain/blockchain.service'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import axios from 'axios'
 import { Config, ENV } from '@config/index'
-import { Block, NEW_BLOCK_EVENT } from '@epimon/common'
+import { Block, NEW_BLOCK_EVENT, NEW_TRANSACTION_EVENT, Transaction } from '@epimon/common'
 
 @Injectable()
 export class SocketService {
@@ -39,5 +39,18 @@ export class SocketService {
       return this.blockchainService.syncChainWithRoot()
     }
     console.info('✅ New block received successfully.')
+  }
+
+  @EventListener(NEW_TRANSACTION_EVENT)
+  public async onNewTransaction(transaction: Transaction): Promise<void> {
+    const newTransactionEndpoint = this.config.LOCAL_API_URI + '/transactions/pool'
+    const { status } = await axios.post(newTransactionEndpoint, transaction)
+
+    if (status !== HttpStatus.CREATED) {
+      console.error('❌ Something went wrong while receiving new transaction.')
+      return this.blockchainService.syncChainWithRoot()
+    }
+    console.log('✅ New transaction received successfully.')
+    await this.blockchainService.mineBlock()
   }
 }
