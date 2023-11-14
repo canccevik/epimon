@@ -286,9 +286,15 @@ importers:
       axios:
         specifier: ^1.6.0
         version: 1.6.0
+      bip39:
+        specifier: ^3.1.0
+        version: 3.1.0
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
+      elliptic:
+        specifier: ^6.5.4
+        version: 6.5.4
       envalid:
         specifier: ^7.0.0
         version: 7.0.0
@@ -323,6 +329,9 @@ importers:
       '@nestjs/testing':
         specifier: ^10.0.0
         version: 10.2.8(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)(@nestjs/platform-express@10.2.8)
+      '@types/elliptic':
+        specifier: ^6.4.16
+        version: 6.4.16
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.20
