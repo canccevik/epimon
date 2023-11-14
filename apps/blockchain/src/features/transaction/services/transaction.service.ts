@@ -9,7 +9,7 @@ import { WalletService } from '@features/wallet/services'
 import { BlockchainService } from '@features/blockchain/services'
 import { CreateTransactionDto } from '../dto'
 import { P2PGateway } from '@features/p2p/gateways'
-import { NEW_TRANSACTION } from '@features/p2p/constants'
+import { NEW_TRANSACTION_EVENT } from '@epimon/common'
 
 @Injectable()
 export class TransactionService {
@@ -116,7 +116,7 @@ export class TransactionService {
     }
 
     const createdTransaction = await this.transactionRepository.create(transaction)
-    this.p2pGateway.server.emit(NEW_TRANSACTION, createdTransaction)
+    this.p2pGateway.server.emit(NEW_TRANSACTION_EVENT, createdTransaction)
     return createdTransaction
   }
 

@@ -8,7 +8,7 @@ import { TransactionService } from '@features/transaction/services'
 import { BlockRepository } from '../repositories'
 import { BlockchainService } from './blockchain.service'
 import { P2PGateway } from '@features/p2p/gateways'
-import { NEW_BLOCK } from '@features/p2p/constants'
+import { NEW_BLOCK_EVENT } from '@epimon/common'
 
 @Injectable()
 export class BlockService {
@@ -107,7 +107,7 @@ export class BlockService {
     const createdBlock = await this.blockRepository.create(block)
     await this.transactionService.cleanTransactionPool()
 
-    this.p2pGateway.server.emit(NEW_BLOCK, createdBlock)
+    this.p2pGateway.server.emit(NEW_BLOCK_EVENT, createdBlock)
     return createdBlock
   }
 }

@@ -7,10 +7,9 @@ import {
   OnDisconnect,
   EventListener
 } from 'nestjs-io-client'
-import { NEW_BLOCK_EVENT } from './constants'
 import axios from 'axios'
 import { Config, ENV } from '@config/index'
-import { Block } from '@epimon/common'
+import { Block, NEW_BLOCK_EVENT } from '@epimon/common'
 
 @Injectable()
 export class SocketService {
