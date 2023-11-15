@@ -153,7 +153,10 @@ export class TransactionService {
         throw new BadRequestException('Transaction is not valid.')
       }
 
-      const isTransactionExists = await this.transactionRepository.findById(transaction.id)
+      const isTransactionExists = await this.transactionRepository.findById(
+        transaction._id.toString()
+      )
+
       if (!isTransactionExists) {
         nonExistentTransactions.push(transaction)
       }

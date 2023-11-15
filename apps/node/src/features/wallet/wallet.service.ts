@@ -1,7 +1,8 @@
 import { Config, ENV } from '@config/index'
 import { Payload } from '@epimon/common'
+import { AXIOS_INSTANCE } from '@modules/axios/axios.provider'
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
-import axios from 'axios'
+import { Axios } from 'axios'
 import { mnemonicToEntropy } from 'bip39'
 import { ec as EC } from 'elliptic'
 
@@ -9,7 +10,10 @@ import { ec as EC } from 'elliptic'
 export class WalletService {
   private readonly ec = new EC('secp256k1')
 
-  constructor(@Inject(ENV) private readonly config: Config) {}
+  constructor(
+    @Inject(ENV) private readonly config: Config,
+    @Inject(AXIOS_INSTANCE) private readonly axios: Axios
+  ) {}
 
   public getAddressesFromSecretPhrase(secretPhrase: string): {
     privateAddress: string
@@ -25,7 +29,7 @@ export class WalletService {
   }
 
   public async getBalanceOfAddress(publicAddress: string): Promise<void | number> {
-    const balanceRequest = await axios.get<Payload<{ balance: number }>>(
+    const balanceRequest = await this.axios.get<Payload<{ balance: number }>>(
       this.config.LOCAL_API_URI + `/wallets/${publicAddress}/balance`
     )
 

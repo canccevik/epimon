@@ -29,7 +29,7 @@ export class AddTransactionDto {
   public timestamp: number
 
   @ApiProperty()
-  @IsNotEmpty()
+  @IsOptional()
   @IsString()
   public signature: string
 }

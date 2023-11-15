@@ -17,7 +17,7 @@ export class TransactionController {
     @RequestHeader('x-private-key') privateKey: string,
     @Body() createTransactionDto: CreateTransactionDto
   ): Promise<TransactionDocument> {
-    await this.transactionService.signTransaction(privateKey, createTransactionDto)
+    this.transactionService.signTransaction(privateKey, createTransactionDto)
     return this.transactionService.createTransaction(createTransactionDto)
   }
 

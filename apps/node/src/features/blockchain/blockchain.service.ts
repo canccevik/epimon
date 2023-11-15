@@ -1,17 +1,19 @@
 import { Config, ENV } from '@config/index'
 import { WalletService } from '@features/wallet/wallet.service'
+import { AXIOS_INSTANCE } from '@modules/axios/axios.provider'
 import { Inject, Injectable, HttpStatus } from '@nestjs/common'
-import axios from 'axios'
+import { Axios } from 'axios'
 
 @Injectable()
 export class BlockchainService {
   constructor(
     @Inject(ENV) private readonly config: Config,
+    @Inject(AXIOS_INSTANCE) private readonly axios: Axios,
     private readonly walletService: WalletService
   ) {}
 
   public async syncChainWithRoot(): Promise<void> {
-    const { status } = await axios.post(this.config.LOCAL_API_URI + '/chain/sync')
+    const { status } = await this.axios.post(this.config.LOCAL_API_URI + '/chain/sync')
 
     if (status !== HttpStatus.CREATED) {
       throw new Error('❌ Something went wrong while syncing the chain.')
@@ -25,7 +27,7 @@ export class BlockchainService {
     )
 
     const mineEndpoint = this.config.LOCAL_API_URI + '/chain/mine'
-    const mineRequest = await axios.post(
+    const mineRequest = await this.axios.post(
       mineEndpoint,
       {},
       { headers: { 'x-private-key': minerWallet.privateAddress } }

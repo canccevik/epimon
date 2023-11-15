@@ -70,7 +70,7 @@ export class BlockchainService {
     const rootNodeUri = this.config.ROOT_NODE_URI
     const chainRequest = await axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
     const transactionPoolRequest = await axios.get<Payload<TransactionDocument[]>>(
-      rootNodeUri + '/transactions'
+      rootNodeUri + '/transactions/pool'
     )
 
     if (chainRequest.status !== 200 || transactionPoolRequest.status !== 200) {
@@ -87,7 +87,7 @@ export class BlockchainService {
   }
 
   public async addMinedBlock(minedBlock: AddMinedBlockDto): Promise<void> {
-    const isBlockExists = await this.blockRepository.findOne({ hash: minedBlock.hash })
+    const isBlockExists = await this.blockRepository.findById(minedBlock._id)
 
     if (isBlockExists) return
 
