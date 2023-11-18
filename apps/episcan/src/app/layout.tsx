@@ -1,9 +1,11 @@
 import type { Metadata } from 'next'
-import { Inter } from 'next/font/google'
+import { Prompt } from 'next/font/google'
 import '../styles/globals.css'
 import { siteConfig } from '@/config/site'
+import Sidebar from '@/components/sidebar'
+import { cn } from '@/lib/utils'
 
-const inter = Inter({ subsets: ['latin'] })
+const prompt = Prompt({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
   title: {
@@ -15,7 +17,10 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
+      <body className={cn(prompt.className, 'bg-gray-50')}>
+        <Sidebar />
+        <div>{children}</div>
+      </body>
     </html>
   )
 }
