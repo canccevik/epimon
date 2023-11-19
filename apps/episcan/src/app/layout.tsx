@@ -2,8 +2,9 @@ import type { Metadata } from 'next'
 import { Prompt } from 'next/font/google'
 import '../styles/globals.css'
 import { siteConfig } from '@/config/site'
-import Sidebar from '@/components/sidebar'
 import { cn } from '@/lib/utils'
+import Sidebar from './sidebar'
+import React from 'react'
 
 const prompt = Prompt({ subsets: ['latin'], weight: '400' })
 
@@ -14,12 +15,16 @@ export const metadata: Metadata = {
   }
 }
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+interface LayoutProps {
+  children: React.ReactNode
+}
+
+export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en">
       <body className={cn(prompt.className, 'bg-gray-50')}>
         <Sidebar />
-        <div>{children}</div>
+        <div className="w-10/12 ml-auto">{children}</div>
       </body>
     </html>
   )
