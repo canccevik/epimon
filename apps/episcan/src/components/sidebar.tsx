@@ -1,3 +1,4 @@
+import { sidebarNavItems } from '@/config/sidebar'
 import { Boxes, FileText, Home, User2 } from 'lucide-react'
 import Link from 'next/link'
 
@@ -9,25 +10,16 @@ export default function Sidebar() {
       </div>
 
       <div className="flex flex-col gap-y-5">
-        <Link className="w-full flex items-center p-5 gap-x-5 rounded-lg" href="/">
-          <Home />
-          <span>Home</span>
-        </Link>
-
-        <Link className="w-full flex items-center p-5 gap-x-5 rounded-lg" href="/">
-          <FileText />
-          <span>Transactions</span>
-        </Link>
-
-        <Link className="w-full flex items-center p-5 gap-x-5 rounded-lg" href="/">
-          <Boxes />
-          <span>Blocks</span>
-        </Link>
-
-        <Link className="w-full flex items-center p-5 gap-x-5 rounded-lg" href="/">
-          <User2 />
-          <span>Validators</span>
-        </Link>
+        {sidebarNavItems.map((item, i) => (
+          <Link
+            className="w-full flex items-center p-5 gap-x-5 rounded-lg"
+            href={item.path}
+            key={i}
+          >
+            {item.icon}
+            <span>{item.title}</span>
+          </Link>
+        ))}
       </div>
 
       <div></div>
