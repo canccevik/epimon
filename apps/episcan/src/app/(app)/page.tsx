@@ -43,9 +43,9 @@ export default function Home() {
 
               <TableBody>
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">33635052</TableCell>
+                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72EBea1s
                     </a>
                   </TableCell>
@@ -53,9 +53,9 @@ export default function Home() {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">33635052</TableCell>
+                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72EBea1s
                     </a>
                   </TableCell>
@@ -63,9 +63,9 @@ export default function Home() {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">33635052</TableCell>
+                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72EBea1s
                     </a>
                   </TableCell>
@@ -73,9 +73,9 @@ export default function Home() {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">33635052</TableCell>
+                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72EBea1s
                     </a>
                   </TableCell>
@@ -83,9 +83,9 @@ export default function Home() {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">33635052</TableCell>
+                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72EBea1s
                     </a>
                   </TableCell>
@@ -115,9 +115,9 @@ export default function Home() {
 
               <TableBody>
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">0x13...9e49738e</TableCell>
+                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72ebea1
                     </a>
                   </TableCell>
@@ -125,9 +125,9 @@ export default function Home() {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">0x13...9e49738e</TableCell>
+                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72ebea1
                     </a>
                   </TableCell>
@@ -135,9 +135,9 @@ export default function Home() {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">0x13...9e49738e</TableCell>
+                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72ebea1
                     </a>
                   </TableCell>
@@ -145,9 +145,9 @@ export default function Home() {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">0x13...9e49738e</TableCell>
+                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72ebea1
                     </a>
                   </TableCell>
@@ -155,9 +155,9 @@ export default function Home() {
                 </TableRow>
 
                 <TableRow>
-                  <TableCell className="font-medium text-[#534FFF]">0x13...9e49738e</TableCell>
+                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
                   <TableCell>
-                    <a href="/" className="text-[#534FFF]">
+                    <a href="/" className="text-main-blue">
                       0xe2...c72ebea1
                     </a>
                   </TableCell>

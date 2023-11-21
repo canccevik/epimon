@@ -2,7 +2,7 @@ import { Input } from '@/components/ui/input'
 
 export default function SearchBanner() {
   return (
-    <div className="w-full p-8 bg-[#182122] text-white rounded-lg flex flex-col gap-y-5 bg-ima">
+    <div className="w-full p-8 bg-main-black text-white rounded-lg flex flex-col gap-y-5 bg-ima">
       <h1 className="text-4xl font-medium">EPM Chain Explorer</h1>
 
       <p className="w-6/12">
@@ -11,7 +11,7 @@ export default function SearchBanner() {
       </p>
 
       <Input
-        className="w-5/12 p-7 rounded-3xl text-black"
+        className="w-5/12 p-7 rounded-3xl text-main-black"
         placeholder="Search Block / Tx / Address"
       />
     </div>
