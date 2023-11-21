@@ -1,4 +1,6 @@
+import { Switch } from '@/components/ui/switch'
 import { sidebarNavItems } from '@/config/sidebar'
+import { Moon } from 'lucide-react'
 import Link from 'next/link'
 
 export default function Sidebar() {
@@ -11,7 +13,7 @@ export default function Sidebar() {
       <div className="w-full flex flex-col gap-y-5 px-8">
         {sidebarNavItems.map((item, i) => (
           <Link
-            className="w-full flex items-center p-6 gap-x-5 rounded-lg"
+            className="w-full flex items-center hover:bg-[#182122] hover:text-white duration-200 hover:duration-200 p-6 gap-x-5 rounded-lg"
             href={item.path}
             key={i}
           >
@@ -23,7 +25,10 @@ export default function Sidebar() {
 
       <div></div>
 
-      <div></div>
+      <div className="flex gap-x-5">
+        <Moon color="#000" />
+        <Switch />
+      </div>
     </div>
   )
 }
