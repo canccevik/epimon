@@ -24,7 +24,7 @@ export default function RootLayout({ children }: LayoutProps) {
     <html lang="en">
       <body className={cn(prompt.className, 'bg-gray-50')}>
         <Sidebar />
-        <div className="w-10/12 ml-auto">{children}</div>
+        <div className="w-10/12 ml-auto p-10">{children}</div>
       </body>
     </html>
   )

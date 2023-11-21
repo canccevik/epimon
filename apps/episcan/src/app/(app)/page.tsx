@@ -14,7 +14,7 @@ import Link from 'next/link'
 
 export default function Home() {
   return (
-    <div className="flex flex-col p-10 gap-y-10">
+    <div className="flex flex-col gap-y-10">
       <SearchBanner />
 
       <div className="w-full flex justify-between mt-8">
@@ -27,7 +27,7 @@ export default function Home() {
         <div className="w-6/12">
           <h1 className="text-lg">The latest 5 Blocks</h1>
 
-          <div className="mt-5 bg-white rounded-lg p-3 border-gray-200 border">
+          <div className="mt-5">
             <Table>
               <TableCaption>
                 <Link href={'/blocks'}>View All Blocks</Link>
@@ -99,7 +99,7 @@ export default function Home() {
         <div className="w-6/12">
           <h1 className="text-lg">The latest 5 Transactions</h1>
 
-          <div className="mt-5 bg-white rounded-lg p-3 border-gray-200 border">
+          <div className="mt-5">
             <Table>
               <TableCaption>
                 <Link href={'/transactions'}>View All Transactions</Link>
