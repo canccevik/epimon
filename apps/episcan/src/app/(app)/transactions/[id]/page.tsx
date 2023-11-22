@@ -27,7 +27,7 @@ export default function TransactionDetail() {
 
             <TableRow>
               <TableCell className="text-gray-500">Block</TableCell>
-              <TableCell className="flex gap-x-2">
+              <TableCell className="flex gap-x-1">
                 <span className="text-main-blue">33720482</span>
                 <span>72 Block Confirmations</span>
               </TableCell>
@@ -35,7 +35,7 @@ export default function TransactionDetail() {
 
             <TableRow>
               <TableCell className="text-gray-500">Timestamp</TableCell>
-              <TableCell className="flex gap-x-2">
+              <TableCell className="flex gap-x-1">
                 <span>14m 51s ago</span>
                 <span className="text-gray-500">(Nov-22-2023 04:54:41 PM +UTC)</span>
               </TableCell>
@@ -59,7 +59,7 @@ export default function TransactionDetail() {
 
             <TableRow>
               <TableCell className="text-gray-500">Value</TableCell>
-              <TableCell className="flex gap-x-2">
+              <TableCell className="flex">
                 <span>120 EPM</span>
               </TableCell>
             </TableRow>
