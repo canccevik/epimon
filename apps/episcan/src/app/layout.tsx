@@ -4,7 +4,6 @@ import '../styles/globals.css'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Sidebar from './sidebar'
-import React from 'react'
 
 const prompt = Prompt({ subsets: ['latin'], weight: '400' })
 
