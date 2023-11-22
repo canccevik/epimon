@@ -5,5 +5,5 @@ export const sidebarNavItems: NavbarItem[] = [
   { path: '/', title: 'Home', icon: <Home /> },
   { path: '/transactions', title: 'Transactions', icon: <FileText /> },
   { path: '/blocks', title: 'Blocks', icon: <Boxes /> },
-  { path: '/validators', title: 'Validators', icon: <User2 /> }
+  { path: '/miners', title: 'Miners', icon: <User2 /> }
 ]

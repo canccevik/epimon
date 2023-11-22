@@ -20,7 +20,7 @@ export default function Home() {
       <div className="w-full flex justify-between mt-8">
         <InfoCard title="$121.80" description="EPM Price" icon={<BadgeDollarSign size={30} />} />
         <InfoCard title="33634430" description="Latest Block" icon={<Cuboid size={30} />} />
-        <InfoCard title="32" description="Validators" icon={<User2 size={30} />} />
+        <InfoCard title="32" description="Miners" icon={<User2 size={30} />} />
       </div>
 
       <div className="flex justify-between gap-x-10">
