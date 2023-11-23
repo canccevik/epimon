@@ -183,10 +183,19 @@ importers:
       '@nestjs/platform-express':
         specifier: ^10.0.0
         version: 10.2.8(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)
+      compression:
+        specifier: ^1.7.4
+        version: 1.7.4
       dotenv:
         specifier: ^16.3.1
         version: 16.3.1
       envalid:
+        specifier: ^7.0.0
+        version: 7.0.0
+      express-mongo-sanitize:
+        specifier: ^2.2.0
+        version: 2.2.0
+      helmet:
         specifier: ^7.0.0
         version: 7.0.0
       nestjs-envalid:
@@ -217,9 +226,15 @@ importers:
       '@nestjs/testing':
         specifier: ^10.0.0
         version: 10.2.8(@nestjs/common@10.2.8)(@nestjs/core@10.2.8)(@nestjs/platform-express@10.2.8)
+      '@types/compression':
+        specifier: ^1.7.5
+        version: 1.7.5
       '@types/express':
         specifier: ^4.17.17
         version: 4.17.20
+      '@types/helmet':
+        specifier: ^4.0.0
+        version: 4.0.0
       '@types/jest':
         specifier: ^29.5.2
         version: 29.5.7
@@ -2939,6 +2954,12 @@ packages:
       '@types/node': 20.8.10
     dev: true
 
+  /@types/compression@1.7.5:
+    resolution: {integrity: sha512-AAQvK5pxMpaT+nDvhHrsBhLSYG5yQdtkaJE1WYieSNY2mVFKAgmU4ks65rkZD5oqnGCFLyQpUr1CqI4DmUMyDg==}
+    dependencies:
+      '@types/express': 4.17.20
+    dev: true
+
   /@types/connect@3.4.37:
     resolution: {integrity: sha512-zBUSRqkfZ59OcwXon4HVxhx5oWCJmc0OtBTK05M+p0dYjgN6iTwIL2T/WbsQZrEsdnwaF9cWQ+azOnpPvIqY3Q==}
     dependencies:
@@ -3003,6 +3024,13 @@ packages:
     resolution: {integrity: sha512-NhRH7YzWq8WiNKVavKPBmtLYZHxNY19Hh+az28O/phfp68CF45pMFud+ZzJ8ewnxnC5smIdF3dqFeiSUQ5I+pw==}
     dependencies:
       '@types/node': 20.8.10
+    dev: true
+
+  /@types/helmet@4.0.0:
+    resolution: {integrity: sha512-ONIn/nSNQA57yRge3oaMQESef/6QhoeX7llWeDli0UZIfz8TQMkfNPTXA8VnnyeA1WUjG2pGqdjEIueYonMdfQ==}
+    deprecated: This is a stub types definition. helmet provides its own type definitions, so you do not need this installed.
+    dependencies:
+      helmet: 7.0.0
     dev: true
 
   /@types/http-errors@2.0.3:
@@ -6182,7 +6210,6 @@ packages:
   /helmet@7.0.0:
     resolution: {integrity: sha512-MsIgYmdBh460ZZ8cJC81q4XJknjG567wzEmv46WOBblDb6TUd3z8/GhgmsM9pn8g2B80tAJ4m5/d3Bi1KrSUBQ==}
     engines: {node: '>=16.0.0'}
-    dev: false
 
   /help-me@4.2.0:
     resolution: {integrity: sha512-TAOnTB8Tz5Dw8penUuzHVrKNKlCIbwwbHnXraNJxPwf8LRtE2HlM84RYuezMFcwOJmoYOCWVDyJ8TQGxn9PgxA==}
