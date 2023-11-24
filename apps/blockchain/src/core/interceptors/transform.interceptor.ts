@@ -1,5 +1,4 @@
-import { Message } from '@common/decorators'
-import { Payload } from '@epimon/common'
+import { Payload, Message } from '@epimon/common'
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Response } from 'express'
