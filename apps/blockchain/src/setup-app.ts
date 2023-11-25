@@ -2,12 +2,10 @@ import helmet from 'helmet'
 import compression from 'compression'
 import mongoSanitize from 'express-mongo-sanitize'
 import { Config, ENV } from './config'
-import { INestApplication } from '@nestjs/common'
-import { ValidationPipe } from '@core/pipes'
-import { HttpExceptionFilter } from '@core/filters'
-import { LoggingInterceptor, TransformInterceptor } from '@core/interceptors'
+import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Logger } from 'nestjs-pino'
+import { HttpExceptionFilter, LoggingInterceptor, TransformInterceptor } from '@epimon/common'
 
 export function setupApp(app: INestApplication): void {
   const config = app.get<Config>(ENV)

@@ -1,8 +1,9 @@
-import { Payload, Message } from '@epimon/common'
 import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Response } from 'express'
 import { Observable, map } from 'rxjs'
+import { Message } from '../decorators'
+import { Payload } from '../interfaces'
 
 @Injectable()
 export class TransformInterceptor<T> implements NestInterceptor<T, Payload<T>> {
