@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common'
 import { EnvalidModule } from 'nestjs-envalid'
 import { validators } from '@config/index'
+import { LoggerModule } from '@epimon/common'
 
 @Module({
   imports: [
@@ -8,7 +9,8 @@ import { validators } from '@config/index'
       validators,
       isGlobal: true,
       useDotenv: true
-    })
+    }),
+    LoggerModule
   ]
 })
 export class AppModule {}

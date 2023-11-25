@@ -27,6 +27,7 @@
     "express-mongo-sanitize": "^2.2.0",
     "helmet": "^7.0.0",
     "nestjs-envalid": "1.3.0",
+    "nestjs-pino": "^3.5.0",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.1"
   },
