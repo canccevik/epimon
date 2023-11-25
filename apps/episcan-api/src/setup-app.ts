@@ -3,7 +3,7 @@ import { Config, ENV } from './config'
 import helmet from 'helmet'
 import compression from 'compression'
 import mongoSanitize from 'express-mongo-sanitize'
-import { ValidationPipe } from '@epimon/common'
+import { HttpExceptionFilter, ValidationPipe } from '@epimon/common'
 
 export function setupApp(app: INestApplication): void {
   const config = app.get<Config>(ENV)
@@ -16,4 +16,5 @@ export function setupApp(app: INestApplication): void {
   app.use(mongoSanitize())
 
   app.useGlobalPipes(new ValidationPipe())
+  app.useGlobalFilters(new HttpExceptionFilter())
 }
