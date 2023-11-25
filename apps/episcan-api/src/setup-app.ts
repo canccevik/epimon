@@ -3,7 +3,8 @@ import { Config, ENV } from './config'
 import helmet from 'helmet'
 import compression from 'compression'
 import mongoSanitize from 'express-mongo-sanitize'
-import { HttpExceptionFilter, ValidationPipe } from '@epimon/common'
+import { HttpExceptionFilter, TransformInterceptor, ValidationPipe } from '@epimon/common'
+import { Reflector } from '@nestjs/core'
 
 export function setupApp(app: INestApplication): void {
   const config = app.get<Config>(ENV)
@@ -17,4 +18,5 @@ export function setupApp(app: INestApplication): void {
 
   app.useGlobalPipes(new ValidationPipe())
   app.useGlobalFilters(new HttpExceptionFilter())
+  app.useGlobalInterceptors(new TransformInterceptor(new Reflector()))
 }
