@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common'
 import { EnvalidModule } from 'nestjs-envalid'
 import { DatabaseModule } from './database/database.module'
 import { FeaturesModule } from '@features/features.module'
-import { LoggerModule } from './logger/logger.module'
+import { LoggerModule } from '@epimon/common'
 
 @Module({
   imports: [
