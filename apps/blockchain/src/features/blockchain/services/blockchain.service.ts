@@ -8,6 +8,8 @@ import { Payload } from '@epimon/common'
 import { TransactionDocument } from '@features/transaction/schemas'
 import { BlockRepository } from '../repositories'
 import { AddMinedBlockDto } from '../dto'
+import { PaginationDto } from '@common/dto'
+import { PaginationResult } from '@common/interfaces'
 
 @Injectable()
 export class BlockchainService {
@@ -17,6 +19,10 @@ export class BlockchainService {
     private readonly blockRepository: BlockRepository,
     private readonly transactionService: TransactionService
   ) {}
+
+  public async getChain(query: PaginationDto): Promise<PaginationResult> {
+    return this.blockRepository.paginate(query)
+  }
 
   public async isChainValid(): Promise<boolean> {
     const originalGenesisBlock = this.blockService.createGenesisBlock()
@@ -54,10 +60,12 @@ export class BlockchainService {
 
   public async fetchOrCreateGenesisBlock(): Promise<Block> {
     const rootNodeUri = this.config.ROOT_NODE_URI
-    const { data } = await axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
+    const { data } = await axios.get<Payload<PaginationResult<BlockDocument>>>(
+      rootNodeUri + '/chain'
+    )
 
-    if (data.statusCode === 200 && data.data.length > 0) {
-      return data.data.find(
+    if (data.statusCode === 200 && data.data.records.length > 0) {
+      return data.data.records.find(
         (block) => block.nonce === 0 && block.previousBlockHash === null && block.timestamp === 0
       )
     }
@@ -68,7 +76,9 @@ export class BlockchainService {
     await this.blockService.addGenesisBlockToChain()
 
     const rootNodeUri = this.config.ROOT_NODE_URI
-    const chainRequest = await axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
+    const chainRequest = await axios.get<Payload<PaginationResult<BlockDocument>>>(
+      rootNodeUri + '/chain'
+    )
     const transactionPoolRequest = await axios.get<Payload<TransactionDocument[]>>(
       rootNodeUri + '/transactions/pool'
     )
@@ -81,7 +91,7 @@ export class BlockchainService {
     await this.transactionService.cleanTransactionPool()
     await this.transactionService.addTransactionsToPool(transactionPool)
 
-    const chain = chainRequest.data.data
+    const chain = chainRequest.data.data.records
     await this.blockRepository.deleteMany({})
     await this.blockRepository.insertMany(chain)
   }
