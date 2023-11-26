@@ -7,8 +7,7 @@ import {
   InsertManyResult,
   UpdateResult
 } from './types/queries.type'
-import { PaginationDto } from '@common/dto'
-import { PaginationResult } from '@epimon/common'
+import { PaginationResult, PaginationDto } from '@epimon/common'
 
 export class BaseRepository<T> {
   constructor(private readonly model: Model<T>) {}

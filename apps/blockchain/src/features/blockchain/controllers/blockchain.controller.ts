@@ -4,8 +4,7 @@ import { Block, BlockDocument } from '../schemas'
 import { RequestHeader } from '@common/decorators'
 import { BlockService, BlockchainService } from '../services'
 import { AddMinedBlockDto } from '../dto'
-import { Message, Paginate, PaginationResult } from '@epimon/common'
-import { PaginationDto } from '@common/dto'
+import { Message, Paginate, PaginationResult, PaginationDto } from '@epimon/common'
 
 @ApiTags('chain')
 @Controller('chain')

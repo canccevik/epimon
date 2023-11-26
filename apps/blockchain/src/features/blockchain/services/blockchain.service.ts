@@ -4,11 +4,10 @@ import { TransactionService } from '@features/transaction/services'
 import { Block, BlockDocument } from '../schemas'
 import axios from 'axios'
 import { Config, ENV } from '@config/index'
-import { Payload, PaginationResult } from '@epimon/common'
+import { Payload, PaginationResult, PaginationDto } from '@epimon/common'
 import { TransactionDocument } from '@features/transaction/schemas'
 import { BlockRepository } from '../repositories'
 import { AddMinedBlockDto } from '../dto'
-import { PaginationDto } from '@common/dto'
 
 @Injectable()
 export class BlockchainService {
