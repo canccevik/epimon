@@ -1,26 +1,24 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 import { ApiHeader, ApiTags } from '@nestjs/swagger'
-import { BlockDocument } from '../schemas'
-import { BlockRepository } from '../repositories'
+import { Block, BlockDocument } from '../schemas'
 import { RequestHeader } from '@common/decorators'
 import { BlockService, BlockchainService } from '../services'
 import { AddMinedBlockDto } from '../dto'
-import { Message } from '@epimon/common'
+import { Message, Paginate, PaginationResult } from '@epimon/common'
 import { PaginationDto } from '@common/dto'
-import { PaginationResult } from '@common/interfaces'
 
 @ApiTags('chain')
 @Controller('chain')
 export class BlockchainController {
   constructor(
-    private readonly blockRepository: BlockRepository,
     private readonly blockService: BlockService,
     private readonly blockchainService: BlockchainService
   ) {}
 
   @Get()
+  @Paginate()
   @Message('Chain fetched successfully.')
-  public async getChain(@Query() query: PaginationDto): Promise<PaginationResult> {
+  public async getChain(@Query() query: PaginationDto): Promise<PaginationResult<Block>> {
     return this.blockchainService.getChain(query)
   }
 

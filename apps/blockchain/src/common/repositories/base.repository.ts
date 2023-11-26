@@ -8,7 +8,7 @@ import {
   UpdateResult
 } from './types/queries.type'
 import { PaginationDto } from '@common/dto'
-import { PaginationResult } from '@common/interfaces'
+import { PaginationResult } from '@epimon/common'
 
 export class BaseRepository<T> {
   constructor(private readonly model: Model<T>) {}
@@ -87,14 +87,20 @@ export class BaseRepository<T> {
       query = query.limit(limit)
     }
 
-    const records = await query.exec()
-    const totalRecordCount = await this.model.find().countDocuments()
-
-    const lastPage = Math.ceil(totalRecordCount / limit)
-    const previousPage = page > 0 ? page - 1 : null
-
+    const records = (await query.exec()) as T
+    const totalRecords = await this.model.find().countDocuments()
+    const lastPage = Math.ceil(totalRecords / limit)
+    const previousPage = page > 1 ? page - 1 : null
     const nextPage = page < lastPage ? page + 1 : null
 
-    return { records, lastPage, previousPage, nextPage }
+    return {
+      records,
+      lastPage,
+      previousPage,
+      nextPage,
+      totalRecords,
+      currentPage: page,
+      pageSize: limit
+    }
   }
 }
