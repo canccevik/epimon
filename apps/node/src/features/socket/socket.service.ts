@@ -2,13 +2,7 @@ import { BlockchainService } from '@features/blockchain/blockchain.service'
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { Axios } from 'axios'
 import { Config, ENV } from '@config/index'
-import {
-  InjectIoClientProvider,
-  IoClient,
-  OnConnect,
-  OnDisconnect,
-  EventListener
-} from 'nestjs-io-client'
+import { OnConnect, OnDisconnect, EventListener } from 'nestjs-io-client'
 import {
   AXIOS_INSTANCE,
   Block,
@@ -21,7 +15,6 @@ import {
 export class SocketService {
   constructor(
     @Inject(ENV) private readonly config: Config,
-    @InjectIoClientProvider() private readonly io: IoClient,
     @Inject(AXIOS_INSTANCE) private readonly axios: Axios,
     private readonly blockchainService: BlockchainService
   ) {}
