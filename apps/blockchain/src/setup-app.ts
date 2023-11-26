@@ -2,7 +2,7 @@ import helmet from 'helmet'
 import compression from 'compression'
 import mongoSanitize from 'express-mongo-sanitize'
 import { Config, ENV } from './config'
-import { INestApplication } from '@nestjs/common'
+import { INestApplication, ValidationPipe as BaseValidationPipe } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { Logger } from 'nestjs-pino'
 import {
@@ -22,6 +22,7 @@ export function setupApp(app: INestApplication): void {
   app.use(compression())
   app.use(mongoSanitize())
 
+  app.useGlobalPipes(new BaseValidationPipe({ transform: true }))
   app.useGlobalPipes(new ValidationPipe())
   app.useGlobalFilters(new HttpExceptionFilter())
   app.useGlobalInterceptors(new TransformInterceptor(new Reflector()))

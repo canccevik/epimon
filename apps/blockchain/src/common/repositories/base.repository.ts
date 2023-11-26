@@ -7,6 +7,8 @@ import {
   InsertManyResult,
   UpdateResult
 } from './types/queries.type'
+import { PaginationDto } from '@common/dto'
+import { PaginationResult } from '@common/interfaces'
 
 export class BaseRepository<T> {
   constructor(private readonly model: Model<T>) {}
@@ -73,5 +75,26 @@ export class BaseRepository<T> {
 
   public deleteOne(filter: FilterQuery<T>): DeleteResult<T> {
     return this.model.deleteOne(filter)
+  }
+
+  public async paginate({ page, limit }: PaginationDto): Promise<PaginationResult<T>> {
+    let query = this.model.find()
+
+    if (page && limit) {
+      query = query.skip((page - 1) * limit)
+    }
+    if (limit) {
+      query = query.limit(limit)
+    }
+
+    const records = await query.exec()
+    const totalRecordCount = await this.model.find().countDocuments()
+
+    const lastPage = Math.ceil(totalRecordCount / limit)
+    const previousPage = page > 0 ? page - 1 : null
+
+    const nextPage = page < lastPage ? page + 1 : null
+
+    return { records, lastPage, previousPage, nextPage }
   }
 }
