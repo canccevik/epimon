@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common'
 import { EnvalidModule } from 'nestjs-envalid'
 import { validators } from '@config/index'
-import { LoggerModule } from '@epimon/common'
+import { AxiosModule, LoggerModule } from '@epimon/common'
 import { FeaturesModule } from '@features/features.module'
 
 @Module({
@@ -12,7 +12,8 @@ import { FeaturesModule } from '@features/features.module'
       useDotenv: true
     }),
     FeaturesModule,
-    LoggerModule
+    LoggerModule,
+    AxiosModule
   ]
 })
 export class AppModule {}

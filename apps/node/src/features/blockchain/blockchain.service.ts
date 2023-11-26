@@ -1,6 +1,6 @@
 import { Config, ENV } from '@config/index'
+import { AXIOS_INSTANCE } from '@epimon/common'
 import { WalletService } from '@features/wallet/wallet.service'
-import { AXIOS_INSTANCE } from '@modules/axios/axios.provider'
 import { Inject, Injectable, HttpStatus } from '@nestjs/common'
 import { Axios } from 'axios'
 

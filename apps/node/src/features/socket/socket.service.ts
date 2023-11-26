@@ -1,3 +1,7 @@
+import { BlockchainService } from '@features/blockchain/blockchain.service'
+import { HttpStatus, Inject, Injectable } from '@nestjs/common'
+import { Axios } from 'axios'
+import { Config, ENV } from '@config/index'
 import {
   InjectIoClientProvider,
   IoClient,
@@ -5,12 +9,13 @@ import {
   OnDisconnect,
   EventListener
 } from 'nestjs-io-client'
-import { BlockchainService } from '@features/blockchain/blockchain.service'
-import { HttpStatus, Inject, Injectable } from '@nestjs/common'
-import { Axios } from 'axios'
-import { Config, ENV } from '@config/index'
-import { Block, NEW_BLOCK_EVENT, NEW_TRANSACTION_EVENT, Transaction } from '@epimon/common'
-import { AXIOS_INSTANCE } from '@modules/axios/axios.provider'
+import {
+  AXIOS_INSTANCE,
+  Block,
+  NEW_BLOCK_EVENT,
+  NEW_TRANSACTION_EVENT,
+  Transaction
+} from '@epimon/common'
 
 @Injectable()
 export class SocketService {

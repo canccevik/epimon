@@ -1,6 +1,5 @@
 import { Config, ENV } from '@config/index'
-import { Payload } from '@epimon/common'
-import { AXIOS_INSTANCE } from '@modules/axios/axios.provider'
+import { AXIOS_INSTANCE, Payload } from '@epimon/common'
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { Axios } from 'axios'
 import { mnemonicToEntropy } from 'bip39'
