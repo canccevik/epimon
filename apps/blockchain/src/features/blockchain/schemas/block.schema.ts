@@ -31,6 +31,12 @@ export class Block implements IBlock {
   public timestamp: number
 
   @Prop({
+    type: Number,
+    required: true
+  })
+  public reward: number
+
+  @Prop({
     type: SchemaTypes.Array,
     required: true
   })

@@ -32,4 +32,9 @@ export class AddMinedBlockDto {
   @IsNotEmpty()
   @IsString()
   public hash: string
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  public reward: number
 }
