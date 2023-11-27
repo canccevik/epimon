@@ -6,6 +6,7 @@ export interface Block {
   nonce: number
   reward: number
   miner: string
+  difficulty: number
   hash: string
   previousBlockHash: string
   transactions: Transaction[]

@@ -40,6 +40,7 @@ export class BlockService {
           block.nonce +
           block.reward +
           block.miner +
+          block.difficulty +
           JSON.stringify(block.transactions).toString()
       )
       .digest('hex')
@@ -58,6 +59,7 @@ export class BlockService {
     genesisBlock.timestamp = 0
     genesisBlock.reward = 0
     genesisBlock.miner = null
+    genesisBlock.difficulty = 0
     genesisBlock.transactions = [genesisTransaction]
     genesisBlock.hash = this.calculateHash(genesisBlock)
 
@@ -69,6 +71,7 @@ export class BlockService {
       previousBlockHash: null,
       miner: null,
       timestamp: 0,
+      difficulty: 0,
       nonce: 0,
       reward: 0
     })
@@ -103,6 +106,7 @@ export class BlockService {
     block.nonce = 0
     block.reward = this.config.MINING_REWARD
     block.miner = minerAddress
+    block.difficulty = this.config.DIFFICULTY
     block.timestamp = Date.now()
     block.previousBlockHash = lastBlock.hash
     block.transactions = transactionPool

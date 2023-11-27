@@ -42,6 +42,12 @@ export class Block implements IBlock {
   public miner: string
 
   @Prop({
+    type: Number,
+    required: true
+  })
+  public difficulty: number
+
+  @Prop({
     type: SchemaTypes.Array,
     required: true
   })

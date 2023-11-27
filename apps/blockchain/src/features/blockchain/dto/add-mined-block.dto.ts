@@ -42,4 +42,9 @@ export class AddMinedBlockDto {
   @IsNotEmpty()
   @IsString()
   public miner: string
+
+  @ApiProperty()
+  @IsNotEmpty()
+  @IsNumber()
+  public difficulty: number
 }
