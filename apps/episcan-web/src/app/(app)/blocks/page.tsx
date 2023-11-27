@@ -12,14 +12,14 @@ import {
 } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
-import { ArrowRight, LoaderIcon } from 'lucide-react'
+import { LoaderIcon } from 'lucide-react'
 import Link from 'next/link'
 import useSWR from 'swr'
+import PaginationSection from '@/components/pagination-section'
 import { useState } from 'react'
-import { Button } from '@/components/ui/button'
 
 export default function Blocks() {
-  const [page] = useState(1)
+  const [page, setPage] = useState(1)
   const blockCount = 10
 
   const { data, isLoading } = useSWR<Payload<Block[]>>(
@@ -40,33 +40,7 @@ export default function Blocks() {
           data && (
             <Table>
               <TableCaption>
-                <div className="flex gap-x-2 ml-5">
-                  <Button className="bg-main-black" size={'sm'}>
-                    1
-                  </Button>
-
-                  <Button className="bg-main-black" size={'sm'}>
-                    2
-                  </Button>
-
-                  <Button className="bg-main-black" size={'sm'}>
-                    3
-                  </Button>
-
-                  <Button className="bg-main-black" size={'sm'}>
-                    4
-                  </Button>
-
-                  <span className="text-2xl font-medium">...</span>
-
-                  <Button className="bg-main-black" size={'sm'}>
-                    500
-                  </Button>
-
-                  <Button className="bg-main-black" size={'sm'}>
-                    <span>Next</span> <ArrowRight size={16} />
-                  </Button>
-                </div>
+                {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
               </TableCaption>
 
               <TableHeader>
