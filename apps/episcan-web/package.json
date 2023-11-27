@@ -24,6 +24,7 @@
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",
     "lucide-react": "^0.292.0",
+    "moment": "^2.29.4",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",
@@ -35,6 +36,7 @@
   },
   "devDependencies": {
     "@epimon/tsconfig": "workspace:^",
+    "@types/moment": "^2.13.0",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
