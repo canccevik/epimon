@@ -83,7 +83,7 @@ export class BaseRepository<T> {
       query = query.skip((page - 1) * limit)
     }
     if (limit) {
-      query = query.limit(limit)
+      query = query.sort({ timestamp: -1 }).limit(limit)
     }
 
     const records = (await query.exec()) as T

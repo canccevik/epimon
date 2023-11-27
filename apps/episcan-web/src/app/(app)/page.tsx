@@ -11,6 +11,7 @@ import {
   TableRow
 } from '@/components/ui/table'
 import Link from 'next/link'
+import LastFiveBlocks from '@/components/last-five-blocks'
 
 export default function Home() {
   return (
@@ -28,71 +29,7 @@ export default function Home() {
           <h1 className="text-lg">The latest 5 Blocks</h1>
 
           <div className="mt-5">
-            <Table>
-              <TableCaption>
-                <Link href={'/blocks'}>View All Blocks</Link>
-              </TableCaption>
-
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Block</TableHead>
-                  <TableHead>Validated</TableHead>
-                  <TableHead>Block Reward</TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72EBea1s
-                    </a>
-                  </TableCell>
-                  <TableCell>0.06467 EPM</TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72EBea1s
-                    </a>
-                  </TableCell>
-                  <TableCell>0.06467 EPM</TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72EBea1s
-                    </a>
-                  </TableCell>
-                  <TableCell>0.06467 EPM</TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72EBea1s
-                    </a>
-                  </TableCell>
-                  <TableCell>0.06467 EPM</TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">33635052</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72EBea1s
-                    </a>
-                  </TableCell>
-                  <TableCell>0.06467 EPM</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <LastFiveBlocks />
           </div>
         </div>
 

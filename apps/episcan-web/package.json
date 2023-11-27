@@ -8,6 +8,7 @@
     "lint": "next lint --fix"
   },
   "dependencies": {
+    "@epimon/common": "workspace:^",
     "@hookform/resolvers": "^3.3.2",
     "@radix-ui/react-alert-dialog": "^1.0.5",
     "@radix-ui/react-avatar": "^1.0.4",
@@ -27,6 +28,7 @@
     "react": "^18",
     "react-dom": "^18",
     "react-hook-form": "^7.47.0",
+    "swr": "^2.2.4",
     "tailwind-merge": "^2.0.0",
     "tailwindcss-animate": "^1.0.7",
     "zod": "^3.22.4"
