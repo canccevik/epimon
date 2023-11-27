@@ -1,4 +1,4 @@
-import { Controller, Get, Query } from '@nestjs/common'
+import { Controller, Get, Param, Query } from '@nestjs/common'
 import { BlockchainService } from '../services'
 import { Block, Message, Paginate, PaginationDto, PaginationResult } from '@epimon/common'
 
@@ -11,5 +11,11 @@ export class BlockchainController {
   @Message('Blocks fetched successfully.')
   public async getBlocks(@Query() query: PaginationDto): Promise<PaginationResult<Block[]>> {
     return this.blockchainService.getBlocks(query)
+  }
+
+  @Get(':id')
+  @Message('Block fetched successfully.')
+  public async getBlockById(@Param('id') id: string): Promise<Block> {
+    return this.blockchainService.getBlockById(id)
   }
 }

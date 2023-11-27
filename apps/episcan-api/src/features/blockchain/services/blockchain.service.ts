@@ -29,4 +29,9 @@ export class BlockchainService {
       ...chainRequest.data.meta
     }
   }
+
+  public async getBlockById(id: string): Promise<Block> {
+    const blocks = await this.getBlocks({})
+    return blocks.records.find((block) => block._id === id)
+  }
 }
