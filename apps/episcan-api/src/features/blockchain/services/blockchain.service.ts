@@ -32,6 +32,11 @@ export class BlockchainService {
 
   public async getBlockById(id: string): Promise<Block> {
     const blocks = await this.getBlocks({})
-    return blocks.records.find((block) => block._id === id)
+    const block = blocks.records.find((block) => block._id === id)
+
+    if (!block) {
+      throw new BadRequestException('Block not found.')
+    }
+    return block
   }
 }
