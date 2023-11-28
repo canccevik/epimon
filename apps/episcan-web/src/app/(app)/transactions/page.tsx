@@ -1,4 +1,13 @@
-import { Button } from '@/components/ui/button'
+'use client'
+
+import PaginationSection from '@/components/pagination-section'
+import { Card } from '@/components/ui/card'
+import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
+import { Payload, Transaction } from '@epimon/common'
+import { LoaderIcon } from 'lucide-react'
+import Link from 'next/link'
+import { useState } from 'react'
+import useSWR from 'swr'
 import {
   Table,
   TableBody,
@@ -8,259 +17,80 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import { ArrowRight } from 'lucide-react'
 
 export default function Transactions() {
+  const [page, setPage] = useState(1)
+  const transactionCount = 10
+
+  const { data } = useSWR<Payload<Transaction[]>>(
+    `/transactions?page=${page}&limit=${transactionCount}`,
+    fetcher
+  )
+
   return (
     <div className="flex flex-col">
       <h1 className="text-4xl font-semibold tracking-wide">Transactions</h1>
 
       <div className="mt-10">
-        <Table>
-          <TableCaption>
-            <div className="flex gap-x-2 ml-5">
-              <Button className="bg-main-black" size={'sm'}>
-                1
-              </Button>
+        {!data ? (
+          <Card className="flex justify-center p-10">
+            <LoaderIcon className="animate-spin" />
+          </Card>
+        ) : (
+          <Table>
+            <TableCaption>
+              {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
+            </TableCaption>
 
-              <Button className="bg-main-black" size={'sm'}>
-                2
-              </Button>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Transaction</TableHead>
+                <TableHead>Signature</TableHead>
+                <TableHead>Age</TableHead>
+                <TableHead>From</TableHead>
+                <TableHead>To</TableHead>
+                <TableHead>Status</TableHead>
+                <TableHead>Value</TableHead>
+              </TableRow>
+            </TableHeader>
 
-              <Button className="bg-main-black" size={'sm'}>
-                3
-              </Button>
+            <TableBody>
+              {data.data?.map((transaction, i) => {
+                return (
+                  <TableRow key={i}>
+                    <TableCell className="text-main-blue">
+                      <Link href={`/transactions/${transaction._id}`}>{transaction._id}</Link>
+                    </TableCell>
 
-              <Button className="bg-main-black" size={'sm'}>
-                4
-              </Button>
+                    <TableCell>
+                      {transaction.signature ? shortenString(transaction.signature) : 'Null'}
+                    </TableCell>
 
-              <span className="text-2xl font-medium">...</span>
+                    <TableCell>{getRelativeTimeFromTimestamp(transaction.timestamp)}</TableCell>
 
-              <Button className="bg-main-black" size={'sm'}>
-                500
-              </Button>
+                    <TableCell className="text-main-blue">
+                      <Link href={`/address/${transaction.senderAddress}`}>
+                        {transaction.senderAddress
+                          ? shortenString(transaction.senderAddress)
+                          : 'System'}
+                      </Link>
+                    </TableCell>
 
-              <Button className="bg-main-black" size={'sm'}>
-                <span>Next</span> <ArrowRight size={16} />
-              </Button>
-            </div>
-          </TableCaption>
+                    <TableCell className="text-main-blue">
+                      <Link href={`/address/${transaction.receiverAddress}`}>
+                        {shortenString(transaction.receiverAddress)}
+                      </Link>
+                    </TableCell>
 
-          <TableHeader>
-            <TableRow>
-              <TableHead>Txn Hash</TableHead>
-              <TableHead>Block</TableHead>
-              <TableHead>Age</TableHead>
-              <TableHead>From</TableHead>
-              <TableHead>To</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Value</TableHead>
-            </TableRow>
-          </TableHeader>
+                    <TableCell className="text-green-500">Confirmed</TableCell>
 
-          <TableBody>
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-green-500">Confirmed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell className="text-main-blue">0x87...f57ca947</TableCell>
-              <TableCell className="text-main-blue">33695550</TableCell>
-              <TableCell>9m ago</TableCell>
-              <TableCell className="text-main-blue">0x24...a6515daa</TableCell>
-              <TableCell className="text-main-blue">0x00...00001000</TableCell>
-              <TableCell className="text-red-500">Failed</TableCell>
-              <TableCell>362 EPM</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+                    <TableCell>{transaction.amount} EPM</TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        )}
       </div>
     </div>
   )

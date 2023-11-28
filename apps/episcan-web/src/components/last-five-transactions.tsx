@@ -36,7 +36,7 @@ export default function LastFiveTransactions() {
 
         <TableHeader>
           <TableRow>
-            <TableHead>Txn Signature</TableHead>
+            <TableHead>Transaction</TableHead>
             <TableHead>From</TableHead>
             <TableHead>Value</TableHead>
           </TableRow>
@@ -47,11 +47,11 @@ export default function LastFiveTransactions() {
             return (
               <TableRow key={i}>
                 <TableCell className="font-medium text-main-blue">
-                  {transaction.signature ? shortenString(transaction.signature) : 'Null'}
+                  <Link href={`/transactions/${transaction._id}`}>{transaction._id}</Link>
                 </TableCell>
 
                 <TableCell>
-                  <Link href="/" className="text-main-blue">
+                  <Link href={`/address/${transaction.senderAddress}`} className="text-main-blue">
                     {transaction.senderAddress
                       ? shortenString(transaction.senderAddress)
                       : 'System'}

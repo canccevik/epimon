@@ -21,7 +21,7 @@ export default function LastFiveBlocks() {
 
   if (!data) {
     return (
-      <Card className="w-full flex justify-center p-5 shadow-none">
+      <Card className="w-full flex justify-center p-10 shadow-none">
         <LoaderIcon className="animate-spin" />
       </Card>
     )

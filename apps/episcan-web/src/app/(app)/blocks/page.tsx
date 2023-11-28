@@ -22,64 +22,57 @@ export default function Blocks() {
   const [page, setPage] = useState(1)
   const blockCount = 10
 
-  const { data, isLoading } = useSWR<Payload<Block[]>>(
-    `/chain?page=${page}&limit=${blockCount}`,
-    fetcher
-  )
+  const { data } = useSWR<Payload<Block[]>>(`/chain?page=${page}&limit=${blockCount}`, fetcher)
 
   return (
     <div className="flex flex-col">
       <h1 className="text-4xl font-semibold tracking-wide">Blocks</h1>
 
       <div className="mt-10">
-        {isLoading ? (
+        {!data ? (
           <Card className="flex justify-center p-10">
             <LoaderIcon className="animate-spin" />
           </Card>
         ) : (
-          data && (
-            <Table>
-              <TableCaption>
-                {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
-              </TableCaption>
+          <Table>
+            <TableCaption>
+              {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
+            </TableCaption>
 
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Block</TableHead>
-                  <TableHead>Age</TableHead>
-                  <TableHead>Mined by</TableHead>
-                  <TableHead>Reward</TableHead>
-                </TableRow>
-              </TableHeader>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Block</TableHead>
+                <TableHead>Age</TableHead>
+                <TableHead>Mined by</TableHead>
+                <TableHead>Reward</TableHead>
+              </TableRow>
+            </TableHeader>
 
-              <TableBody>
-                {data &&
-                  data.data?.map((block, i) => {
-                    return (
-                      <TableRow key={i}>
-                        <TableCell className="text-main-blue">
-                          <Link href={`/blocks/${block._id}`}>{block._id}</Link>
-                        </TableCell>
+            <TableBody>
+              {data &&
+                data.data?.map((block, i) => {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell className="text-main-blue">
+                        <Link href={`/blocks/${block._id}`}>{block._id}</Link>
+                      </TableCell>
 
-                        <TableCell>{getRelativeTimeFromTimestamp(block.timestamp)}</TableCell>
+                      <TableCell>{getRelativeTimeFromTimestamp(block.timestamp)}</TableCell>
 
-                        <TableCell className="text-main-blue">
-                          {block.miner ? (
-                            <Link href={`/address/${block.miner}`}>
-                              {shortenString(block.miner)}
-                            </Link>
-                          ) : (
-                            'System'
-                          )}
-                        </TableCell>
+                      <TableCell className="text-main-blue">
+                        {block.miner ? (
+                          <Link href={`/address/${block.miner}`}>{shortenString(block.miner)}</Link>
+                        ) : (
+                          'System'
+                        )}
+                      </TableCell>
 
-                        <TableCell>{block.reward} EPM</TableCell>
-                      </TableRow>
-                    )
-                  })}
-              </TableBody>
-            </Table>
-          )
+                      <TableCell>{block.reward} EPM</TableCell>
+                    </TableRow>
+                  )
+                })}
+            </TableBody>
+          </Table>
         )}
       </div>
     </div>
