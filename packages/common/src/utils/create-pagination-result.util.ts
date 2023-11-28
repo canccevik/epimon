@@ -1,11 +1,11 @@
 import { PaginationResult } from '../interfaces'
 
 export function createPaginationResult<T>(
-  records: T,
+  records: T[],
   page: number,
   limit: number,
   totalRecords: number
-): PaginationResult<T> {
+): PaginationResult<T[]> {
   const lastPage = Math.ceil(totalRecords / limit)
 
   return {

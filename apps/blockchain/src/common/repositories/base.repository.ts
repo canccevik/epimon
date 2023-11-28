@@ -77,7 +77,7 @@ export class BaseRepository<T> {
     return this.model.deleteOne(filter)
   }
 
-  public async paginate({ page, limit }: PaginationDto): Promise<PaginationResult<T>> {
+  public async paginate({ page, limit }: PaginationDto): Promise<PaginationResult<T[]>> {
     let query = this.model.find()
 
     if (page && limit) {
@@ -87,9 +87,9 @@ export class BaseRepository<T> {
       query = query.sort({ timestamp: -1 }).limit(limit)
     }
 
-    const records = (await query.exec()) as T
+    const records = (await query.exec()) as T[]
     const totalRecords = await this.model.find().countDocuments()
 
-    return createPaginationResult(records, page, limit, totalRecords)
+    return createPaginationResult<T>(records, page, limit, totalRecords)
   }
 }

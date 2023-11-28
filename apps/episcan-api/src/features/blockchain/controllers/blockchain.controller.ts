@@ -1,7 +1,9 @@
 import { Controller, Get, Param, Query } from '@nestjs/common'
 import { BlockchainService } from '../services'
+import { ApiTags } from '@nestjs/swagger'
 import { Block, Message, Paginate, PaginationDto, PaginationResult } from '@epimon/common'
 
+@ApiTags('chain')
 @Controller('chain')
 export class BlockchainController {
   constructor(private readonly blockchainService: BlockchainService) {}
