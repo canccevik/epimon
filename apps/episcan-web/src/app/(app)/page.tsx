@@ -1,17 +1,8 @@
 import { BadgeDollarSign, Cuboid, User2 } from 'lucide-react'
 import SearchBanner from './search-banner'
 import InfoCard from '@/components/info-card'
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table'
-import Link from 'next/link'
 import LastFiveBlocks from '@/components/last-five-blocks'
+import LastFiveTransactions from '@/components/last-five-transactions'
 
 export default function Home() {
   return (
@@ -37,71 +28,7 @@ export default function Home() {
           <h1 className="text-lg">The latest 5 Transactions</h1>
 
           <div className="mt-5">
-            <Table>
-              <TableCaption>
-                <Link href={'/transactions'}>View All Transactions</Link>
-              </TableCaption>
-
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Txn Hash</TableHead>
-                  <TableHead>From</TableHead>
-                  <TableHead>Value</TableHead>
-                </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72ebea1
-                    </a>
-                  </TableCell>
-                  <TableCell>0.05366 EPM</TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72ebea1
-                    </a>
-                  </TableCell>
-                  <TableCell>0.05366 EPM</TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72ebea1
-                    </a>
-                  </TableCell>
-                  <TableCell>0.05366 EPM</TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72ebea1
-                    </a>
-                  </TableCell>
-                  <TableCell>0.05366 EPM</TableCell>
-                </TableRow>
-
-                <TableRow>
-                  <TableCell className="font-medium text-main-blue">0x13...9e49738e</TableCell>
-                  <TableCell>
-                    <a href="/" className="text-main-blue">
-                      0xe2...c72ebea1
-                    </a>
-                  </TableCell>
-                  <TableCell>0.05366 EPM</TableCell>
-                </TableRow>
-              </TableBody>
-            </Table>
+            <LastFiveTransactions />
           </div>
         </div>
       </div>
