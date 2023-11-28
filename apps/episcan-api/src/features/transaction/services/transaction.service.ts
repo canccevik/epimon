@@ -19,10 +19,7 @@ export class TransactionService {
     private readonly blockchainService: BlockchainService
   ) {}
 
-  public async getTransactions(query: PaginationDto): Promise<PaginationResult<Transaction[]>> {
-    const page = Number(query.page)
-    const limit = Number(query.limit)
-
+  private async getAllTransactions(): Promise<Transaction[]> {
     const txsEndpoint = this.config.ROOT_NODE_URI + '/transactions/pool'
     const txsRequest = await this.axios.get<Payload<Transaction[]>>(txsEndpoint)
 
@@ -32,11 +29,17 @@ export class TransactionService {
 
     const blocks = await this.blockchainService.getBlocks({})
 
-    const transactions = blocks.records
+    return blocks.records
       .flatMap((block) => block.transactions)
       .concat(txsRequest.data.data)
       .sort((a, b) => b.timestamp - a.timestamp)
+  }
 
+  public async getTransactions(query: PaginationDto): Promise<PaginationResult<Transaction[]>> {
+    const page = Number(query.page)
+    const limit = Number(query.limit)
+
+    const transactions = await this.getAllTransactions()
     const paginatedTransactions = transactions.slice((page - 1) * limit, (page - 1) * limit + limit)
 
     return createPaginationResult<Transaction>(
@@ -45,5 +48,15 @@ export class TransactionService {
       limit,
       transactions.length
     )
+  }
+
+  public async getTransactionById(id: string): Promise<Transaction> {
+    const transactions = await this.getAllTransactions()
+    const transaction = transactions.find((transaction) => transaction._id === id)
+
+    if (!transaction) {
+      throw new BadRequestException('Transaction not found.')
+    }
+    return transaction
   }
 }
