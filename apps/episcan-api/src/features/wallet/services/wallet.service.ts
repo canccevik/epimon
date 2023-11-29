@@ -46,9 +46,13 @@ export class WalletService {
           .flatMap((tx) => tx.amount)
           .reduce((prev, curr) => prev + curr, 0)
 
-        return { address, totalReward }
+        return { address, totalReward, rank: 0 }
       })
       .sort((a, b) => b.totalReward - a.totalReward)
+      .map((miner, i) => {
+        miner.rank = i + 1
+        return miner
+      })
 
     const paginatedMiners = paginateArray(miners, { page, limit })
 

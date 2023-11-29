@@ -1,4 +1,10 @@
-import { Button } from '@/components/ui/button'
+'use client'
+
+import PaginationSection from '@/components/pagination-section'
+import { Miner, Payload } from '@epimon/common'
+import { useState } from 'react'
+import Link from 'next/link'
+import useSWR from 'swr'
 import {
   Table,
   TableCaption,
@@ -8,146 +14,62 @@ import {
   TableBody,
   TableCell
 } from '@/components/ui/table'
-import { ArrowRight } from 'lucide-react'
+import { fetcher, shortenString } from '@/lib/utils'
+import { Card } from '@/components/ui/card'
+import { Loader } from 'lucide-react'
 
 export default function Miners() {
+  const minerCount = 10
+  const [page, setPage] = useState(1)
+
+  const { data } = useSWR<Payload<Miner[]>>(
+    `/wallets/miners?page=${page}&limit=${minerCount}`,
+    fetcher
+  )
+
   return (
     <div className="flex flex-col">
       <h1 className="text-4xl font-semibold tracking-wide">Miners</h1>
 
       <div className="mt-10">
-        <Table>
-          <TableCaption>
-            <div className="flex gap-x-2 ml-5">
-              <Button className="bg-main-black" size={'sm'}>
-                1
-              </Button>
+        {!data ? (
+          <Card className="flex justify-center p-10">
+            <Loader className="animate-spin" />
+          </Card>
+        ) : (
+          <Table>
+            <TableCaption>
+              {data?.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
+            </TableCaption>
 
-              <Button className="bg-main-black" size={'sm'}>
-                2
-              </Button>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Rank</TableHead>
+                <TableHead>Address</TableHead>
+                <TableHead>Total reward</TableHead>
+                <TableHead>Active</TableHead>
+              </TableRow>
+            </TableHeader>
 
-              <Button className="bg-main-black" size={'sm'}>
-                3
-              </Button>
+            <TableBody>
+              {data?.data?.map((miner, i) => {
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{miner.rank}</TableCell>
 
-              <Button className="bg-main-black" size={'sm'}>
-                4
-              </Button>
+                    <TableCell className="text-main-blue">
+                      <Link href={`/address/${miner.address}`}>{shortenString(miner.address)}</Link>
+                    </TableCell>
 
-              <span className="text-2xl font-medium">...</span>
+                    <TableCell>{miner.totalReward} EPM</TableCell>
 
-              <Button className="bg-main-black" size={'sm'}>
-                500
-              </Button>
-
-              <Button className="bg-main-black" size={'sm'}>
-                <span>Next</span> <ArrowRight size={16} />
-              </Button>
-            </div>
-          </TableCaption>
-
-          <TableHeader>
-            <TableRow>
-              <TableHead>Rank</TableHead>
-              <TableHead>Address</TableHead>
-              <TableHead>Total reward</TableHead>
-              <TableHead>Active</TableHead>
-            </TableRow>
-          </TableHeader>
-
-          <TableBody>
-            <TableRow>
-              <TableCell>1</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-green-500">Yes</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>2</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-red-500">No</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>3</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-green-500">Yes</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>4</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-red-500">No</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>5</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-green-500">Yes</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>6</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-red-500">No</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>7</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-green-500">Yes</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>8</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-red-500">No</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>9</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-green-500">Yes</TableCell>
-            </TableRow>
-
-            <TableRow>
-              <TableCell>10</TableCell>
-              <TableCell className="text-main-blue">
-                0x7AE2F5B9e386cd1B50A4550696D957cB4900f03a
-              </TableCell>
-              <TableCell>16279 EPM</TableCell>
-              <TableCell className="text-red-500">No</TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+                    <TableCell className="text-green-500">Yes</TableCell>
+                  </TableRow>
+                )
+              })}
+            </TableBody>
+          </Table>
+        )}
       </div>
     </div>
   )
