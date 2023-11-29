@@ -6,6 +6,7 @@ import { TransactionModule } from '@features/transaction/transaction.module'
 @Module({
   imports: [TransactionModule],
   controllers: [WalletController],
-  providers: [WalletService]
+  providers: [WalletService],
+  exports: [WalletService]
 })
 export class WalletModule {}
