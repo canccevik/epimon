@@ -59,7 +59,11 @@ export default function Transactions() {
                 return (
                   <TableRow key={i}>
                     <TableCell className="text-main-blue">
-                      <Link href={`/transactions/${transaction._id}`}>{transaction._id}</Link>
+                      {transaction._id ? (
+                        <Link href={`/transactions/${transaction._id}`}>{transaction._id}</Link>
+                      ) : (
+                        'Null'
+                      )}
                     </TableCell>
 
                     <TableCell>

@@ -2,7 +2,7 @@
 
 import { Card } from '@/components/ui/card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
-import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
+import { fetcher, getRelativeTimeFromTimestamp } from '@/lib/utils'
 import { Payload, Transaction } from '@epimon/common'
 import { BadgeCheck, Copy, LoaderIcon } from 'lucide-react'
 import moment from 'moment'
