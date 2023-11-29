@@ -3,6 +3,7 @@ import { ApiTags, ApiParam } from '@nestjs/swagger'
 import { WalletService } from '../services'
 import {
   Message,
+  Miner,
   Paginate,
   PaginationDto,
   PaginationResult,
@@ -37,5 +38,12 @@ export class WalletController {
     @Query() query: PaginationDto
   ): Promise<PaginationResult<Transaction[]>> {
     return this.transactionService.getTransactionsOfWallet(walletAddress, query)
+  }
+
+  @Get('miners')
+  @Paginate()
+  @Message('Miners fetched successfully.')
+  public async getMiners(@Query() query: PaginationDto): Promise<PaginationResult<Miner[]>> {
+    return this.walletService.getMiners(query)
   }
 }

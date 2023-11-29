@@ -1,5 +1,8 @@
 import { paginateArray } from '@common/utils'
 import { Config, ENV } from '@config/index'
+import { BlockchainService } from '@features/blockchain/services'
+import { BadRequestException, HttpStatus, Inject, Injectable } from '@nestjs/common'
+import { Axios } from 'axios'
 import {
   AXIOS_INSTANCE,
   PaginationDto,
@@ -8,9 +11,6 @@ import {
   Transaction,
   createPaginationResult
 } from '@epimon/common'
-import { BlockchainService } from '@features/blockchain/services'
-import { BadRequestException, HttpStatus, Inject, Injectable } from '@nestjs/common'
-import { Axios } from 'axios'
 
 @Injectable()
 export class TransactionService {
@@ -20,7 +20,7 @@ export class TransactionService {
     private readonly blockchainService: BlockchainService
   ) {}
 
-  private async getAllTransactions(): Promise<Transaction[]> {
+  public async getAllTransactions(): Promise<Transaction[]> {
     const txsEndpoint = this.config.ROOT_NODE_URI + '/transactions/pool'
     const txsRequest = await this.axios.get<Payload<Transaction[]>>(txsEndpoint)
 
