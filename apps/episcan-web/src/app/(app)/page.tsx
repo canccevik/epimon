@@ -1,18 +1,44 @@
+'use client'
+
 import { BadgeDollarSign, Cuboid, User2 } from 'lucide-react'
 import SearchBanner from './search-banner'
 import InfoCard from '@/components/info-card'
 import LastFiveBlocks from '@/components/last-five-blocks'
 import LastFiveTransactions from '@/components/last-five-transactions'
+import useSWR from 'swr'
+import { Block, Miner, Payload, Transaction } from '@epimon/common'
+import { fetcher } from '@/lib/utils'
 
 export default function Home() {
+  const txsRequest = useSWR<Payload<Transaction[]>>('/transactions?page=1&limit=1', fetcher)
+  const blocksRequest = useSWR<Payload<Block[]>>('/chain?page=1&limit=1', fetcher)
+  const minersRequest = useSWR<Payload<Miner>>('/wallets/miners', fetcher)
+
   return (
     <div className="flex flex-col gap-y-10">
       <SearchBanner />
 
       <div className="w-full flex justify-between mt-8">
-        <InfoCard title="$121.80" description="EPM Price" icon={<BadgeDollarSign size={30} />} />
-        <InfoCard title="33634430" description="Latest Block" icon={<Cuboid size={30} />} />
-        <InfoCard title="32" description="Miners" icon={<User2 size={30} />} />
+        <InfoCard
+          title={txsRequest.data?.meta?.totalRecords.toString()}
+          description="Transactions"
+          icon={<BadgeDollarSign size={30} />}
+          isLoading={txsRequest.isLoading}
+        />
+
+        <InfoCard
+          title={blocksRequest.data?.data?.at(0)?._id}
+          description="Latest Block"
+          icon={<Cuboid size={30} />}
+          isLoading={blocksRequest.isLoading}
+        />
+
+        <InfoCard
+          title={minersRequest.data?.meta?.totalRecords.toString()}
+          description="Miners"
+          icon={<User2 size={30} />}
+          isLoading={minersRequest.isLoading}
+        />
       </div>
 
       <div className="flex justify-between gap-x-10">
