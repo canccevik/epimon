@@ -35,10 +35,10 @@ export class TransactionService {
       .sort((a, b) => b.timestamp - a.timestamp)
   }
 
-  public async getTransactions(query: PaginationDto): Promise<PaginationResult<Transaction[]>> {
-    const page = Number(query.page)
-    const limit = Number(query.limit)
-
+  public async getTransactions({
+    page,
+    limit
+  }: PaginationDto): Promise<PaginationResult<Transaction[]>> {
     const transactions = await this.getAllTransactions()
     const paginatedTransactions = transactions.slice((page - 1) * limit, (page - 1) * limit + limit)
 
