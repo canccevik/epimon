@@ -18,7 +18,7 @@ export class BlockchainService {
     private readonly transactionService: TransactionService
   ) {}
 
-  public async getChain(query: PaginationDto): Promise<PaginationResult<Block>> {
+  public async getChain(query: PaginationDto): Promise<PaginationResult<Block[]>> {
     return this.blockRepository.paginate(query)
   }
 

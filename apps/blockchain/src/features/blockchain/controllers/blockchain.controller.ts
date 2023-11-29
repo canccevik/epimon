@@ -17,7 +17,7 @@ export class BlockchainController {
   @Get()
   @Paginate()
   @Message('Chain fetched successfully.')
-  public async getChain(@Query() query: PaginationDto): Promise<PaginationResult<Block>> {
+  public async getChain(@Query() query: PaginationDto): Promise<PaginationResult<Block[]>> {
     return this.blockchainService.getChain(query)
   }
 
