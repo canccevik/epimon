@@ -1,12 +1,23 @@
-import { Controller, Get, Param } from '@nestjs/common'
+import { Controller, Get, Param, Query } from '@nestjs/common'
 import { ApiTags, ApiParam } from '@nestjs/swagger'
 import { WalletService } from '../services'
-import { Message, WalletAddressDto } from '@epimon/common'
+import {
+  Message,
+  Paginate,
+  PaginationDto,
+  PaginationResult,
+  Transaction,
+  WalletAddressDto
+} from '@epimon/common'
+import { TransactionService } from '@features/transaction/services'
 
 @ApiTags('wallets')
 @Controller('wallets')
 export class WalletController {
-  constructor(private readonly walletService: WalletService) {}
+  constructor(
+    private readonly walletService: WalletService,
+    private readonly transactionService: TransactionService
+  ) {}
 
   @Get(':walletAddress/balance')
   @ApiParam({ name: 'walletAddress' })
@@ -15,5 +26,16 @@ export class WalletController {
     @Param() { walletAddress }: WalletAddressDto
   ): Promise<{ balance: number }> {
     return this.walletService.getBalanceOfAddress(walletAddress)
+  }
+
+  @Get(':walletAddress/transactions')
+  @ApiParam({ name: 'walletAddress' })
+  @Message("Wallet's transactions fetched successfully.")
+  @Paginate()
+  public async getTransactionsOfWallet(
+    @Param() { walletAddress }: WalletAddressDto,
+    @Query() query: PaginationDto
+  ): Promise<PaginationResult<Transaction[]>> {
+    return this.transactionService.getTransactionsOfWallet(walletAddress, query)
   }
 }

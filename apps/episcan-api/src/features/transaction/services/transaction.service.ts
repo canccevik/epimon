@@ -1,3 +1,4 @@
+import { paginateArray } from '@common/utils'
 import { Config, ENV } from '@config/index'
 import {
   AXIOS_INSTANCE,
@@ -40,7 +41,7 @@ export class TransactionService {
     limit
   }: PaginationDto): Promise<PaginationResult<Transaction[]>> {
     const transactions = await this.getAllTransactions()
-    const paginatedTransactions = transactions.slice((page - 1) * limit, (page - 1) * limit + limit)
+    const paginatedTransactions = paginateArray(transactions, { page, limit })
 
     return createPaginationResult<Transaction>(
       paginatedTransactions,
@@ -58,5 +59,28 @@ export class TransactionService {
       throw new BadRequestException('Transaction not found.')
     }
     return transaction
+  }
+
+  public async getTransactionsOfWallet(
+    walletAddress: string,
+    { page, limit }: PaginationDto
+  ): Promise<PaginationResult<Transaction[]>> {
+    const transactions = await this.getAllTransactions()
+    const transactionsOfWallet = transactions.filter(
+      (transaction) =>
+        transaction.receiverAddress === walletAddress || transaction.senderAddress === walletAddress
+    )
+    const paginatedTransactionsOfWallet = paginateArray(transactionsOfWallet, { page, limit })
+
+    if (!transactionsOfWallet.length) {
+      throw new BadRequestException('No transactions found for address.')
+    }
+
+    return createPaginationResult(
+      paginatedTransactionsOfWallet,
+      page,
+      limit,
+      transactionsOfWallet.length
+    )
   }
 }
