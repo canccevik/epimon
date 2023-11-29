@@ -57,10 +57,8 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
 
         <Button
           size={'sm'}
-          className={
-            meta.lastPage - buttonCount >= page ? 'bg-main-black' : 'bg-gray-400 hover:bg-gray-400'
-          }
-          onClick={() => meta.lastPage - buttonCount >= page && setPage(page + 1)}
+          className={page < meta.lastPage ? 'bg-main-black' : 'bg-gray-400 hover:bg-gray-400'}
+          onClick={() => page < meta.lastPage && setPage(page + 1)}
         >
           <span>Next</span> <ArrowRight size={16} />
         </Button>

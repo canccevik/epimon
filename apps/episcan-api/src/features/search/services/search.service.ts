@@ -27,6 +27,6 @@ export class SearchService {
     if (wallet.balance) {
       return { isBlock: false, isTransaction: false, isAddress: true }
     }
-    throw new BadRequestException('No result found for value.')
+    throw new BadRequestException('No result found for search.')
   }
 }
