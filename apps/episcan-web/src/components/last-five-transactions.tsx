@@ -46,16 +46,24 @@ export default function LastFiveTransactions() {
           {data.data?.map((transaction, i) => {
             return (
               <TableRow key={i}>
-                <TableCell className="font-medium text-main-blue">
-                  <Link href={`/transactions/${transaction._id}`}>{transaction._id}</Link>
+                <TableCell className="font-medium">
+                  {transaction._id ? (
+                    <Link href={`/transactions/${transaction._id}`} className="text-main-blue">
+                      {transaction._id}
+                    </Link>
+                  ) : (
+                    'Null'
+                  )}
                 </TableCell>
 
                 <TableCell>
-                  <Link href={`/address/${transaction.senderAddress}`} className="text-main-blue">
-                    {transaction.senderAddress
-                      ? shortenString(transaction.senderAddress)
-                      : 'System'}
-                  </Link>
+                  {transaction.senderAddress ? (
+                    <Link href={`/address/${transaction.senderAddress}`} className="text-main-blue">
+                      {shortenString(transaction.senderAddress)}
+                    </Link>
+                  ) : (
+                    'System'
+                  )}
                 </TableCell>
 
                 <TableCell>{transaction.amount} EPM</TableCell>

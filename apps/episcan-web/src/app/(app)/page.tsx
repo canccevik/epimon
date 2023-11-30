@@ -1,6 +1,6 @@
 'use client'
 
-import { BadgeDollarSign, Cuboid, User2 } from 'lucide-react'
+import { Cuboid, FileText, User2 } from 'lucide-react'
 import SearchBanner from './search-banner'
 import InfoCard from '@/components/info-card'
 import LastFiveBlocks from '@/components/last-five-blocks'
@@ -20,17 +20,17 @@ export default function Home() {
 
       <div className="w-full flex justify-between mt-8">
         <InfoCard
-          title={txsRequest.data?.meta?.totalRecords.toString()}
-          description="Transactions"
-          icon={<BadgeDollarSign size={30} />}
-          isLoading={txsRequest.isLoading}
+          title={blocksRequest.data?.meta?.totalRecords.toString()}
+          description="Blocks"
+          icon={<Cuboid size={30} />}
+          isLoading={blocksRequest.isLoading}
         />
 
         <InfoCard
-          title={blocksRequest.data?.data?.at(0)?._id}
-          description="Latest Block"
-          icon={<Cuboid size={30} />}
-          isLoading={blocksRequest.isLoading}
+          title={txsRequest.data?.meta?.totalRecords.toString()}
+          description="Transactions"
+          icon={<FileText size={30} />}
+          isLoading={txsRequest.isLoading}
         />
 
         <InfoCard

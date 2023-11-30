@@ -4,6 +4,7 @@ import PaginationSection from '@/components/pagination-section'
 import { Card } from '@/components/ui/card'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Payload, Transaction } from '@epimon/common'
+import { useSearchParams } from 'next/navigation'
 import { LoaderIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
@@ -19,17 +20,32 @@ import {
 } from '@/components/ui/table'
 
 export default function Transactions() {
+  const searchParams = useSearchParams()
   const [page, setPage] = useState(1)
   const transactionCount = 10
+  const blockId = searchParams.get('block')
+
+  const txsEndpoint = `/transactions?page=${page}&limit=${transactionCount}`
+  const txsEndpointWithBlock = txsEndpoint + `&blockId=${blockId}`
 
   const { data } = useSWR<Payload<Transaction[]>>(
-    `/transactions?page=${page}&limit=${transactionCount}`,
+    blockId ? txsEndpointWithBlock : txsEndpoint,
     fetcher
   )
 
   return (
     <div className="flex flex-col">
       <h1 className="text-4xl font-semibold tracking-wide">Transactions</h1>
+
+      {blockId && (
+        <span className="mt-3">
+          From Block [
+          <Link href={`/blocks/${blockId}`} className="text-main-blue">
+            {blockId}
+          </Link>
+          ]
+        </span>
+      )}
 
       <div className="mt-10">
         {!data ? (
@@ -58,9 +74,11 @@ export default function Transactions() {
               {data.data?.map((transaction, i) => {
                 return (
                   <TableRow key={i}>
-                    <TableCell className="text-main-blue">
+                    <TableCell>
                       {transaction._id ? (
-                        <Link href={`/transactions/${transaction._id}`}>{transaction._id}</Link>
+                        <Link href={`/transactions/${transaction._id}`} className="text-main-blue">
+                          {transaction._id}
+                        </Link>
                       ) : (
                         'Null'
                       )}
@@ -72,12 +90,17 @@ export default function Transactions() {
 
                     <TableCell>{getRelativeTimeFromTimestamp(transaction.timestamp)}</TableCell>
 
-                    <TableCell className="text-main-blue">
-                      <Link href={`/address/${transaction.senderAddress}`}>
-                        {transaction.senderAddress
-                          ? shortenString(transaction.senderAddress)
-                          : 'System'}
-                      </Link>
+                    <TableCell>
+                      {transaction.senderAddress ? (
+                        <Link
+                          href={`/address/${transaction.senderAddress}`}
+                          className="text-main-blue"
+                        >
+                          {shortenString(transaction.senderAddress)}
+                        </Link>
+                      ) : (
+                        'System'
+                      )}
                     </TableCell>
 
                     <TableCell className="text-main-blue">

@@ -51,9 +51,13 @@ export default function LastFiveBlocks() {
                 </TableCell>
 
                 <TableCell>
-                  <Link href={`/address/${block.miner}`} className="text-main-blue truncate">
-                    {block.miner ? shortenString(block.miner) : 'System'}
-                  </Link>
+                  {block.miner ? (
+                    <Link href={`/address/${block.miner}`} className="text-main-blue">
+                      {shortenString(block.miner)}
+                    </Link>
+                  ) : (
+                    'System'
+                  )}
                 </TableCell>
                 <TableCell>{block.reward} EPM</TableCell>
               </TableRow>

@@ -59,9 +59,11 @@ export default function Blocks() {
 
                       <TableCell>{getRelativeTimeFromTimestamp(block.timestamp)}</TableCell>
 
-                      <TableCell className="text-main-blue">
+                      <TableCell>
                         {block.miner ? (
-                          <Link href={`/address/${block.miner}`}>{shortenString(block.miner)}</Link>
+                          <Link href={`/address/${block.miner}`} className="text-main-blue">
+                            {shortenString(block.miner)}
+                          </Link>
                         ) : (
                           'System'
                         )}

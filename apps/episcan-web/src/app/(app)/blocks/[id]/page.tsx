@@ -52,9 +52,9 @@ export default function BlockDetail() {
                 <TableRow>
                   <TableCell className="text-gray-500">Transactions</TableCell>
                   <TableCell className="flex gap-x-1">
-                    <span className="text-main-blue">
+                    <Link href={`/transactions?block=${data.data._id}`} className="text-main-blue">
                       {data.data.transactions.length} transactions
-                    </span>
+                    </Link>
                     <span>in this block</span>
                   </TableCell>
                 </TableRow>
