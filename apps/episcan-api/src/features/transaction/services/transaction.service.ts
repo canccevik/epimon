@@ -2,6 +2,7 @@ import { paginateArray } from '@common/utils'
 import { Config, ENV } from '@config/index'
 import { BlockchainService } from '@features/blockchain/services'
 import { BadRequestException, HttpStatus, Inject, Injectable } from '@nestjs/common'
+import { PaginationWithBlockIdDto } from '../dto'
 import { Axios } from 'axios'
 import {
   AXIOS_INSTANCE,
@@ -53,7 +54,7 @@ export class TransactionService {
     page,
     limit,
     blockId
-  }: PaginationDto & { blockId?: string }): Promise<PaginationResult<TransactionWithStatus[]>> {
+  }: PaginationWithBlockIdDto): Promise<PaginationResult<TransactionWithStatus[]>> {
     const transactions = await this.getAllTransactions(blockId)
     const paginatedTransactions = paginateArray(transactions, { page, limit })
 

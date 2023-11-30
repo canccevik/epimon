@@ -1,7 +1,6 @@
 import {
   Message,
   Paginate,
-  PaginationDto,
   PaginationResult,
   Transaction,
   TransactionWithStatus
@@ -9,6 +8,7 @@ import {
 import { Controller, Get, Param, Query } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { TransactionService } from '../services'
+import { PaginationWithBlockIdDto } from '../dto'
 
 @ApiTags('transactions')
 @Controller('transactions')
@@ -19,7 +19,7 @@ export class TransactionController {
   @Paginate()
   @Message('Transactions fetched successfully.')
   public async getTransactions(
-    @Query() query: PaginationDto & { blockId?: string }
+    @Query() query: PaginationWithBlockIdDto
   ): Promise<PaginationResult<TransactionWithStatus[]>> {
     return this.transactionService.getTransactions(query)
   }
