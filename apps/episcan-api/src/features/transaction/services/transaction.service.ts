@@ -20,7 +20,7 @@ export class TransactionService {
     private readonly blockchainService: BlockchainService
   ) {}
 
-  public async getAllTransactions(): Promise<Transaction[]> {
+  public async getAllTransactions(blockId?: string): Promise<Transaction[]> {
     const txsEndpoint = this.config.ROOT_NODE_URI + '/transactions/pool'
     const txsRequest = await this.axios.get<Payload<Transaction[]>>(txsEndpoint)
 
@@ -29,18 +29,23 @@ export class TransactionService {
     }
 
     const blocks = await this.blockchainService.getBlocks({})
+    if (blockId) {
+      blocks.records = blocks.records.filter((block) => block._id === blockId)
+    }
 
-    return blocks.records
-      .flatMap((block) => block.transactions)
-      .concat(txsRequest.data.data)
-      .sort((a, b) => b.timestamp - a.timestamp)
+    let transactions = blocks.records.flatMap((block) => block.transactions)
+    if (!blockId) {
+      transactions = transactions.concat(txsRequest.data.data)
+    }
+    return transactions.sort((a, b) => b.timestamp - a.timestamp)
   }
 
   public async getTransactions({
     page,
-    limit
-  }: PaginationDto): Promise<PaginationResult<Transaction[]>> {
-    const transactions = await this.getAllTransactions()
+    limit,
+    blockId
+  }: PaginationDto & { blockId?: string }): Promise<PaginationResult<Transaction[]>> {
+    const transactions = await this.getAllTransactions(blockId)
     const paginatedTransactions = paginateArray(transactions, { page, limit })
 
     return createPaginationResult<Transaction>(

@@ -12,7 +12,7 @@ export class TransactionController {
   @Paginate()
   @Message('Transactions fetched successfully.')
   public async getTransactions(
-    @Query() query: PaginationDto
+    @Query() query: PaginationDto & { blockId?: string }
   ): Promise<PaginationResult<Transaction[]>> {
     return this.transactionService.getTransactions(query)
   }
