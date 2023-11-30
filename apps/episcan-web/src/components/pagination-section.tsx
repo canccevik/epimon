@@ -18,7 +18,8 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
           { length: meta.lastPage > buttonCount ? buttonCount : meta.lastPage },
           (_, i) => i++
         ).map((i) => {
-          const targetPage = page <= meta.lastPage - buttonCount ? page + i * 1 : i + 1
+          const targetPage =
+            meta.lastPage - page >= buttonCount ? page + i : meta.lastPage - buttonCount + 1 + i * 1
 
           return (
             <div key={i}>
