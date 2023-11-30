@@ -1,4 +1,11 @@
-import { Message, Paginate, PaginationDto, PaginationResult, Transaction } from '@epimon/common'
+import {
+  Message,
+  Paginate,
+  PaginationDto,
+  PaginationResult,
+  Transaction,
+  TransactionWithStatus
+} from '@epimon/common'
 import { Controller, Get, Param, Query } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { TransactionService } from '../services'
@@ -13,7 +20,7 @@ export class TransactionController {
   @Message('Transactions fetched successfully.')
   public async getTransactions(
     @Query() query: PaginationDto & { blockId?: string }
-  ): Promise<PaginationResult<Transaction[]>> {
+  ): Promise<PaginationResult<TransactionWithStatus[]>> {
     return this.transactionService.getTransactions(query)
   }
 

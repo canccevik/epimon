@@ -6,3 +6,7 @@ export interface Transaction {
   timestamp: number
   signature: string
 }
+
+export interface TransactionWithStatus extends Transaction {
+  isConfirmed: boolean
+}

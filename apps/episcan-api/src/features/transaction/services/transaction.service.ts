@@ -9,6 +9,7 @@ import {
   PaginationResult,
   Payload,
   Transaction,
+  TransactionWithStatus,
   createPaginationResult
 } from '@epimon/common'
 
@@ -20,7 +21,7 @@ export class TransactionService {
     private readonly blockchainService: BlockchainService
   ) {}
 
-  public async getAllTransactions(blockId?: string): Promise<Transaction[]> {
+  public async getAllTransactions(blockId?: string): Promise<TransactionWithStatus[]> {
     const txsEndpoint = this.config.ROOT_NODE_URI + '/transactions/pool'
     const txsRequest = await this.axios.get<Payload<Transaction[]>>(txsEndpoint)
 
@@ -33,9 +34,17 @@ export class TransactionService {
       blocks.records = blocks.records.filter((block) => block._id === blockId)
     }
 
-    let transactions = blocks.records.flatMap((block) => block.transactions)
+    let transactions = blocks.records
+      .flatMap((block) => block.transactions)
+      .map((tx) => {
+        return { ...tx, isConfirmed: true }
+      })
+
     if (!blockId) {
-      transactions = transactions.concat(txsRequest.data.data)
+      const txPool = txsRequest.data.data.map((tx) => {
+        return { ...tx, isConfirmed: false }
+      })
+      transactions = transactions.concat(txPool)
     }
     return transactions.sort((a, b) => b.timestamp - a.timestamp)
   }
@@ -44,11 +53,11 @@ export class TransactionService {
     page,
     limit,
     blockId
-  }: PaginationDto & { blockId?: string }): Promise<PaginationResult<Transaction[]>> {
+  }: PaginationDto & { blockId?: string }): Promise<PaginationResult<TransactionWithStatus[]>> {
     const transactions = await this.getAllTransactions(blockId)
     const paginatedTransactions = paginateArray(transactions, { page, limit })
 
-    return createPaginationResult<Transaction>(
+    return createPaginationResult<TransactionWithStatus>(
       paginatedTransactions,
       page,
       limit,
@@ -56,7 +65,7 @@ export class TransactionService {
     )
   }
 
-  public async getTransactionById(id: string): Promise<Transaction> {
+  public async getTransactionById(id: string): Promise<TransactionWithStatus> {
     const transactions = await this.getAllTransactions()
     const transaction = transactions.find((transaction) => transaction._id === id)
 
