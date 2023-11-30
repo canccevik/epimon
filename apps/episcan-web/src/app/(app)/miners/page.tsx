@@ -47,7 +47,6 @@ export default function Miners() {
                 <TableHead>Rank</TableHead>
                 <TableHead>Address</TableHead>
                 <TableHead>Total reward</TableHead>
-                <TableHead>Active</TableHead>
               </TableRow>
             </TableHeader>
 
@@ -62,8 +61,6 @@ export default function Miners() {
                     </TableCell>
 
                     <TableCell>{miner.totalReward} EPM</TableCell>
-
-                    <TableCell className="text-green-500">Yes</TableCell>
                   </TableRow>
                 )
               })}

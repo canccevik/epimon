@@ -3,7 +3,7 @@
 import PaginationSection from '@/components/pagination-section'
 import { Card } from '@/components/ui/card'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
-import { Payload, Transaction } from '@epimon/common'
+import { Payload, TransactionWithStatus } from '@epimon/common'
 import { useSearchParams } from 'next/navigation'
 import { LoaderIcon } from 'lucide-react'
 import Link from 'next/link'
@@ -28,7 +28,7 @@ export default function Transactions() {
   const txsEndpoint = `/transactions?page=${page}&limit=${transactionCount}`
   const txsEndpointWithBlock = txsEndpoint + `&blockId=${blockId}`
 
-  const { data } = useSWR<Payload<Transaction[]>>(
+  const { data } = useSWR<Payload<TransactionWithStatus[]>>(
     blockId ? txsEndpointWithBlock : txsEndpoint,
     fetcher
   )
@@ -109,7 +109,13 @@ export default function Transactions() {
                       </Link>
                     </TableCell>
 
-                    <TableCell className="text-green-500">Confirmed</TableCell>
+                    <TableCell>
+                      {transaction.isConfirmed ? (
+                        <span className="text-green-500">Confirmed</span>
+                      ) : (
+                        <span className="text-red-500">Not Confirmed</span>
+                      )}
+                    </TableCell>
 
                     <TableCell>{transaction.amount} EPM</TableCell>
                   </TableRow>

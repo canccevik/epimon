@@ -3,8 +3,8 @@
 import { Card } from '@/components/ui/card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp } from '@/lib/utils'
-import { Payload, Transaction } from '@epimon/common'
-import { BadgeCheck, Copy, LoaderIcon } from 'lucide-react'
+import { Payload, TransactionWithStatus } from '@epimon/common'
+import { BadgeCheck, Copy, LoaderIcon, XCircle } from 'lucide-react'
 import moment from 'moment'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
@@ -12,7 +12,7 @@ import useSWR from 'swr'
 
 export default function TransactionDetail() {
   const params = useParams()
-  const { data } = useSWR<Payload<Transaction>>(`/transactions/${params.id}`, fetcher)
+  const { data } = useSWR<Payload<TransactionWithStatus>>(`/transactions/${params.id}`, fetcher)
 
   return (
     <div className="flex flex-col">
@@ -40,9 +40,19 @@ export default function TransactionDetail() {
 
               <TableRow>
                 <TableCell className="text-gray-500">Status</TableCell>
-                <TableCell className="flex gap-x-2 text-green-500">
-                  <BadgeCheck className="cursor-pointer" size={20} />
-                  <span>Confirmed</span>
+
+                <TableCell>
+                  {data.data?.isConfirmed ? (
+                    <div className="flex text-green-500 gap-x-2">
+                      <BadgeCheck className="cursor-pointer" size={20} />
+                      <span>Confirmed</span>
+                    </div>
+                  ) : (
+                    <div className="flex text-red-500 gap-x-2">
+                      <XCircle className="cursor-pointer" size={20} />
+                      <span>Not Confirmed</span>
+                    </div>
+                  )}
                 </TableCell>
               </TableRow>
 
