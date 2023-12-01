@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { Prompt } from 'next/font/google'
-import '../styles/globals.css'
+import '@/styles/globals.css'
 import { siteConfig } from '@/config/site'
 import { cn } from '@/lib/utils'
 import Sidebar from './sidebar'
-import Footer from './footer'
+import Footer from '../components/footer'
 import { Toaster } from '@/components/ui/toaster'
 
 const prompt = Prompt({ subsets: ['latin'], weight: '400' })
