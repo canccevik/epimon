@@ -1,10 +1,10 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
+import TableLoader from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp } from '@/lib/utils'
 import { Payload, TransactionWithStatus } from '@epimon/common'
-import { BadgeCheck, Copy, LoaderIcon, XCircle } from 'lucide-react'
+import { BadgeCheck, Copy, XCircle } from 'lucide-react'
 import moment from 'moment'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
@@ -20,9 +20,7 @@ export default function TransactionDetail() {
 
       <div className="mt-10">
         {!data ? (
-          <Card className="flex justify-center p-10">
-            <LoaderIcon className="animate-spin" />
-          </Card>
+          <TableLoader />
         ) : (
           <Table>
             <TableBody>

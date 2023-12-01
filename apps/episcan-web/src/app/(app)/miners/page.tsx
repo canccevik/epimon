@@ -15,8 +15,7 @@ import {
   TableCell
 } from '@/components/ui/table'
 import { fetcher, shortenString } from '@/lib/utils'
-import { Card } from '@/components/ui/card'
-import { Loader } from 'lucide-react'
+import TableLoader from '@/components/loader-card'
 
 export default function Miners() {
   const minerCount = 10
@@ -33,9 +32,7 @@ export default function Miners() {
 
       <div className="mt-10">
         {!data ? (
-          <Card className="flex justify-center p-10">
-            <Loader className="animate-spin" />
-          </Card>
+          <TableLoader />
         ) : (
           <Table>
             <TableCaption>

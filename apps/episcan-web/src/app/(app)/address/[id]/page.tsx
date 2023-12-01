@@ -4,7 +4,7 @@ import PaginationSection from '@/components/pagination-section'
 import { Card } from '@/components/ui/card'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Payload, Transaction } from '@epimon/common'
-import { Copy, Loader } from 'lucide-react'
+import { Copy } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import { useState } from 'react'
 import useSWR from 'swr'
@@ -18,6 +18,7 @@ import {
   TableCaption
 } from '@/components/ui/table'
 import Link from 'next/link'
+import TableLoader from '@/components/loader-card'
 
 export default function Address() {
   const transactionCount = 10
@@ -48,9 +49,7 @@ export default function Address() {
         </div>
 
         {!balanceRequest.data ? (
-          <Card className="flex justify-center w-max bg-white p-5 border border-gray-200 rounded-lg">
-            <Loader className="animate-spin text-3xl" />
-          </Card>
+          <TableLoader className="w-max" />
         ) : (
           <Card className="w-max bg-white p-5 border border-gray-200 rounded-lg">
             <h6>Balance</h6>
@@ -63,9 +62,7 @@ export default function Address() {
         <h1 className="text-lg mb-5">Transactions</h1>
 
         {!txsRequest.data ? (
-          <Card className="flex justify-center p-10">
-            <Loader className="animate-spin" />
-          </Card>
+          <TableLoader />
         ) : (
           <Table>
             <TableCaption>

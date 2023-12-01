@@ -1,6 +1,5 @@
 'use client'
 
-import { Loader } from 'lucide-react'
 import useSWR from 'swr'
 import {
   Table,
@@ -13,18 +12,14 @@ import {
 } from './ui/table'
 import { fetcher, shortenString } from '@/lib/utils'
 import { Payload, Transaction } from '@epimon/common'
-import { Card } from './ui/card'
 import Link from 'next/link'
+import LoaderCard from './loader-card'
 
 export default function LastFiveTransactions() {
   const { data } = useSWR<Payload<Transaction[]>>('/transactions?page=1&limit=5', fetcher)
 
   if (!data) {
-    return (
-      <Card className="flex justify-center p-10">
-        <Loader className="animate-spin" />
-      </Card>
-    )
+    return <LoaderCard />
   }
 
   return (

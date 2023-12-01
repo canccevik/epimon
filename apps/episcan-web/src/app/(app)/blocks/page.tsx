@@ -1,6 +1,5 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
 import {
   Table,
   TableBody,
@@ -12,11 +11,11 @@ import {
 } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
-import { LoaderIcon } from 'lucide-react'
 import Link from 'next/link'
 import useSWR from 'swr'
 import PaginationSection from '@/components/pagination-section'
 import { useState } from 'react'
+import TableLoader from '@/components/loader-card'
 
 export default function Blocks() {
   const [page, setPage] = useState(1)
@@ -30,9 +29,7 @@ export default function Blocks() {
 
       <div className="mt-10">
         {!data ? (
-          <Card className="flex justify-center p-10">
-            <LoaderIcon className="animate-spin" />
-          </Card>
+          <TableLoader />
         ) : (
           <Table>
             <TableCaption>

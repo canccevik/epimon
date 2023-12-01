@@ -13,18 +13,13 @@ import {
 } from './ui/table'
 import { fetcher, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
-import { LoaderIcon } from 'lucide-react'
-import { Card } from './ui/card'
+import LoaderCard from './loader-card'
 
 export default function LastFiveBlocks() {
   const { data } = useSWR<Payload<Block[]>>('/chain?page=1&limit=5', fetcher)
 
   if (!data) {
-    return (
-      <Card className="w-full flex justify-center p-10 shadow-none">
-        <LoaderIcon className="animate-spin" />
-      </Card>
-    )
+    return <LoaderCard />
   }
 
   return (

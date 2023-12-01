@@ -1,10 +1,10 @@
 'use client'
 
-import { Card } from '@/components/ui/card'
+import TableLoader from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
-import { Copy, Loader } from 'lucide-react'
+import { Copy } from 'lucide-react'
 import moment from 'moment'
 import Link from 'next/link'
 import { useParams } from 'next/navigation'
@@ -20,9 +20,7 @@ export default function BlockDetail() {
 
       <div className="mt-10">
         {isLoading ? (
-          <Card className="flex justify-center p-10">
-            <Loader className="animate-spin" />
-          </Card>
+          <TableLoader />
         ) : (
           data?.data && (
             <Table>

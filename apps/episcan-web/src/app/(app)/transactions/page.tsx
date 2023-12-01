@@ -1,11 +1,9 @@
 'use client'
 
 import PaginationSection from '@/components/pagination-section'
-import { Card } from '@/components/ui/card'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Payload, TransactionWithStatus } from '@epimon/common'
 import { useSearchParams } from 'next/navigation'
-import { LoaderIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useState } from 'react'
 import useSWR from 'swr'
@@ -18,6 +16,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
+import TableLoader from '@/components/loader-card'
 
 export default function Transactions() {
   const searchParams = useSearchParams()
@@ -49,9 +48,7 @@ export default function Transactions() {
 
       <div className="mt-10">
         {!data ? (
-          <Card className="flex justify-center p-10">
-            <LoaderIcon className="animate-spin" />
-          </Card>
+          <TableLoader />
         ) : (
           <Table>
             <TableCaption>
