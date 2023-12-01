@@ -21,16 +21,18 @@ export default function SearchBanner() {
   async function search(e: FormEvent<HTMLFormElement>) {
     e.preventDefault()
 
-    const { statusCode, data, message } = await trigger()
+    try {
+      const { data } = await trigger()
 
-    if (statusCode !== 200) {
-      return toast({ title: message, variant: 'destructive' })
-    } else if (data?.isBlock) {
-      router.push(`/blocks/${searchValue}`)
-    } else if (data?.isTransaction) {
-      router.push(`/transactions/${searchValue}`)
-    } else if (data?.isAddress) {
-      router.push(`/address/${searchValue}`)
+      if (data?.isBlock) {
+        router.push(`/blocks/${searchValue}`)
+      } else if (data?.isTransaction) {
+        router.push(`/transactions/${searchValue}`)
+      } else if (data?.isAddress) {
+        router.push(`/address/${searchValue}`)
+      }
+    } catch (error: any) {
+      toast({ title: error.message, variant: 'destructive' })
     }
   }
 
