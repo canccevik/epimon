@@ -1,5 +1,5 @@
 import { Config, ENV } from '@config/index'
-import { BadRequestException, HttpStatus, Inject, Injectable } from '@nestjs/common'
+import { HttpStatus, Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { Axios } from 'axios'
 import { URLSearchParams } from 'url'
 import { AXIOS_INSTANCE, Block, PaginationDto, PaginationResult, Payload } from '@epimon/common'
@@ -21,7 +21,7 @@ export class BlockchainService {
       this.config.ROOT_NODE_URI + '/chain?' + searchParams.toString()
     )
     if (chainRequest.status !== HttpStatus.OK) {
-      throw new BadRequestException(chainRequest.data.message)
+      throw new NotFoundException(chainRequest.data.message)
     }
 
     return {
@@ -35,7 +35,7 @@ export class BlockchainService {
     const block = blocks.records.find((block) => block._id === id)
 
     if (!block) {
-      throw new BadRequestException('Block not found.')
+      throw new NotFoundException('Block not found.')
     }
     return block
   }

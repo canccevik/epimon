@@ -14,11 +14,19 @@ import { fetcher, shortenString } from '@/lib/utils'
 import { Payload, Transaction } from '@epimon/common'
 import Link from 'next/link'
 import LoaderCard from './loader-card'
+import ErrorCard from './error-card'
 
 export default function LastFiveTransactions() {
-  const { data } = useSWR<Payload<Transaction[]>>('/transactions?page=1&limit=5', fetcher)
+  const { data, isLoading, error } = useSWR<Payload<Transaction[]>, Payload<null>>(
+    '/transactions?page=1&limit=5',
+    fetcher
+  )
 
-  if (!data) {
+  if (error) {
+    return <ErrorCard message={error.message} />
+  }
+
+  if (isLoading) {
     return <LoaderCard />
   }
 

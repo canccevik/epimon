@@ -9,7 +9,13 @@ import {
   createPaginationResult
 } from '@epimon/common'
 import { TransactionService } from '@features/transaction/services'
-import { BadRequestException, HttpStatus, Inject, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common'
 import { Axios } from 'axios'
 
 @Injectable()
@@ -36,7 +42,7 @@ export class WalletService {
     const minerAddresses = [...new Set(miningTransactions.map((tx) => tx.receiverAddress))]
 
     if (!minerAddresses.length) {
-      throw new BadRequestException('No miner found.')
+      throw new NotFoundException('No miner found.')
     }
 
     const miners: Miner[] = minerAddresses

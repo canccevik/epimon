@@ -1,7 +1,13 @@
 import { paginateArray } from '@common/utils'
 import { Config, ENV } from '@config/index'
 import { BlockchainService } from '@features/blockchain/services'
-import { BadRequestException, HttpStatus, Inject, Injectable } from '@nestjs/common'
+import {
+  BadRequestException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  NotFoundException
+} from '@nestjs/common'
 import { PaginationWithBlockIdDto } from '../dto'
 import { Axios } from 'axios'
 import {
@@ -27,7 +33,7 @@ export class TransactionService {
     const txsRequest = await this.axios.get<Payload<Transaction[]>>(txsEndpoint)
 
     if (txsRequest.status !== HttpStatus.OK) {
-      throw new BadRequestException(txsRequest.data.message)
+      throw new NotFoundException('No transactions found.')
     }
 
     const blocks = await this.blockchainService.getBlocks({})
@@ -71,7 +77,7 @@ export class TransactionService {
     const transaction = transactions.find((transaction) => transaction._id === id)
 
     if (!transaction) {
-      throw new BadRequestException('Transaction not found.')
+      throw new NotFoundException('Transaction not found.')
     }
     return transaction
   }

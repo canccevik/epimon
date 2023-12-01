@@ -8,8 +8,15 @@ export function cn(...inputs: ClassValue[]) {
 
 const ROOT_NODE_URI = process.env.NEXT_PUBLIC_EPISCAN_API_URI
 
-export const fetcher = (endpoint: string) =>
-  fetch(ROOT_NODE_URI + endpoint).then((res) => res.json())
+export const fetcher = async (url: string) => {
+  const response = await fetch(ROOT_NODE_URI + url)
+  const data = await response.json()
+
+  if (!response.ok) {
+    throw data
+  }
+  return data
+}
 
 export const shortenString = (text: string) =>
   text.length >= 20 ? text.slice(0, 5) + '...' + text.slice(text.length - 8, text.length) : text

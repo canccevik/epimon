@@ -1,5 +1,5 @@
-import { Loader } from 'lucide-react'
 import { Card } from './ui/card'
+import LoaderCard from './loader-card'
 
 interface ComponentProps {
   icon: React.ReactNode
@@ -16,10 +16,10 @@ export default function InfoCard({ icon, title, description, isLoading = true }:
       </div>
 
       {isLoading ? (
-        <Loader className="animate-spin" />
+        <LoaderCard className="border-none p-7" />
       ) : (
         <div className="line-clamp-2">
-          <h1 className="text-4xl font-semibold tracking-wider">{title}</h1>
+          <h1 className="text-4xl font-semibold tracking-wider">{title ?? 0}</h1>
           <p className="mt-3 font-medium text-lg">{description}</p>
         </div>
       )}

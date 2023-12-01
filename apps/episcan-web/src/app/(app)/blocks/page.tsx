@@ -16,38 +16,44 @@ import useSWR from 'swr'
 import PaginationSection from '@/components/pagination-section'
 import { useState } from 'react'
 import TableLoader from '@/components/loader-card'
+import ErrorCard from '@/components/error-card'
 
 export default function Blocks() {
-  const [page, setPage] = useState(1)
   const blockCount = 10
+  const [page, setPage] = useState(1)
 
-  const { data } = useSWR<Payload<Block[]>>(`/chain?page=${page}&limit=${blockCount}`, fetcher)
+  const { data, isLoading, error } = useSWR<Payload<Block[]>, Payload<null>>(
+    `/chain?page=${page}&limit=${blockCount}`,
+    fetcher
+  )
 
   return (
     <div className="flex flex-col">
       <h1 className="text-4xl font-semibold tracking-wide">Blocks</h1>
 
       <div className="mt-10">
-        {!data ? (
+        {error ? (
+          <ErrorCard message={error.message} />
+        ) : isLoading ? (
           <TableLoader />
         ) : (
-          <Table>
-            <TableCaption>
-              {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
-            </TableCaption>
+          data && (
+            <Table>
+              <TableCaption>
+                {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
+              </TableCaption>
 
-            <TableHeader>
-              <TableRow>
-                <TableHead>Block</TableHead>
-                <TableHead>Age</TableHead>
-                <TableHead>Mined by</TableHead>
-                <TableHead>Reward</TableHead>
-              </TableRow>
-            </TableHeader>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Block</TableHead>
+                  <TableHead>Age</TableHead>
+                  <TableHead>Mined by</TableHead>
+                  <TableHead>Reward</TableHead>
+                </TableRow>
+              </TableHeader>
 
-            <TableBody>
-              {data &&
-                data.data?.map((block, i) => {
+              <TableBody>
+                {data.data?.map((block, i) => {
                   return (
                     <TableRow key={i}>
                       <TableCell className="text-main-blue">
@@ -70,8 +76,9 @@ export default function Blocks() {
                     </TableRow>
                   )
                 })}
-            </TableBody>
-          </Table>
+              </TableBody>
+            </Table>
+          )
         )}
       </div>
     </div>

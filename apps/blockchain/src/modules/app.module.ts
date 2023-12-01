@@ -3,7 +3,7 @@ import { Module } from '@nestjs/common'
 import { EnvalidModule } from 'nestjs-envalid'
 import { DatabaseModule } from './database/database.module'
 import { FeaturesModule } from '@features/features.module'
-import { LoggerModule } from '@epimon/common'
+import { AxiosModule, LoggerModule } from '@epimon/common'
 
 @Module({
   imports: [
@@ -14,7 +14,8 @@ import { LoggerModule } from '@epimon/common'
     }),
     FeaturesModule,
     DatabaseModule,
-    LoggerModule
+    LoggerModule,
+    AxiosModule
   ]
 })
 export class AppModule {}

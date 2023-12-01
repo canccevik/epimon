@@ -1,5 +1,6 @@
 'use client'
 
+import ErrorCard from '@/components/error-card'
 import TableLoader from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
@@ -12,17 +13,23 @@ import useSWR from 'swr'
 
 export default function BlockDetail() {
   const params = useParams()
-  const { data, isLoading } = useSWR<Payload<Block>>(`/chain/${params.id}`, fetcher)
+  const { data, isLoading, error } = useSWR<Payload<Block>, Payload<null>>(
+    `/chain/${params.id}`,
+    fetcher
+  )
 
   return (
     <div className="flex flex-col">
       <h1 className="text-4xl font-semibold tracking-wide">Block details</h1>
 
       <div className="mt-10">
-        {isLoading ? (
+        {error ? (
+          <ErrorCard message={error.message} />
+        ) : isLoading ? (
           <TableLoader />
         ) : (
-          data?.data && (
+          data &&
+          data.data && (
             <Table>
               <TableBody>
                 <TableRow>

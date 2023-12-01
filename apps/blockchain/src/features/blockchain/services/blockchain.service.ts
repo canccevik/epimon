@@ -1,25 +1,31 @@
-import { Inject, Injectable } from '@nestjs/common'
+import { Inject, Injectable, NotFoundException } from '@nestjs/common'
 import { BlockService } from './block.service'
 import { TransactionService } from '@features/transaction/services'
 import { Block, BlockDocument } from '../schemas'
-import axios from 'axios'
 import { Config, ENV } from '@config/index'
-import { Payload, PaginationResult, PaginationDto } from '@epimon/common'
+import { Payload, PaginationResult, PaginationDto, AXIOS_INSTANCE } from '@epimon/common'
 import { TransactionDocument } from '@features/transaction/schemas'
 import { BlockRepository } from '../repositories'
 import { AddMinedBlockDto } from '../dto'
+import { Axios } from 'axios'
 
 @Injectable()
 export class BlockchainService {
   constructor(
     @Inject(ENV) private readonly config: Config,
+    @Inject(AXIOS_INSTANCE) private readonly axios: Axios,
     private readonly blockService: BlockService,
     private readonly blockRepository: BlockRepository,
     private readonly transactionService: TransactionService
   ) {}
 
   public async getChain(query: PaginationDto): Promise<PaginationResult<Block[]>> {
-    return this.blockRepository.paginate(query)
+    const blocks = await this.blockRepository.paginate(query)
+
+    if (blocks.totalRecords === 0) {
+      throw new NotFoundException('No block found.')
+    }
+    return blocks
   }
 
   public async isChainValid(): Promise<boolean> {
@@ -58,7 +64,7 @@ export class BlockchainService {
 
   public async fetchOrCreateGenesisBlock(): Promise<Block> {
     const rootNodeUri = this.config.ROOT_NODE_URI
-    const { data } = await axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
+    const { data } = await this.axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
 
     if (data.statusCode === 200 && data.data.length > 0) {
       return data.data.find(
@@ -72,8 +78,8 @@ export class BlockchainService {
     await this.blockService.addGenesisBlockToChain()
 
     const rootNodeUri = this.config.ROOT_NODE_URI
-    const chainRequest = await axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
-    const transactionPoolRequest = await axios.get<Payload<TransactionDocument[]>>(
+    const chainRequest = await this.axios.get<Payload<BlockDocument[]>>(rootNodeUri + '/chain')
+    const transactionPoolRequest = await this.axios.get<Payload<TransactionDocument[]>>(
       rootNodeUri + '/transactions/pool'
     )
 

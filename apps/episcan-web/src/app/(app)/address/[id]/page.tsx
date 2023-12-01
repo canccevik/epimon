@@ -19,17 +19,18 @@ import {
 } from '@/components/ui/table'
 import Link from 'next/link'
 import TableLoader from '@/components/loader-card'
+import ErrorCard from '@/components/error-card'
 
 export default function Address() {
   const transactionCount = 10
   const [page, setPage] = useState(1)
   const params = useParams()
 
-  const balanceRequest = useSWR<Payload<{ balance: number }>>(
+  const balanceRequest = useSWR<Payload<{ balance: number }>, Payload<null>>(
     `/wallets/${params.id}/balance`,
     fetcher
   )
-  const txsRequest = useSWR<Payload<Transaction[]>>(
+  const txsRequest = useSWR<Payload<Transaction[]>, Payload<null>>(
     `/wallets/${params.id}/transactions?page=${page}&limit=${transactionCount}`,
     fetcher
   )
@@ -48,85 +49,96 @@ export default function Address() {
           />
         </div>
 
-        {!balanceRequest.data ? (
+        {balanceRequest.error ? (
+          <ErrorCard message={balanceRequest.error.message} />
+        ) : balanceRequest.isLoading ? (
           <TableLoader className="w-max" />
         ) : (
-          <Card className="w-max bg-white p-5 border border-gray-200 rounded-lg">
-            <h6>Balance</h6>
-            <h1 className="text-3xl mt-2">{balanceRequest.data.data?.balance} EPM</h1>
-          </Card>
+          balanceRequest.data && (
+            <Card className="w-max bg-white p-5 border border-gray-200 rounded-lg">
+              <h6>Balance</h6>
+              <h1 className="text-3xl mt-2">{balanceRequest.data.data?.balance} EPM</h1>
+            </Card>
+          )
         )}
       </div>
 
       <div className="mt-10">
         <h1 className="text-lg mb-5">Transactions</h1>
 
-        {!txsRequest.data ? (
+        {txsRequest.error ? (
+          <ErrorCard message={txsRequest.error.message} />
+        ) : txsRequest.isLoading ? (
           <TableLoader />
         ) : (
-          <Table>
-            <TableCaption>
-              {txsRequest.data.meta && (
-                <PaginationSection meta={txsRequest.data.meta} page={page} setPage={setPage} />
-              )}
-            </TableCaption>
+          txsRequest.data && (
+            <Table>
+              <TableCaption>
+                {txsRequest.data.meta && (
+                  <PaginationSection meta={txsRequest.data.meta} page={page} setPage={setPage} />
+                )}
+              </TableCaption>
 
-            <TableHeader>
-              <TableRow>
-                <TableHead>Transaction</TableHead>
-                <TableHead>Signature</TableHead>
-                <TableHead>Age</TableHead>
-                <TableHead>From</TableHead>
-                <TableHead>To</TableHead>
-                <TableHead>Value</TableHead>
-              </TableRow>
-            </TableHeader>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Transaction</TableHead>
+                  <TableHead>Signature</TableHead>
+                  <TableHead>Age</TableHead>
+                  <TableHead>From</TableHead>
+                  <TableHead>To</TableHead>
+                  <TableHead>Value</TableHead>
+                </TableRow>
+              </TableHeader>
 
-            <TableBody>
-              {txsRequest.data.data?.map((transaction, i) => {
-                return (
-                  <TableRow key={i}>
-                    <TableCell>
-                      {transaction._id ? (
-                        <Link href={`/transactions/${transaction._id}`} className="text-main-blue">
-                          {transaction._id}
+              <TableBody>
+                {txsRequest.data.data?.map((transaction, i) => {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell>
+                        {transaction._id ? (
+                          <Link
+                            href={`/transactions/${transaction._id}`}
+                            className="text-main-blue"
+                          >
+                            {transaction._id}
+                          </Link>
+                        ) : (
+                          'Null'
+                        )}
+                      </TableCell>
+
+                      <TableCell>
+                        {transaction.signature ? shortenString(transaction.signature) : 'Null'}
+                      </TableCell>
+
+                      <TableCell>{getRelativeTimeFromTimestamp(transaction.timestamp)}</TableCell>
+
+                      <TableCell>
+                        {transaction.senderAddress ? (
+                          <Link
+                            href={`/address/${transaction.senderAddress}`}
+                            className="text-main-blue"
+                          >
+                            {shortenString(transaction.senderAddress)}
+                          </Link>
+                        ) : (
+                          'System'
+                        )}
+                      </TableCell>
+
+                      <TableCell className="text-main-blue">
+                        <Link href={`/address/${transaction.receiverAddress}`}>
+                          {shortenString(transaction.receiverAddress)}
                         </Link>
-                      ) : (
-                        'Null'
-                      )}
-                    </TableCell>
+                      </TableCell>
 
-                    <TableCell>
-                      {transaction.signature ? shortenString(transaction.signature) : 'Null'}
-                    </TableCell>
-
-                    <TableCell>{getRelativeTimeFromTimestamp(transaction.timestamp)}</TableCell>
-
-                    <TableCell>
-                      {transaction.senderAddress ? (
-                        <Link
-                          href={`/address/${transaction.senderAddress}`}
-                          className="text-main-blue"
-                        >
-                          {shortenString(transaction.senderAddress)}
-                        </Link>
-                      ) : (
-                        'System'
-                      )}
-                    </TableCell>
-
-                    <TableCell className="text-main-blue">
-                      <Link href={`/address/${transaction.receiverAddress}`}>
-                        {shortenString(transaction.receiverAddress)}
-                      </Link>
-                    </TableCell>
-
-                    <TableCell>{transaction.amount} EPM</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
+                      <TableCell>{transaction.amount} EPM</TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          )
         )}
       </div>
     </div>

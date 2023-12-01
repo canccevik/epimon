@@ -16,12 +16,13 @@ import {
 } from '@/components/ui/table'
 import { fetcher, shortenString } from '@/lib/utils'
 import TableLoader from '@/components/loader-card'
+import ErrorCard from '@/components/error-card'
 
 export default function Miners() {
   const minerCount = 10
   const [page, setPage] = useState(1)
 
-  const { data } = useSWR<Payload<Miner[]>>(
+  const { data, isLoading, error } = useSWR<Payload<Miner[]>, Payload<null>>(
     `/wallets/miners?page=${page}&limit=${minerCount}`,
     fetcher
   )
@@ -31,38 +32,44 @@ export default function Miners() {
       <h1 className="text-4xl font-semibold tracking-wide">Miners</h1>
 
       <div className="mt-10">
-        {!data ? (
+        {error ? (
+          <ErrorCard message={error.message} />
+        ) : isLoading ? (
           <TableLoader />
         ) : (
-          <Table>
-            <TableCaption>
-              {data?.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
-            </TableCaption>
+          data && (
+            <Table>
+              <TableCaption>
+                {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
+              </TableCaption>
 
-            <TableHeader>
-              <TableRow>
-                <TableHead>Rank</TableHead>
-                <TableHead>Address</TableHead>
-                <TableHead>Total reward</TableHead>
-              </TableRow>
-            </TableHeader>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Rank</TableHead>
+                  <TableHead>Address</TableHead>
+                  <TableHead>Total reward</TableHead>
+                </TableRow>
+              </TableHeader>
 
-            <TableBody>
-              {data?.data?.map((miner, i) => {
-                return (
-                  <TableRow key={i}>
-                    <TableCell>{miner.rank}</TableCell>
+              <TableBody>
+                {data.data?.map((miner, i) => {
+                  return (
+                    <TableRow key={i}>
+                      <TableCell>{miner.rank}</TableCell>
 
-                    <TableCell className="text-main-blue">
-                      <Link href={`/address/${miner.address}`}>{shortenString(miner.address)}</Link>
-                    </TableCell>
+                      <TableCell className="text-main-blue">
+                        <Link href={`/address/${miner.address}`}>
+                          {shortenString(miner.address)}
+                        </Link>
+                      </TableCell>
 
-                    <TableCell>{miner.totalReward} EPM</TableCell>
-                  </TableRow>
-                )
-              })}
-            </TableBody>
-          </Table>
+                      <TableCell>{miner.totalReward} EPM</TableCell>
+                    </TableRow>
+                  )
+                })}
+              </TableBody>
+            </Table>
+          )
         )}
       </div>
     </div>

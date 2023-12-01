@@ -14,11 +14,19 @@ import {
 import { fetcher, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
 import LoaderCard from './loader-card'
+import ErrorCard from './error-card'
 
 export default function LastFiveBlocks() {
-  const { data } = useSWR<Payload<Block[]>>('/chain?page=1&limit=5', fetcher)
+  const { data, isLoading, error } = useSWR<Payload<Block[]>, Payload<null>>(
+    '/chain?page=1&limit=5',
+    fetcher
+  )
 
-  if (!data) {
+  if (error) {
+    return <ErrorCard message={error.message} />
+  }
+
+  if (isLoading) {
     return <LoaderCard />
   }
 
