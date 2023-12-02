@@ -4,7 +4,7 @@ import ErrorCard from '@/components/error-card'
 import LoaderCard from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
 import { appConfig } from '@/config/app'
-import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
+import { copyToClipboard, fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
 import { Copy } from 'lucide-react'
 import moment from 'moment'
@@ -40,7 +40,7 @@ export default function BlockDetail() {
                     <Copy
                       className="cursor-pointer"
                       size={20}
-                      onClick={() => navigator.clipboard.writeText(params.id.toString())}
+                      onClick={() => copyToClipboard(params.id.toString())}
                     />
                   </TableCell>
                 </TableRow>
