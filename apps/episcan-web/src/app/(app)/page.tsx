@@ -18,7 +18,7 @@ export default function Home() {
     <div className="flex flex-col gap-y-10">
       <SearchBanner />
 
-      <div className="w-full flex justify-between mt-8">
+      <div className="w-full flex flex-col gap-y-16 md:flex-row md:justify-between mt-8">
         <InfoCard
           title={blocksRequest.data?.meta?.totalRecords.toString()}
           description="Blocks"
@@ -41,8 +41,8 @@ export default function Home() {
         />
       </div>
 
-      <div className="flex justify-between gap-x-10">
-        <div className="w-6/12">
+      <div className="flex flex-col lg:flex-row lg:justify-between gap-10">
+        <div className="w-full lg:w-6/12">
           <h1 className="text-lg">The latest 5 Blocks</h1>
 
           <div className="mt-5">
@@ -50,7 +50,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="w-6/12">
+        <div className="w-full lg:w-6/12">
           <h1 className="text-lg">The latest 5 Transactions</h1>
 
           <div className="mt-5">

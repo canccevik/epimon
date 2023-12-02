@@ -38,15 +38,15 @@ export default function SearchBanner() {
   }
 
   return (
-    <div className="w-full p-8 bg-main-black text-white dark:bg-dark-gray rounded-lg flex flex-col gap-y-5 bg-ima">
+    <div className="w-full p-8 bg-main-black text-white dark:bg-dark-gray rounded-lg flex flex-col items-center text-center sm:text-left sm:items-start gap-y-5 bg-ima">
       <h1 className="text-4xl font-medium">EPM Chain Explorer</h1>
 
-      <p className="w-6/12">
+      <p className="w-full md:w-10/12 lg:w-6/12">
         A blockchain explorer and analytics platform for Epimon Chain. It enables users to explore
         blocks, transactions and addresses on EPM.
       </p>
 
-      <form onSubmit={(e) => search(e)}>
+      <form onSubmit={(e) => search(e)} className="w-full">
         <div className="relative flex items-center">
           <Search
             className="absolute cursor-pointer text-black z-10 ml-5"
@@ -55,7 +55,7 @@ export default function SearchBanner() {
           />
 
           <Input
-            className="w-5/12 py-7 pt-8 pl-14 rounded-3xl text-main-black dark:bg-white relative"
+            className="w-full lg:w-5/12 py-7 pt-8 pl-14 rounded-3xl text-main-black dark:bg-white relative"
             placeholder="Search Block / Tx / Address"
             onChange={(e) => setSearchText(e.target.value)}
           />

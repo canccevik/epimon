@@ -4,7 +4,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <div className="w-full mt-10 p-10 flex justify-between bg-main-black dark:bg-dark-gray text-white rounded-lg">
+    <div className="w-full mt-10 p-10 flex flex-col items-center gap-y-6 md:flex-row md:justify-between bg-main-black dark:bg-dark-gray text-white rounded-lg">
       <span>&copy; {year} Epimon. All rights reserved.</span>
       <a
         href="https://github.com/canccevik/epimon"

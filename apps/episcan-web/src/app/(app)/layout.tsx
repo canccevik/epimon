@@ -12,7 +12,7 @@ export default function AppLayout({ children }: LayoutProps) {
       <Toaster />
       <Sidebar />
 
-      <div className="w-10/12 ml-auto p-10">
+      <div className="w-full sm:w-10/12 ml-auto p-5 sm:p-10 max-sm:mt-24">
         <div>{children}</div>
         <Footer />
       </div>

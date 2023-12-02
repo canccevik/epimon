@@ -25,9 +25,7 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
             <div key={i}>
               <Button
                 className={cn(
-                  page === targetPage
-                    ? 'bg-gray-400 hover:bg-gray-600'
-                    : 'bg-main-black dark:bg-white',
+                  page === targetPage ? 'bg-gray-400' : 'bg-main-black dark:bg-white',
                   'font-semibold'
                 )}
                 size={'sm'}
