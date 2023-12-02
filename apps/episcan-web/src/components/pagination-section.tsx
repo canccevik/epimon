@@ -11,15 +11,16 @@ interface Props {
 }
 
 export default function PaginationSection({ meta, page, setPage, buttonCount = 4 }: Props) {
+  const BUTTON_COUNT = meta.lastPage > buttonCount ? buttonCount : meta.lastPage
+
   return (
     <div className="flex justify-between px-5">
       <div className="flex gap-x-2">
-        {Array.from(
-          { length: meta.lastPage > buttonCount ? buttonCount : meta.lastPage },
-          (_, i) => i++
-        ).map((i) => {
+        {Array.from({ length: BUTTON_COUNT }, (_, i) => i++).map((i) => {
           const targetPage =
-            meta.lastPage - page >= buttonCount ? page + i : meta.lastPage - buttonCount + 1 + i * 1
+            meta.lastPage - page >= BUTTON_COUNT
+              ? page + i
+              : meta.lastPage - BUTTON_COUNT + 1 + i * 1
 
           return (
             <div key={i}>
@@ -37,7 +38,7 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
           )
         })}
 
-        {meta.lastPage - buttonCount > page && (
+        {meta.lastPage - BUTTON_COUNT > page && (
           <>
             <span className="text-2xl font-medium">...</span>
 

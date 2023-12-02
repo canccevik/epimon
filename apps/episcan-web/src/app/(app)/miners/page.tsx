@@ -30,14 +30,15 @@ export default function Miners() {
         ) : isLoading ? (
           <LoaderCard />
         ) : (
-          data && (
+          data &&
+          data.data && (
             <DataTable
               data={data}
               page={page}
               setPage={setPage}
               headings={['Rank', 'Address', 'Total reward']}
             >
-              {data.data?.map((miner, i) => {
+              {data.data.map((miner, i) => {
                 return (
                   <TableRow key={i}>
                     <TableCell>{miner.rank}</TableCell>

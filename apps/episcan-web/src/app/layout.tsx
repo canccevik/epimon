@@ -10,9 +10,10 @@ const prompt = Prompt({ subsets: ['latin'], weight: '400' })
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
+    default: `${siteConfig.name} - EPM Chain Explorer`,
     template: `%s - ${siteConfig.name}`
-  }
+  },
+  description: siteConfig.description
 }
 
 interface LayoutProps {
