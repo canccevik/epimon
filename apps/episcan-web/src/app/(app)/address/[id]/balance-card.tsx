@@ -6,6 +6,7 @@ import { Copy } from 'lucide-react'
 import { useParams } from 'next/navigation'
 import LoaderCard from '@/components/loader-card'
 import useSWR from 'swr'
+import { appConfig } from '@/config/app'
 
 export default function BalanceCard() {
   const params = useParams()
@@ -34,7 +35,9 @@ export default function BalanceCard() {
         data.data && (
           <Card className="w-max bg-white p-5 border border-gray-200 rounded-lg">
             <h6>Balance</h6>
-            <h1 className="text-3xl mt-2">{data.data.balance} EPM</h1>
+            <h1 className="text-3xl mt-2">
+              {data.data.balance} {appConfig.coinName}
+            </h1>
           </Card>
         )
       )}

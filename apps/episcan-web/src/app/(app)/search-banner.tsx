@@ -1,6 +1,7 @@
 'use client'
 
 import { Input } from '@/components/ui/input'
+import { appConfig } from '@/config/app'
 import { useToast } from '@/hooks/use-toast'
 import { fetcher } from '@/lib/utils'
 import { Payload, SearchResult } from '@epimon/common'
@@ -39,11 +40,11 @@ export default function SearchBanner() {
 
   return (
     <div className="w-full p-8 bg-main-black text-white dark:bg-dark-gray rounded-lg flex flex-col items-center text-center sm:text-left sm:items-start gap-y-5 bg-ima">
-      <h1 className="text-4xl font-medium">EPM Chain Explorer</h1>
+      <h1 className="text-4xl font-medium">{appConfig.coinName} Chain Explorer</h1>
 
       <p className="w-full md:w-10/12 lg:w-6/12">
         A blockchain explorer and analytics platform for Epimon Chain. It enables users to explore
-        blocks, transactions and addresses on EPM.
+        blocks, transactions and addresses on {appConfig.coinName}.
       </p>
 
       <form onSubmit={(e) => search(e)} className="w-full">

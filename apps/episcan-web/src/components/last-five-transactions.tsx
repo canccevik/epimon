@@ -15,6 +15,7 @@ import { Payload, Transaction } from '@epimon/common'
 import Link from 'next/link'
 import LoaderCard from './loader-card'
 import ErrorCard from './error-card'
+import { appConfig } from '@/config/app'
 
 export default function LastFiveTransactions() {
   const { data, isLoading, error } = useSWR<Payload<Transaction[]>, Payload<null>>(
@@ -69,7 +70,9 @@ export default function LastFiveTransactions() {
                   )}
                 </TableCell>
 
-                <TableCell>{transaction.amount} EPM</TableCell>
+                <TableCell>
+                  {transaction.amount} {appConfig.coinName}
+                </TableCell>
               </TableRow>
             )
           })}

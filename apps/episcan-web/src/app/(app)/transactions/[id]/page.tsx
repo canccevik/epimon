@@ -3,6 +3,7 @@
 import ErrorCard from '@/components/error-card'
 import LoaderCard from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
+import { appConfig } from '@/config/app'
 import { fetcher, getRelativeTimeFromTimestamp } from '@/lib/utils'
 import { Payload, TransactionWithStatus } from '@epimon/common'
 import { BadgeCheck, Copy, Loader } from 'lucide-react'
@@ -124,7 +125,7 @@ export default function TransactionDetail() {
                 <TableRow>
                   <TableCell className="text-gray-500">Value</TableCell>
                   <TableCell className="flex">
-                    <span>{data.data?.amount} EPM</span>
+                    <span>{data.data?.amount} {appConfig.coinName}</span>
                   </TableCell>
                 </TableRow>
               </TableBody>

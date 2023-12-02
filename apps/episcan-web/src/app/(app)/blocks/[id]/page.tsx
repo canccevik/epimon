@@ -3,6 +3,7 @@
 import ErrorCard from '@/components/error-card'
 import LoaderCard from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
+import { appConfig } from '@/config/app'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
 import { Copy } from 'lucide-react'
@@ -80,7 +81,9 @@ export default function BlockDetail() {
                 <TableRow>
                   <TableCell className="text-gray-500">Block reward</TableCell>
                   <TableCell className="flex">
-                    <span>{data.data.reward} EPM</span>
+                    <span>
+                      {data.data.reward} {appConfig.coinName}
+                    </span>
                   </TableCell>
                 </TableRow>
 

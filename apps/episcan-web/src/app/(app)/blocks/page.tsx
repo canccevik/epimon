@@ -17,6 +17,7 @@ import PaginationSection from '@/components/pagination-section'
 import { useState } from 'react'
 import LoaderCard from '@/components/loader-card'
 import ErrorCard from '@/components/error-card'
+import { appConfig } from '@/config/app'
 
 export default function Blocks() {
   const blockCount = 10
@@ -72,7 +73,9 @@ export default function Blocks() {
                         )}
                       </TableCell>
 
-                      <TableCell>{block.reward} EPM</TableCell>
+                      <TableCell>
+                        {block.reward} {appConfig.coinName}
+                      </TableCell>
                     </TableRow>
                   )
                 })}

@@ -9,3 +9,7 @@ export type NavbarItem = {
   path: string
   icon?: React.ReactNode
 }
+
+export type AppConfig = {
+  coinName: string
+}

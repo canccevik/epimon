@@ -11,6 +11,7 @@ import ErrorCard from '@/components/error-card'
 import BalanceCard from './balance-card'
 import { TableRow, TableCell } from '@/components/ui/table'
 import DataTable from '@/components/data-table'
+import { appConfig } from '@/config/app'
 
 export default function Address() {
   const TRANSACTION_COUNT = 10
@@ -81,7 +82,9 @@ export default function Address() {
                     </Link>
                   </TableCell>
 
-                  <TableCell>{transaction.amount} EPM</TableCell>
+                  <TableCell>
+                    {transaction.amount} {appConfig.coinName}
+                  </TableCell>
                 </TableRow>
               ))}
             </DataTable>

@@ -17,6 +17,7 @@ import {
 import { fetcher, shortenString } from '@/lib/utils'
 import LoaderCard from '@/components/loader-card'
 import ErrorCard from '@/components/error-card'
+import { appConfig } from '@/config/app'
 
 export default function Miners() {
   const minerCount = 10
@@ -63,7 +64,9 @@ export default function Miners() {
                         </Link>
                       </TableCell>
 
-                      <TableCell>{miner.totalReward} EPM</TableCell>
+                      <TableCell>
+                        {miner.totalReward} {appConfig.coinName}
+                      </TableCell>
                     </TableRow>
                   )
                 })}

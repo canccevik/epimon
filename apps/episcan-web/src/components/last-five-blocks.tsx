@@ -15,6 +15,7 @@ import { fetcher, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
 import LoaderCard from './loader-card'
 import ErrorCard from './error-card'
+import { appConfig } from '@/config/app'
 
 export default function LastFiveBlocks() {
   const { data, isLoading, error } = useSWR<Payload<Block[]>, Payload<null>>(
@@ -62,7 +63,9 @@ export default function LastFiveBlocks() {
                     'System'
                   )}
                 </TableCell>
-                <TableCell>{block.reward} EPM</TableCell>
+                <TableCell>
+                  {block.reward} {appConfig.coinName}
+                </TableCell>
               </TableRow>
             )
           })}

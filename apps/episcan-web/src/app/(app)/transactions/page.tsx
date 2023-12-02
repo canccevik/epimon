@@ -18,6 +18,7 @@ import {
 } from '@/components/ui/table'
 import LoaderCard from '@/components/loader-card'
 import ErrorCard from '@/components/error-card'
+import { appConfig } from '@/config/app'
 
 export default function Transactions() {
   const searchParams = useSearchParams()
@@ -122,7 +123,9 @@ export default function Transactions() {
                         )}
                       </TableCell>
 
-                      <TableCell>{transaction.amount} EPM</TableCell>
+                      <TableCell>
+                        {transaction.amount} {appConfig.coinName}
+                      </TableCell>
                     </TableRow>
                   )
                 })}
