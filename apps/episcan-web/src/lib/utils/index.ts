@@ -18,7 +18,9 @@ export const fetcher = async (url: string) => {
   return data
 }
 
-export const shortenString = (text: string) =>
-  text.length >= 20 ? text.slice(0, 5) + '...' + text.slice(text.length - 8, text.length) : text
+export const shortenString = (text: string, lastPartLength: number = 8) =>
+  text.length >= 20
+    ? text.slice(0, 5) + '...' + text.slice(text.length - lastPartLength, text.length)
+    : text
 
 export const getRelativeTimeFromTimestamp = (timestamp: number) => moment(timestamp).fromNow()

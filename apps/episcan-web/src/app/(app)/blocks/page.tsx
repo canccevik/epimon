@@ -65,7 +65,7 @@ export default function Blocks() {
                       <TableCell>
                         {block.miner ? (
                           <Link href={`/address/${block.miner}`} className="text-main-blue">
-                            {shortenString(block.miner)}
+                            {shortenString(block.miner, block.miner.length / 3)}
                           </Link>
                         ) : (
                           'System'

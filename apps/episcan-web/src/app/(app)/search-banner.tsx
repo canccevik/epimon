@@ -38,7 +38,7 @@ export default function SearchBanner() {
   }
 
   return (
-    <div className="w-full p-8 bg-main-black text-white rounded-lg flex flex-col gap-y-5 bg-ima">
+    <div className="w-full p-8 bg-main-black text-white dark:bg-dark-gray rounded-lg flex flex-col gap-y-5 bg-ima">
       <h1 className="text-4xl font-medium">EPM Chain Explorer</h1>
 
       <p className="w-6/12">
@@ -55,7 +55,7 @@ export default function SearchBanner() {
           />
 
           <Input
-            className="w-5/12 p-7 pl-14 rounded-3xl text-main-black relative"
+            className="w-5/12 py-7 pt-8 pl-14 rounded-3xl text-main-black dark:bg-white relative"
             placeholder="Search Block / Tx / Address"
             onChange={(e) => setSearchText(e.target.value)}
           />

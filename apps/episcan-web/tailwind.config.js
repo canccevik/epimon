@@ -19,6 +19,7 @@ module.exports = {
       colors: {
         'main-blue': 'var(--main-blue)',
         'main-black': 'var(--main-black)',
+        'dark-gray': 'var(--dark-gray)',
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
@@ -74,5 +75,5 @@ module.exports = {
       }
     }
   },
-  plugins: [require('tailwindcss-animate'), require('@tailwindcss/line-clamp')]
+  plugins: [require('tailwindcss-animate')]
 }

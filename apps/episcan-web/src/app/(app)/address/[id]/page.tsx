@@ -41,7 +41,7 @@ export default function Address() {
 
       <div className="flex flex-col gap-y-5">
         <div className="flex gap-x-2 mt-5">
-          <h6>{shortenString(params.id.toString())}</h6>
+          <h6>{shortenString(params.id.toString(), params.id.length / 4)}</h6>
           <Copy
             className="cursor-pointer"
             size={20}

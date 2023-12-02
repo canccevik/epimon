@@ -10,8 +10,8 @@ interface ComponentProps {
 
 export default function InfoCard({ icon, title, description, isLoading = true }: ComponentProps) {
   return (
-    <Card className="w-3/12 p-14 bg-white flex justify-center items-center relative text-center rounded-lg border-gray-200 border">
-      <div className="w-[80px] h-[80px] bg-white rounded-full absolute text-center -top-10 grid place-items-center border-gray-200 border">
+    <Card className="w-3/12 p-14 bg-white dark:border-dark-gray flex justify-center items-center relative text-center rounded-lg border-gray-200 border">
+      <div className="w-[80px] h-[80px] bg-white dark:bg-dark-gray dark:border-main-black rounded-full absolute text-center -top-10 grid place-items-center border-gray-200 border">
         <div className="text-main-blue">{icon}</div>
       </div>
 

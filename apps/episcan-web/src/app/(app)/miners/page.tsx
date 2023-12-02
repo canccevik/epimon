@@ -59,7 +59,7 @@ export default function Miners() {
 
                       <TableCell className="text-main-blue">
                         <Link href={`/address/${miner.address}`}>
-                          {shortenString(miner.address)}
+                          {shortenString(miner.address, miner.address.length / 2)}
                         </Link>
                       </TableCell>
 

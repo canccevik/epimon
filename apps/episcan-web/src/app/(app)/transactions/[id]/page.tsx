@@ -81,9 +81,12 @@ export default function TransactionDetail() {
                 <TableRow>
                   <TableCell className="text-gray-500">From</TableCell>
                   <TableCell className="flex gap-x-2">
-                    <span className="text-main-blue">
+                    <span>
                       {data.data?.senderAddress ? (
-                        <Link href={`/address/${data.data.senderAddress}`}>
+                        <Link
+                          href={`/address/${data.data.senderAddress}`}
+                          className="text-main-blue"
+                        >
                           {data.data.senderAddress}
                         </Link>
                       ) : (

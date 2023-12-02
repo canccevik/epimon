@@ -69,7 +69,9 @@ export default function BlockDetail() {
                   <TableCell className="flex flex-col">
                     <span className="text-main-blue">
                       <Link href={`/address/${data.data.miner}`}>
-                        {data.data.miner ? shortenString(data.data.miner) : 'System'}
+                        {data.data.miner
+                          ? shortenString(data.data.miner, data.data.miner.length / 3)
+                          : 'System'}
                       </Link>
                     </span>
                   </TableCell>

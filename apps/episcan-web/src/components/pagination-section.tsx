@@ -25,7 +25,10 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
             <div key={i}>
               <Button
                 className={cn(
-                  page === targetPage ? 'bg-gray-400 hover:bg-gray-400 ' : 'bg-main-black'
+                  page === targetPage
+                    ? 'bg-gray-400 hover:bg-gray-600'
+                    : 'bg-main-black dark:bg-white',
+                  'font-semibold'
                 )}
                 size={'sm'}
                 onClick={() => setPage(targetPage)}
@@ -40,7 +43,11 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
           <>
             <span className="text-2xl font-medium">...</span>
 
-            <Button className="bg-main-black" size={'sm'} onClick={() => setPage(meta.lastPage)}>
+            <Button
+              className="bg-main-black dark:bg-white font-semibold"
+              size={'sm'}
+              onClick={() => setPage(meta.lastPage)}
+            >
               {meta.lastPage}
             </Button>
           </>
@@ -50,18 +57,26 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
       <div className="flex gap-x-2">
         <Button
           size={'sm'}
-          className={page > 1 ? 'bg-main-black' : 'bg-gray-400 hover:bg-gray-400'}
+          className={cn(
+            page > 1 ? 'bg-main-black dark:bg-white' : 'bg-gray-400 hover:bg-gray-400',
+            'flex font-medium'
+          )}
           onClick={() => page > 1 && setPage(page - 1)}
         >
-          <ArrowLeft size={16} /> <span>Previous</span>
+          <ArrowLeft size={16} />
+          <span className="mt-1 pl-1">Previous</span>
         </Button>
 
         <Button
           size={'sm'}
-          className={page < meta.lastPage ? 'bg-main-black' : 'bg-gray-400 hover:bg-gray-400'}
+          className={cn(
+            page < meta.lastPage ? 'bg-main-black dark:bg-white' : 'bg-gray-400 hover:bg-gray-400',
+            'font-medium'
+          )}
           onClick={() => page < meta.lastPage && setPage(page + 1)}
         >
-          <span>Next</span> <ArrowRight size={16} />
+          <span className="mt-1 pr-1">Next</span>
+          <ArrowRight size={16} />
         </Button>
       </div>
     </div>
