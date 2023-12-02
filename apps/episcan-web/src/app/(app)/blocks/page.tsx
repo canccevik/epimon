@@ -1,30 +1,22 @@
 'use client'
 
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from '@/components/ui/table'
+import { TableCell, TableRow } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
 import Link from 'next/link'
 import useSWR from 'swr'
-import PaginationSection from '@/components/pagination-section'
 import { useState } from 'react'
 import LoaderCard from '@/components/loader-card'
 import ErrorCard from '@/components/error-card'
 import { appConfig } from '@/config/app'
+import DataTable from '@/components/data-table'
 
 export default function Blocks() {
-  const blockCount = 10
+  const BLOCK_COUNT = 10
   const [page, setPage] = useState(1)
 
   const { data, isLoading, error } = useSWR<Payload<Block[]>, Payload<null>>(
-    `/chain?page=${page}&limit=${blockCount}`,
+    `/chain?page=${page}&limit=${BLOCK_COUNT}`,
     fetcher
   )
 
@@ -38,49 +30,40 @@ export default function Blocks() {
         ) : isLoading ? (
           <LoaderCard />
         ) : (
-          data && (
-            <Table>
-              <TableCaption>
-                {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
-              </TableCaption>
+          data &&
+          data.data && (
+            <DataTable
+              data={data}
+              page={page}
+              setPage={setPage}
+              headings={['Block', 'Age', 'Mined by', 'Reward']}
+            >
+              {data.data.map((block, i) => {
+                return (
+                  <TableRow key={i}>
+                    <TableCell className="text-main-blue">
+                      <Link href={`/blocks/${block._id}`}>{block._id}</Link>
+                    </TableCell>
 
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Block</TableHead>
-                  <TableHead>Age</TableHead>
-                  <TableHead>Mined by</TableHead>
-                  <TableHead>Reward</TableHead>
-                </TableRow>
-              </TableHeader>
+                    <TableCell>{getRelativeTimeFromTimestamp(block.timestamp)}</TableCell>
 
-              <TableBody>
-                {data.data?.map((block, i) => {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell className="text-main-blue">
-                        <Link href={`/blocks/${block._id}`}>{block._id}</Link>
-                      </TableCell>
+                    <TableCell>
+                      {block.miner ? (
+                        <Link href={`/address/${block.miner}`} className="text-main-blue">
+                          {shortenString(block.miner, block.miner.length / 3)}
+                        </Link>
+                      ) : (
+                        'System'
+                      )}
+                    </TableCell>
 
-                      <TableCell>{getRelativeTimeFromTimestamp(block.timestamp)}</TableCell>
-
-                      <TableCell>
-                        {block.miner ? (
-                          <Link href={`/address/${block.miner}`} className="text-main-blue">
-                            {shortenString(block.miner, block.miner.length / 3)}
-                          </Link>
-                        ) : (
-                          'System'
-                        )}
-                      </TableCell>
-
-                      <TableCell>
-                        {block.reward} {appConfig.coinName}
-                      </TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
+                    <TableCell>
+                      {block.reward} {appConfig.coinName}
+                    </TableCell>
+                  </TableRow>
+                )
+              })}
+            </DataTable>
           )
         )}
       </div>
