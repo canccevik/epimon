@@ -1,6 +1,6 @@
 import ErrorCard from '@/components/error-card'
 import { Card } from '@/components/ui/card'
-import { fetcher, shortenString } from '@/lib/utils'
+import { copyToClipboard, fetcher, shortenString } from '@/lib/utils'
 import { Payload } from '@epimon/common'
 import { Copy } from 'lucide-react'
 import { useParams } from 'next/navigation'
@@ -9,7 +9,6 @@ import useSWR from 'swr'
 
 export default function BalanceCard() {
   const params = useParams()
-
   const { data, isLoading, error } = useSWR<Payload<{ balance: number }>, Payload<null>>(
     `/wallets/${params.id}/balance`,
     fetcher
@@ -22,7 +21,7 @@ export default function BalanceCard() {
         <Copy
           className="cursor-pointer"
           size={20}
-          onClick={() => navigator.clipboard.writeText(params.id.toString())}
+          onClick={() => copyToClipboard(params.id.toString())}
         />
       </div>
 

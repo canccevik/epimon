@@ -1,6 +1,5 @@
 'use client'
 
-import PaginationSection from '@/components/pagination-section'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Payload, Transaction } from '@epimon/common'
 import { useParams } from 'next/navigation'
@@ -10,21 +9,14 @@ import Link from 'next/link'
 import LoaderCard from '@/components/loader-card'
 import ErrorCard from '@/components/error-card'
 import BalanceCard from './balance-card'
-import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell,
-  TableCaption
-} from '@/components/ui/table'
+import { TableRow, TableCell } from '@/components/ui/table'
+import DataTable from '@/components/data-table'
 
 export default function Address() {
   const TRANSACTION_COUNT = 10
 
-  const [page, setPage] = useState(1)
   const params = useParams()
+  const [page, setPage] = useState(1)
 
   const { data, isLoading, error } = useSWR<Payload<Transaction[]>, Payload<null>>(
     `/wallets/${params.id}/transactions?page=${page}&limit=${TRANSACTION_COUNT}`,
@@ -46,70 +38,53 @@ export default function Address() {
           <LoaderCard />
         ) : (
           data && (
-            <Table>
-              <TableCaption>
-                {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
-              </TableCaption>
+            <DataTable
+              data={data}
+              page={page}
+              setPage={setPage}
+              headings={['Transaction', 'Signature', 'Age', 'From', 'To', 'Value']}
+            >
+              {data.data?.map((transaction, i) => (
+                <TableRow key={i}>
+                  <TableCell>
+                    {transaction._id ? (
+                      <Link href={`/transactions/${transaction._id}`} className="text-main-blue">
+                        {transaction._id}
+                      </Link>
+                    ) : (
+                      'Null'
+                    )}
+                  </TableCell>
 
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Transaction</TableHead>
-                  <TableHead>Signature</TableHead>
-                  <TableHead>Age</TableHead>
-                  <TableHead>From</TableHead>
-                  <TableHead>To</TableHead>
-                  <TableHead>Value</TableHead>
+                  <TableCell>
+                    {transaction.signature ? shortenString(transaction.signature) : 'Null'}
+                  </TableCell>
+
+                  <TableCell>{getRelativeTimeFromTimestamp(transaction.timestamp)}</TableCell>
+
+                  <TableCell>
+                    {transaction.senderAddress ? (
+                      <Link
+                        href={`/address/${transaction.senderAddress}`}
+                        className="text-main-blue"
+                      >
+                        {shortenString(transaction.senderAddress)}
+                      </Link>
+                    ) : (
+                      'System'
+                    )}
+                  </TableCell>
+
+                  <TableCell className="text-main-blue">
+                    <Link href={`/address/${transaction.receiverAddress}`}>
+                      {shortenString(transaction.receiverAddress)}
+                    </Link>
+                  </TableCell>
+
+                  <TableCell>{transaction.amount} EPM</TableCell>
                 </TableRow>
-              </TableHeader>
-
-              <TableBody>
-                {data.data?.map((transaction, i) => {
-                  return (
-                    <TableRow key={i}>
-                      <TableCell>
-                        {transaction._id ? (
-                          <Link
-                            href={`/transactions/${transaction._id}`}
-                            className="text-main-blue"
-                          >
-                            {transaction._id}
-                          </Link>
-                        ) : (
-                          'Null'
-                        )}
-                      </TableCell>
-
-                      <TableCell>
-                        {transaction.signature ? shortenString(transaction.signature) : 'Null'}
-                      </TableCell>
-
-                      <TableCell>{getRelativeTimeFromTimestamp(transaction.timestamp)}</TableCell>
-
-                      <TableCell>
-                        {transaction.senderAddress ? (
-                          <Link
-                            href={`/address/${transaction.senderAddress}`}
-                            className="text-main-blue"
-                          >
-                            {shortenString(transaction.senderAddress)}
-                          </Link>
-                        ) : (
-                          'System'
-                        )}
-                      </TableCell>
-
-                      <TableCell className="text-main-blue">
-                        <Link href={`/address/${transaction.receiverAddress}`}>
-                          {shortenString(transaction.receiverAddress)}
-                        </Link>
-                      </TableCell>
-
-                      <TableCell>{transaction.amount} EPM</TableCell>
-                    </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
+              ))}
+            </DataTable>
           )
         )}
       </div>

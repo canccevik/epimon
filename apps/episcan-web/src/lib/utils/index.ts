@@ -24,3 +24,5 @@ export const shortenString = (text: string, lastPartLength: number = 8) =>
     : text
 
 export const getRelativeTimeFromTimestamp = (timestamp: number) => moment(timestamp).fromNow()
+
+export const copyToClipboard = (text: string) => navigator.clipboard.writeText(text)
