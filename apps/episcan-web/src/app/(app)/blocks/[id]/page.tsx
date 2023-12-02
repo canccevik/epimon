@@ -1,7 +1,7 @@
 'use client'
 
 import ErrorCard from '@/components/error-card'
-import TableLoader from '@/components/loader-card'
+import LoaderCard from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
@@ -26,7 +26,7 @@ export default function BlockDetail() {
         {error ? (
           <ErrorCard message={error.message} />
         ) : isLoading ? (
-          <TableLoader />
+          <LoaderCard />
         ) : (
           data &&
           data.data && (

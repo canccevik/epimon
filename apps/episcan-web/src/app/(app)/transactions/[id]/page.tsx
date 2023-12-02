@@ -1,7 +1,7 @@
 'use client'
 
 import ErrorCard from '@/components/error-card'
-import TableLoader from '@/components/loader-card'
+import LoaderCard from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
 import { fetcher, getRelativeTimeFromTimestamp } from '@/lib/utils'
 import { Payload, TransactionWithStatus } from '@epimon/common'
@@ -26,7 +26,7 @@ export default function TransactionDetail() {
         {error ? (
           <ErrorCard message={error.message} />
         ) : isLoading ? (
-          <TableLoader />
+          <LoaderCard />
         ) : (
           data && (
             <Table>

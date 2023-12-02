@@ -15,7 +15,7 @@ import {
   TableCell
 } from '@/components/ui/table'
 import { fetcher, shortenString } from '@/lib/utils'
-import TableLoader from '@/components/loader-card'
+import LoaderCard from '@/components/loader-card'
 import ErrorCard from '@/components/error-card'
 
 export default function Miners() {
@@ -35,7 +35,7 @@ export default function Miners() {
         {error ? (
           <ErrorCard message={error.message} />
         ) : isLoading ? (
-          <TableLoader />
+          <LoaderCard />
         ) : (
           data && (
             <Table>

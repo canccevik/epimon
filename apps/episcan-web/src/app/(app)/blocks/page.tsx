@@ -15,7 +15,7 @@ import Link from 'next/link'
 import useSWR from 'swr'
 import PaginationSection from '@/components/pagination-section'
 import { useState } from 'react'
-import TableLoader from '@/components/loader-card'
+import LoaderCard from '@/components/loader-card'
 import ErrorCard from '@/components/error-card'
 
 export default function Blocks() {
@@ -35,7 +35,7 @@ export default function Blocks() {
         {error ? (
           <ErrorCard message={error.message} />
         ) : isLoading ? (
-          <TableLoader />
+          <LoaderCard />
         ) : (
           data && (
             <Table>

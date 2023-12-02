@@ -16,7 +16,7 @@ import {
   TableHeader,
   TableRow
 } from '@/components/ui/table'
-import TableLoader from '@/components/loader-card'
+import LoaderCard from '@/components/loader-card'
 import ErrorCard from '@/components/error-card'
 
 export default function Transactions() {
@@ -52,7 +52,7 @@ export default function Transactions() {
         {error ? (
           <ErrorCard message={error.message} />
         ) : isLoading ? (
-          <TableLoader />
+          <LoaderCard />
         ) : (
           data && (
             <Table>
