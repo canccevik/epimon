@@ -4,7 +4,7 @@ import ErrorCard from '@/components/error-card'
 import LoaderCard from '@/components/loader-card'
 import { TableRow, TableBody, TableCell, Table } from '@/components/ui/table'
 import { appConfig } from '@/config/app'
-import { fetcher, getRelativeTimeFromTimestamp } from '@/lib/utils'
+import { copyToClipboard, fetcher, getRelativeTimeFromTimestamp } from '@/lib/utils'
 import { Payload, TransactionWithStatus } from '@epimon/common'
 import { BadgeCheck, Copy, Loader } from 'lucide-react'
 import moment from 'moment'
@@ -29,17 +29,18 @@ export default function TransactionDetail() {
         ) : isLoading ? (
           <LoaderCard />
         ) : (
-          data && (
+          data &&
+          data.data && (
             <Table>
               <TableBody>
                 <TableRow>
                   <TableCell className="text-gray-500">Transaction</TableCell>
                   <TableCell className="flex gap-x-2">
-                    <span>{data.data?._id}</span>
+                    <span>{data.data._id}</span>
                     <Copy
                       className="cursor-pointer"
                       size={20}
-                      onClick={() => navigator.clipboard.writeText(params.id.toString())}
+                      onClick={() => copyToClipboard(params.id.toString())}
                     />
                   </TableCell>
                 </TableRow>
@@ -48,7 +49,7 @@ export default function TransactionDetail() {
                   <TableCell className="text-gray-500">Status</TableCell>
 
                   <TableCell>
-                    {data.data?.isConfirmed ? (
+                    {data.data.isConfirmed ? (
                       <div className="flex text-green-500 gap-x-2">
                         <BadgeCheck className="cursor-pointer" size={20} />
                         <span>Confirmed</span>
@@ -65,16 +66,16 @@ export default function TransactionDetail() {
                 <TableRow>
                   <TableCell className="text-gray-500">Signature</TableCell>
                   <TableCell className="flex gap-x-1">
-                    <span>{data.data?.signature ?? 'Null'}</span>
+                    <span>{data.data.signature ?? 'Null'}</span>
                   </TableCell>
                 </TableRow>
 
                 <TableRow>
                   <TableCell className="text-gray-500">Timestamp</TableCell>
                   <TableCell className="flex gap-x-1">
-                    <span>{getRelativeTimeFromTimestamp(data.data?.timestamp!)}</span>
+                    <span>{getRelativeTimeFromTimestamp(data.data.timestamp!)}</span>
                     <span className="text-gray-500">
-                      ({moment(data.data?.timestamp).format('MMM-DD-YYYY hh:mm:ss A [GMT]Z')})
+                      ({moment(data.data.timestamp).format('MMM-DD-YYYY hh:mm:ss A [GMT]Z')})
                     </span>
                   </TableCell>
                 </TableRow>
@@ -83,7 +84,7 @@ export default function TransactionDetail() {
                   <TableCell className="text-gray-500">From</TableCell>
                   <TableCell className="flex gap-x-2">
                     <span>
-                      {data.data?.senderAddress ? (
+                      {data.data.senderAddress ? (
                         <Link
                           href={`/address/${data.data.senderAddress}`}
                           className="text-main-blue"
@@ -95,11 +96,11 @@ export default function TransactionDetail() {
                       )}
                     </span>
 
-                    {data.data?.senderAddress && (
+                    {data.data.senderAddress && (
                       <Copy
                         className="cursor-pointer"
                         size={20}
-                        onClick={() => navigator.clipboard.writeText(data.data?.senderAddress!)}
+                        onClick={() => data.data && copyToClipboard(data.data.senderAddress)}
                       />
                     )}
                   </TableCell>
@@ -109,15 +110,15 @@ export default function TransactionDetail() {
                   <TableCell className="text-gray-500">To</TableCell>
                   <TableCell className="flex gap-x-2">
                     <span className="text-main-blue">
-                      <Link href={`/address/${data.data?.receiverAddress}`}>
-                        {data.data?.receiverAddress}
+                      <Link href={`/address/${data.data.receiverAddress}`}>
+                        {data.data.receiverAddress}
                       </Link>
                     </span>
 
                     <Copy
                       className="cursor-pointer"
                       size={20}
-                      onClick={() => navigator.clipboard.writeText(data.data?.receiverAddress!)}
+                      onClick={() => data.data && copyToClipboard(data.data.receiverAddress)}
                     />
                   </TableCell>
                 </TableRow>
@@ -125,7 +126,9 @@ export default function TransactionDetail() {
                 <TableRow>
                   <TableCell className="text-gray-500">Value</TableCell>
                   <TableCell className="flex">
-                    <span>{data.data?.amount} {appConfig.coinName}</span>
+                    <span>
+                      {data.data.amount} {appConfig.coinName}
+                    </span>
                   </TableCell>
                 </TableRow>
               </TableBody>
