@@ -3,29 +3,36 @@ import { Payload } from '@epimon/common'
 import { Table, TableCaption, TableHeader, TableRow, TableHead, TableBody } from './ui/table'
 
 interface Props<T> {
-  data: Payload<T[]>
+  data: Payload<T | T[]> | undefined
   headings: string[]
-  page: number
-  setPage: Function
+  page?: number
+  setPage?: Function
+  link?: React.ReactNode
   children: React.ReactNode
 }
 
-export default function DataTable<T>({ data, headings, page, setPage, children: body }: Props<T>) {
+export default function DataTable<T>({ data, headings, page, setPage, link, children }: Props<T>) {
   return (
-    <Table>
-      <TableCaption>
-        {data.meta && <PaginationSection meta={data.meta} page={page} setPage={setPage} />}
-      </TableCaption>
+    data && (
+      <Table>
+        {link && <TableCaption>{link}</TableCaption>}
 
-      <TableHeader>
-        <TableRow>
-          {headings.map((heading, i) => (
-            <TableHead key={i}>{heading}</TableHead>
-          ))}
-        </TableRow>
-      </TableHeader>
+        {data.meta && page && setPage && (
+          <TableCaption>
+            <PaginationSection meta={data.meta} page={page} setPage={setPage} />
+          </TableCaption>
+        )}
 
-      <TableBody>{body}</TableBody>
-    </Table>
+        <TableHeader>
+          <TableRow>
+            {headings.map((heading, i) => (
+              <TableHead key={i}>{heading}</TableHead>
+            ))}
+          </TableRow>
+        </TableHeader>
+
+        <TableBody>{children}</TableBody>
+      </Table>
+    )
   )
 }

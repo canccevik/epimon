@@ -2,20 +2,13 @@
 
 import useSWR from 'swr'
 import Link from 'next/link'
-import {
-  Table,
-  TableCaption,
-  TableHeader,
-  TableRow,
-  TableHead,
-  TableBody,
-  TableCell
-} from './ui/table'
+import { TableRow, TableCell } from './ui/table'
 import { fetcher, shortenString } from '@/lib/utils'
 import { Block, Payload } from '@epimon/common'
 import LoaderCard from './loader-card'
 import ErrorCard from './error-card'
 import { appConfig } from '@/config/app'
+import DataTable from './data-table'
 
 export default function LastFiveBlocks() {
   const { data, isLoading, error } = useSWR<Payload<Block[]>, Payload<null>>(
@@ -25,51 +18,39 @@ export default function LastFiveBlocks() {
 
   if (error) {
     return <ErrorCard message={error.message} />
-  }
-
-  if (isLoading) {
+  } else if (isLoading) {
     return <LoaderCard />
   }
 
   return (
-    <Table>
-      <TableCaption>
-        <Link href={'/blocks'}>View All Blocks</Link>
-      </TableCaption>
+    <DataTable
+      data={data}
+      link={<Link href={'/blocks'}>View All Blocks</Link>}
+      headings={['Block', 'Miner', 'Block reward']}
+    >
+      {data &&
+        data.data &&
+        data.data.map((block, i) => (
+          <TableRow key={i}>
+            <TableCell className="font-medium text-main-blue">
+              <Link href={`/blocks/${block._id}`}>{block._id}</Link>
+            </TableCell>
 
-      <TableHeader>
-        <TableRow>
-          <TableHead>Block</TableHead>
-          <TableHead>Miner</TableHead>
-          <TableHead>Block Reward</TableHead>
-        </TableRow>
-      </TableHeader>
+            <TableCell>
+              {block.miner ? (
+                <Link href={`/address/${block.miner}`} className="text-main-blue">
+                  {shortenString(block.miner)}
+                </Link>
+              ) : (
+                'System'
+              )}
+            </TableCell>
 
-      <TableBody>
-        {data &&
-          data.data?.map((block, i) => {
-            return (
-              <TableRow key={i}>
-                <TableCell className="font-medium text-main-blue">
-                  <Link href={`/blocks/${block._id}`}>{block._id}</Link>
-                </TableCell>
-
-                <TableCell>
-                  {block.miner ? (
-                    <Link href={`/address/${block.miner}`} className="text-main-blue">
-                      {shortenString(block.miner)}
-                    </Link>
-                  ) : (
-                    'System'
-                  )}
-                </TableCell>
-                <TableCell>
-                  {block.reward} {appConfig.coinName}
-                </TableCell>
-              </TableRow>
-            )
-          })}
-      </TableBody>
-    </Table>
+            <TableCell>
+              {block.reward} {appConfig.coinName}
+            </TableCell>
+          </TableRow>
+        ))}
+    </DataTable>
   )
 }
