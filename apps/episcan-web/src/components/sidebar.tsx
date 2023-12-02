@@ -7,7 +7,9 @@ export default function Sidebar() {
   return (
     <div className="w-2/12 h-screen bg-white flex flex-col items-center justify-between fixed top-0 left-0 py-10 text-main-black">
       <div>
-        <a className="text-3xl font-medium tracking-wider">Episcan</a>
+        <Link href="/" className="text-3xl font-semibold tracking-wider">
+          EPISCAN
+        </Link>
       </div>
 
       <div className="w-full flex flex-col gap-y-5 px-8">

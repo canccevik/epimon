@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input'
 import { useToast } from '@/hooks/use-toast'
 import { fetcher } from '@/lib/utils'
 import { Payload, SearchResult } from '@epimon/common'
+import { Search } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 import useSWRMutation from 'swr/mutation'
@@ -18,7 +19,7 @@ export default function SearchBanner() {
     fetcher
   )
 
-  async function search(e: FormEvent<HTMLFormElement>) {
+  async function search(e: FormEvent | MouseEvent) {
     e.preventDefault()
 
     try {
@@ -46,11 +47,19 @@ export default function SearchBanner() {
       </p>
 
       <form onSubmit={(e) => search(e)}>
-        <Input
-          className="w-5/12 p-7 rounded-3xl text-main-black"
-          placeholder="Search Block / Tx / Address"
-          onChange={(e) => setSearchText(e.target.value)}
-        />
+        <div className="relative flex items-center">
+          <Search
+            className="absolute cursor-pointer text-black z-10 ml-5"
+            size={22}
+            onClick={(e) => search(e)}
+          />
+
+          <Input
+            className="w-5/12 p-7 pl-14 rounded-3xl text-main-black relative"
+            placeholder="Search Block / Tx / Address"
+            onChange={(e) => setSearchText(e.target.value)}
+          />
+        </div>
       </form>
     </div>
   )
