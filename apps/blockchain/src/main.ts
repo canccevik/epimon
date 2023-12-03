@@ -15,6 +15,6 @@ async function bootstrap(): Promise<void> {
   setupSwagger(app)
 
   await app.listen(config.PORT)
-  await blockchainService.syncChainWithRoot()
+  blockchainService.syncChainWithRoot().catch(() => {})
 }
 bootstrap()
