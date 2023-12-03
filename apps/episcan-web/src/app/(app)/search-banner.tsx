@@ -56,7 +56,7 @@ export default function SearchBanner() {
           />
 
           <Input
-            className="w-full lg:w-5/12 py-7 pt-8 pl-14 rounded-3xl text-main-black dark:bg-white relative"
+            className="w-full lg:w-5/12 py-7 pl-14 rounded-3xl text-main-black dark:bg-white relative"
             placeholder="Search Block / Tx / Address"
             onChange={(e) => setSearchText(e.target.value)}
           />

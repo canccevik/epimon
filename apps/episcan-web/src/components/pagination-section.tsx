@@ -63,7 +63,7 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
           onClick={() => page > 1 && setPage(page - 1)}
         >
           <ArrowLeft size={16} />
-          <span className="mt-1 pl-1">Previous</span>
+          <span className="pl-1">Previous</span>
         </Button>
 
         <Button
@@ -74,7 +74,7 @@ export default function PaginationSection({ meta, page, setPage, buttonCount = 4
           )}
           onClick={() => page < meta.lastPage && setPage(page + 1)}
         >
-          <span className="mt-1 pr-1">Next</span>
+          <span className="pr-1">Next</span>
           <ArrowRight size={16} />
         </Button>
       </div>

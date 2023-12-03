@@ -1,3 +1,4 @@
+import { TransactionService } from '@features/transaction/services'
 import { paginateArray } from '@common/utils'
 import { Config, ENV } from '@config/index'
 import {
@@ -8,7 +9,6 @@ import {
   Payload,
   createPaginationResult
 } from '@epimon/common'
-import { TransactionService } from '@features/transaction/services'
 import {
   BadRequestException,
   HttpStatus,
@@ -36,7 +36,7 @@ export class WalletService {
     return balanceRequest.data.data
   }
 
-  public async getMiners({ page, limit }: PaginationDto): Promise<PaginationResult<Miner[]>> {
+  public async getMiners(paginationDto: PaginationDto): Promise<PaginationResult<Miner[]>> {
     const transactions = await this.transactionService.getAllTransactions()
     const miningTransactions = transactions.filter((tx) => !tx.senderAddress && tx.timestamp !== 0)
     const minerAddresses = [...new Set(miningTransactions.map((tx) => tx.receiverAddress))]
@@ -45,23 +45,24 @@ export class WalletService {
       throw new NotFoundException('No miner found.')
     }
 
-    const miners: Miner[] = minerAddresses
-      .map((address) => {
-        const totalReward = miningTransactions
-          .filter((tx) => tx.receiverAddress === address)
-          .flatMap((tx) => tx.amount)
-          .reduce((prev, curr) => prev + curr, 0)
+    const unsortedMiners: Miner[] = minerAddresses.map((address) => {
+      const totalReward = miningTransactions
+        .filter((tx) => tx.receiverAddress === address)
+        .flatMap((tx) => tx.amount)
+        .reduce((prev, curr) => prev + curr, 0)
 
-        return { address, totalReward, rank: 0 }
-      })
+      return { address, totalReward, rank: 0 }
+    })
+
+    const sortedMiners: Miner[] = unsortedMiners
       .sort((a, b) => b.totalReward - a.totalReward)
       .map((miner, i) => {
         miner.rank = i + 1
         return miner
       })
 
-    const paginatedMiners = paginateArray(miners, { page, limit })
+    const paginatedMiners = paginateArray(sortedMiners, paginationDto)
 
-    return createPaginationResult(paginatedMiners, page, limit, miners.length)
+    return createPaginationResult(paginatedMiners, paginationDto, sortedMiners.length)
   }
 }
