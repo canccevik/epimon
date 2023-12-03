@@ -13,20 +13,13 @@ export class SearchService {
   ) {}
 
   public async search(value: string): Promise<SearchResult> {
-    const block = await this.blockchainService.getBlockById(value).catch(() => {})
-    if (block) {
-      return { isBlock: true, isTransaction: false, isAddress: false }
-    }
+    const isBlock = await this.blockchainService.getBlockById(value).catch(() => {})
+    const isTransaction = await this.transactionService.getTransactionById(value).catch(() => {})
+    const isAddress = await this.walletService.getBalanceOfAddress(value)
 
-    const transaction = await this.transactionService.getTransactionById(value).catch(() => {})
-    if (transaction) {
-      return { isBlock: false, isTransaction: true, isAddress: false }
+    if (!isBlock && !isTransaction && !isAddress.balance) {
+      throw new BadRequestException('No result found for search.')
     }
-
-    const wallet = await this.walletService.getBalanceOfAddress(value)
-    if (wallet.balance) {
-      return { isBlock: false, isTransaction: false, isAddress: true }
-    }
-    throw new BadRequestException('No result found for search.')
+    return { isBlock: !!isBlock, isTransaction: !!isTransaction, isAddress: !!isAddress.balance }
   }
 }
