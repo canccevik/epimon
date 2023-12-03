@@ -36,23 +36,20 @@ export class TransactionService {
       throw new NotFoundException('No transactions found.')
     }
 
-    const blocks = await this.blockchainService.getBlocks({})
-    if (blockId) {
-      blocks.records = blocks.records.filter((block) => block._id === blockId)
-    }
+    const blocks = blockId
+      ? { records: [await this.blockchainService.getBlockById(blockId)] }
+      : await this.blockchainService.getBlocks({})
 
-    let transactions = blocks.records
-      .flatMap((block) => block.transactions)
-      .map((tx) => {
-        return { ...tx, isConfirmed: true }
-      })
+    const confirmedTxs: TransactionWithStatus[] = blocks.records.flatMap((block) =>
+      block.transactions.map((tx) => ({ ...tx, isConfirmed: true }))
+    )
 
-    if (!blockId) {
-      const txPool = txsRequest.data.data.map((tx) => {
-        return { ...tx, isConfirmed: false }
-      })
-      transactions = transactions.concat(txPool)
-    }
+    const unconfirmedTxs: TransactionWithStatus[] = blockId
+      ? []
+      : txsRequest.data.data.map((tx) => ({ ...tx, isConfirmed: false }))
+
+    const transactions = confirmedTxs.concat(unconfirmedTxs)
+
     return transactions.sort((a, b) => b.timestamp - a.timestamp)
   }
 
@@ -66,8 +63,7 @@ export class TransactionService {
 
     return createPaginationResult<TransactionWithStatus>(
       paginatedTransactions,
-      page,
-      limit,
+      { page, limit },
       transactions.length
     )
   }
@@ -84,14 +80,14 @@ export class TransactionService {
 
   public async getTransactionsOfWallet(
     walletAddress: string,
-    { page, limit }: PaginationDto
+    paginationDto: PaginationDto
   ): Promise<PaginationResult<Transaction[]>> {
     const transactions = await this.getAllTransactions()
     const transactionsOfWallet = transactions.filter(
       (transaction) =>
         transaction.receiverAddress === walletAddress || transaction.senderAddress === walletAddress
     )
-    const paginatedTransactionsOfWallet = paginateArray(transactionsOfWallet, { page, limit })
+    const paginatedTransactionsOfWallet = paginateArray(transactionsOfWallet, paginationDto)
 
     if (!transactionsOfWallet.length) {
       throw new BadRequestException('No transactions found for address.')
@@ -99,8 +95,7 @@ export class TransactionService {
 
     return createPaginationResult(
       paginatedTransactionsOfWallet,
-      page,
-      limit,
+      paginationDto,
       transactionsOfWallet.length
     )
   }

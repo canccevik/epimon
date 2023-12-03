@@ -90,6 +90,6 @@ export class BaseRepository<T> {
     const records = (await query.exec()) as T[]
     const totalRecords = await this.model.find().countDocuments()
 
-    return createPaginationResult<T>(records, page, limit, totalRecords)
+    return createPaginationResult<T>(records, { page, limit }, totalRecords)
   }
 }
