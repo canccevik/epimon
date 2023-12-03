@@ -8,7 +8,12 @@ interface Props {
 
 export default function Providers({ children }: Props) {
   return (
-    <ThemeProvider attribute="class" disableTransitionOnChange={true}>
+    <ThemeProvider
+      attribute="class"
+      disableTransitionOnChange={true}
+      enableSystem={false}
+      defaultTheme="light"
+    >
       {children}
     </ThemeProvider>
   )
