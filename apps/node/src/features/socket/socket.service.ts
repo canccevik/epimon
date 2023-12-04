@@ -2,7 +2,7 @@ import { BlockchainService } from '@features/blockchain/blockchain.service'
 import { HttpStatus, Inject, Injectable } from '@nestjs/common'
 import { Axios } from 'axios'
 import { Config, ENV } from '@config/index'
-import { OnConnect, OnDisconnect, EventListener } from 'nestjs-io-client'
+import { OnConnect, OnDisconnect, EventListener, OnConnectError } from 'nestjs-io-client'
 import {
   AXIOS_INSTANCE,
   Block,
@@ -22,6 +22,11 @@ export class SocketService {
   @OnConnect()
   public onConnect(): void {
     console.info('✅ Connected to the network.')
+  }
+
+  @OnConnectError()
+  public onConnectError(): void {
+    console.error('❌ Failed to connect to network.')
   }
 
   @OnDisconnect()
