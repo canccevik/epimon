@@ -9,8 +9,7 @@ const SocketClientModule = IoClientModule.forRootAsync({
     return {
       uri: config.ROOT_SOCKET_URI,
       options: {
-        reconnection: true,
-        timeout: 500
+        reconnection: true
       }
     }
   },
