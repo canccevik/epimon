@@ -1,7 +1,7 @@
 export default function App() {
   return (
     <>
-      <h1>Epimon Wallet</h1>
+      <h1 className="text-3xl font-bold">Epimon Wallet</h1>
     </>
   )
 }
