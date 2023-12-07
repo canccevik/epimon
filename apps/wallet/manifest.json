@@ -9,7 +9,7 @@
   "permissions": ["scripting", "tabs", "activeTab"],
   "host_permissions": ["https://*/*", "http://*/*"],
   "icons": {
-    "16": "images/icon.ico",
-    "32": "images/icon.ico"
+    "16": "public/images/icon.ico",
+    "32": "public/images/icon.ico"
   }
 }
