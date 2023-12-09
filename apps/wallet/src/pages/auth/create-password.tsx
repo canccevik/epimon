@@ -14,10 +14,13 @@ import {
   FormDescription,
   FormMessage
 } from '@/components/ui/form'
+import { useNavigate } from 'react-router-dom'
 
 type FormData = z.infer<typeof createPasswordSchema>
 
 export default function CreatePassword() {
+  const navigate = useNavigate()
+
   const form = useForm<FormData>({
     resolver: zodResolver(createPasswordSchema)
   })
@@ -26,7 +29,7 @@ export default function CreatePassword() {
 
   return (
     <div className="flex flex-col items-center gap-y-5">
-      <h1 className="text-3xl font-normal">Create a password</h1>
+      <h1 className="text-3xl font-normal text-center">Create a password</h1>
       <p className="text-center">
         This password will unlock your Epimon wallet only on this device. Epimon can not recover
         this password.
@@ -74,7 +77,11 @@ export default function CreatePassword() {
           />
 
           <div className="flex flex-col gap-y-4">
-            <Button type="submit" className={cn('w-full', buttonVariants())}>
+            <Button
+              type="submit"
+              className={cn('w-full', buttonVariants())}
+              onClick={() => navigate('/secure-wallet')}
+            >
               Create a new wallet
             </Button>
 
