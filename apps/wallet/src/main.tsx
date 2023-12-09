@@ -1,10 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './pages/app'
+import Home from './pages/home'
 import '@/styles/globals.css'
+import { RouterProvider, createMemoryRouter } from 'react-router-dom'
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
+const root = document.getElementById('root')
+
+const router = createMemoryRouter([
+  {
+    path: '/',
+    element: <Home />
+  }
+])
+
+ReactDOM.createRoot(root!).render(
   <React.StrictMode>
-    <App />
+    <RouterProvider router={router} />
   </React.StrictMode>
 )
