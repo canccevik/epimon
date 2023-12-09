@@ -1,17 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import Home from './pages/home'
 import '@/styles/globals.css'
-import { RouterProvider, createMemoryRouter } from 'react-router-dom'
+import { RouterProvider } from 'react-router-dom'
+import { router } from './router'
 
 const root = document.getElementById('root')
-
-const router = createMemoryRouter([
-  {
-    path: '/',
-    element: <Home />
-  }
-])
 
 ReactDOM.createRoot(root!).render(
   <React.StrictMode>
