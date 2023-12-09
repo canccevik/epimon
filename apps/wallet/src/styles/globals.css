@@ -79,3 +79,7 @@
   font-family: 'Prompt';
   font-weight: 200;
 }
+
+img {
+  user-select: none;
+}

@@ -7,6 +7,7 @@ import { useTheme } from 'next-themes'
 import Link from 'next/link'
 import { Button } from './ui/button'
 import { useState } from 'react'
+import Image from 'next/image'
 
 export default function Sidebar() {
   const { theme, setTheme } = useTheme()
@@ -16,9 +17,13 @@ export default function Sidebar() {
     <div className="w-full">
       <div className="sm:hidden w-full py-6 z-50 fixed top-0 left-0 px-5 bg-white dark:bg-dark-gray">
         <div className="flex justify-between items-center">
-          <Link href="/" className="text-2xl font-semibold tracking-wider">
-            Episcan
-          </Link>
+          <div className="flex gap-x-3">
+            <Image src={'/icon.ico'} width={25} height={25} alt="Episcan logo" />
+
+            <Link href="/" className="text-3xl font-semibold tracking-wider">
+              Episcan
+            </Link>
+          </div>
 
           <Button
             className="bg-gray-100 focus:bg-gray-100 text-black"
@@ -52,9 +57,13 @@ export default function Sidebar() {
             ES
           </Link>
 
-          <Link href="/" className="text-3xl hidden lg:block font-semibold tracking-wider">
-            EPISCAN
-          </Link>
+          <div className="lg:flex gap-x-3 hidden">
+            <Image src={'/icon.ico'} width={30} height={30} alt="Episcan logo" />
+
+            <Link href="/" className="text-3xl font-semibold tracking-wider">
+              Episcan
+            </Link>
+          </div>
         </div>
 
         <div className="w-full flex flex-col gap-y-5 px-4 lg:px-8">
