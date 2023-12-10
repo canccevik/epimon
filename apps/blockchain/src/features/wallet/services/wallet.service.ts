@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { ec as EC } from 'elliptic'
 import { generateMnemonic, mnemonicToEntropy } from 'bip39'
-import { Wallet } from '../interfaces'
 import { BlockService } from '@features/blockchain/services'
+import { Wallet } from '@epimon/common'
 
 @Injectable()
 export class WalletService {

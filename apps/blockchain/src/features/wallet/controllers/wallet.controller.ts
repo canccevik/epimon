@@ -1,8 +1,7 @@
 import { Controller, Get, Param, Post } from '@nestjs/common'
 import { ApiParam, ApiTags } from '@nestjs/swagger'
 import { WalletService } from '../services'
-import { Wallet } from '../interfaces'
-import { Message, WalletAddressDto } from '@epimon/common'
+import { Message, WalletAddressDto, Wallet } from '@epimon/common'
 
 @ApiTags('wallets')
 @Controller('wallets')
