@@ -1,0 +1,84 @@
+import { buttonVariants } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { Input } from '@/components/ui/input'
+import { cn, copyToClipboard } from '@/lib/utils'
+import { Check, Copy, Eye, EyeOff } from 'lucide-react'
+import { useState } from 'react'
+
+const secretPhrase = 'tobacco captain flush ship stay base patient garlic nephew special bag loyal'
+
+export default function SecureWallet() {
+  const [isCopied, setIsCopied] = useState(false)
+  const [isSecretVisible, setIsSecretVisible] = useState(true)
+
+  function copySecretPhrase() {
+    copyToClipboard(secretPhrase)
+    setIsCopied(true)
+    setTimeout(() => setIsCopied(false), 1000)
+  }
+
+  function toggleSecretVisibility() {
+    setIsSecretVisible(!isSecretVisible)
+  }
+
+  return (
+    <div className="flex flex-col items-center gap-y-5">
+      <h1 className="text-3xl font-normal text-center">Write down your Secret Recovery Phrase</h1>
+
+      <Card className={cn('w-full p-5 select-none', !isSecretVisible && 'blur-sm')}>
+        <div className="grid grid-cols-3 gap-3 text-center text-sm">
+          {secretPhrase.split(' ').map((word, i) => (
+            <Card key={i} className="p-3 rounded-sm flex items-center gap-x-2">
+              <span className="text-gray-600">{i + 1}.</span>
+              <Input
+                className="font-light text-center p-0 disabled:text-black"
+                value={word}
+                disabled
+              />
+            </Card>
+          ))}
+        </div>
+      </Card>
+
+      <div className="w-full flex justify-between my-2">
+        <a
+          className="flex items-center gap-x-2 text-sm cursor-pointer"
+          onClick={() => toggleSecretVisibility()}
+        >
+          {isSecretVisible ? (
+            <>
+              <EyeOff size={20} />
+              Hide secret phrase
+            </>
+          ) : (
+            <>
+              <Eye size={20} />
+              Reveal secret phrase
+            </>
+          )}
+        </a>
+
+        <a
+          className="flex items-center gap-x-2 text-sm cursor-pointer"
+          onClick={() => copySecretPhrase()}
+        >
+          {isCopied ? (
+            <>
+              <Check size={20} />
+              Copied
+            </>
+          ) : (
+            <>
+              <Copy size={20} />
+              Copy to clipboard
+            </>
+          )}
+        </a>
+      </div>
+
+      <a href="/confirm-secret" className={cn('w-full', buttonVariants())}>
+        Next
+      </a>
+    </div>
+  )
+}

@@ -16,3 +16,9 @@ export const createPasswordSchema = z
     message: 'Passwords do not match.',
     path: ['confirmPassword']
   })
+
+export const confirmSecretSchema = z.object({
+  word1: z.string(),
+  word2: z.string(),
+  word3: z.string()
+})
