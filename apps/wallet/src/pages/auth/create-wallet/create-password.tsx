@@ -5,6 +5,13 @@ import { createPasswordSchema } from '@/lib/schemas/auth'
 import PasswordInput from '@/components/password-input'
 import { cn } from '@/lib/utils'
 import { z } from 'zod'
+import { useNavigate } from 'react-router-dom'
+import useSWRMutation from 'swr/mutation'
+import { HttpMethod, fetcher } from '@/lib/utils/fetcher'
+import { Loader } from 'lucide-react'
+import { useToast } from '@/hooks/use-toast'
+import { useContext } from 'react'
+import { AuthContext } from '@/context/auth-context'
 import {
   Form,
   FormField,
@@ -14,18 +21,29 @@ import {
   FormDescription,
   FormMessage
 } from '@/components/ui/form'
-import { useNavigate } from 'react-router-dom'
 
 type FormData = z.infer<typeof createPasswordSchema>
 
 export default function CreatePassword() {
+  const { isMutating, trigger } = useSWRMutation('/wallets', fetcher(HttpMethod.POST))
+
   const navigate = useNavigate()
+  const { toast } = useToast()
+  const { setWallet } = useContext(AuthContext)
 
   const form = useForm<FormData>({
     resolver: zodResolver(createPasswordSchema)
   })
 
-  function onSubmit(values: FormData) {}
+  async function onSubmit(values: FormData) {
+    const { data, statusCode, message } = await trigger({})
+
+    if (statusCode !== 201) {
+      return toast({ title: 'Error', description: message })
+    }
+    setWallet(data)
+    navigate('/secure-wallet')
+  }
 
   return (
     <div className="flex flex-col items-center gap-y-5">
@@ -77,12 +95,8 @@ export default function CreatePassword() {
           />
 
           <div className="flex flex-col gap-y-4">
-            <Button
-              type="submit"
-              className={cn('w-full', buttonVariants())}
-              onClick={() => navigate('/secure-wallet')}
-            >
-              Create a new wallet
+            <Button type="submit" className={cn('w-full', buttonVariants())}>
+              {isMutating ? <Loader className="animate-spin" /> : 'Create a new wallet'}
             </Button>
 
             <a href="/" className={cn('w-full', buttonVariants({ variant: 'outline' }))}>

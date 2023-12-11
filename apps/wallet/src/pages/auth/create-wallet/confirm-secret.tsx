@@ -49,7 +49,7 @@ export default function ConfirmSecret() {
             <div className="grid grid-cols-3 gap-3 text-center text-sm">
               {secretPhrase.split(' ').map((word, i) => (
                 <Card key={i} className="p-3 rounded-sm flex items-center">
-                  <div className="flex items-center gap-x-2 text-gray-500">
+                  <div className="flex items-center gap-x-2 text-gray-600">
                     <span>{i + 1}.</span>
                     {randomWords.includes(word) ? (
                       <FormField
