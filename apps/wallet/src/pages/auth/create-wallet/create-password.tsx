@@ -41,8 +41,9 @@ export default function CreatePassword() {
     if (statusCode !== 201) {
       return toast({ title: 'Error', description: message })
     }
+
     setWallet(data)
-    navigate('/secure-wallet')
+    navigate('/auth/secure-wallet')
   }
 
   return (
@@ -99,9 +100,9 @@ export default function CreatePassword() {
               {isMutating ? <Loader className="animate-spin" /> : 'Create a new wallet'}
             </Button>
 
-            <a href="/" className={cn('w-full', buttonVariants({ variant: 'outline' }))}>
+            <Button className="w-full" variant={'outline'} onClick={() => navigate('/auth')}>
               Go back
-            </a>
+            </Button>
           </div>
         </form>
       </Form>

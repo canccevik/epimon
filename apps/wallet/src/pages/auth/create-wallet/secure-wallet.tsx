@@ -1,12 +1,14 @@
-import { buttonVariants } from '@/components/ui/button'
+import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 import { AuthContext } from '@/context/auth-context'
 import { cn, copyToClipboard } from '@/lib/utils'
 import { Check, Copy, Eye, EyeOff } from 'lucide-react'
 import { useContext, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function SecureWallet() {
+  const navigate = useNavigate()
   const { wallet } = useContext(AuthContext)
   const [isCopied, setIsCopied] = useState(false)
   const [isSecretVisible, setIsSecretVisible] = useState(true)
@@ -29,7 +31,7 @@ export default function SecureWallet() {
         <Card className={cn('w-full p-5 select-none', !isSecretVisible && 'blur-sm')}>
           <div className="grid grid-cols-3 gap-3 text-center text-sm">
             {wallet.secretPhrase.split(' ').map((word, i) => (
-              <Card key={i} className="p-3 rounded-sm flex items-center gap-x-2">
+              <Card key={i} className="p-3 rounded-sm flex items-center gap-x-2 shadow-none">
                 <span className="text-gray-600">{i + 1}.</span>
                 <Input
                   className="font-light text-center p-0 disabled:text-black"
@@ -77,9 +79,9 @@ export default function SecureWallet() {
           </a>
         </div>
 
-        <a href="/confirm-secret" className={cn('w-full', buttonVariants())}>
+        <Button className={'w-full'} onClick={() => navigate('/auth/confirm-secret')}>
           Next
-        </a>
+        </Button>
       </div>
     )
   )
