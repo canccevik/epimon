@@ -1,9 +1,4 @@
-import { Button} from '@/components/ui/button'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { createPasswordSchema } from '@/lib/schemas/auth'
-import PasswordInput from '@/components/password-input'
-import { z } from 'zod'
+import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
 import useSWRMutation from 'swr/mutation'
 import { HttpMethod, fetcher } from '@/lib/utils/fetcher'
@@ -11,17 +6,7 @@ import { Loader } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import { useContext } from 'react'
 import { AuthContext } from '@/context/auth-context'
-import {
-  Form,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormControl,
-  FormDescription,
-  FormMessage
-} from '@/components/ui/form'
-
-type FormData = z.infer<typeof createPasswordSchema>
+import CreatePasswordForm, { FormData } from '@/components/create-password-form'
 
 export default function CreatePassword() {
   const { isMutating, trigger } = useSWRMutation('/wallets', fetcher(HttpMethod.POST))
@@ -29,10 +14,6 @@ export default function CreatePassword() {
   const navigate = useNavigate()
   const { toast } = useToast()
   const { setWallet } = useContext(AuthContext)
-
-  const form = useForm<FormData>({
-    resolver: zodResolver(createPasswordSchema)
-  })
 
   async function onSubmit(values: FormData) {
     const { data, statusCode, message } = await trigger({})
@@ -53,58 +34,15 @@ export default function CreatePassword() {
         this password.
       </p>
 
-      <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>New password</FormLabel>
+      <CreatePasswordForm onSubmit={onsubmit}>
+        <Button type="submit" className="w-full">
+          {isMutating ? <Loader className="animate-spin" /> : 'Create a new wallet'}
+        </Button>
 
-                <FormControl>
-                  <PasswordInput placeholder="Password" {...field} />
-                </FormControl>
-
-                {!form.formState.errors.password ? (
-                  <FormDescription>
-                    A strong password can improve the security of your wallet should your device be
-                    stolen or compromised.
-                  </FormDescription>
-                ) : (
-                  <FormMessage />
-                )}
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Confirm password</FormLabel>
-
-                <FormControl>
-                  <PasswordInput placeholder="Password again" {...field} />
-                </FormControl>
-
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <div className="flex flex-col gap-y-4">
-            <Button type="submit" className="w-full">
-              {isMutating ? <Loader className="animate-spin" /> : 'Create a new wallet'}
-            </Button>
-
-            <Button className="w-full" variant={'outline'} onClick={() => navigate('/auth')}>
-              Go back
-            </Button>
-          </div>
-        </form>
-      </Form>
+        <Button className="w-full" variant={'outline'} onClick={() => navigate('/auth')}>
+          Go back
+        </Button>
+      </CreatePasswordForm>
     </div>
   )
 }
