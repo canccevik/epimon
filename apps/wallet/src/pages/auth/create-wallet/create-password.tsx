@@ -1,9 +1,8 @@
-import { Button, buttonVariants } from '@/components/ui/button'
+import { Button} from '@/components/ui/button'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { createPasswordSchema } from '@/lib/schemas/auth'
 import PasswordInput from '@/components/password-input'
-import { cn } from '@/lib/utils'
 import { z } from 'zod'
 import { useNavigate } from 'react-router-dom'
 import useSWRMutation from 'swr/mutation'
@@ -96,7 +95,7 @@ export default function CreatePassword() {
           />
 
           <div className="flex flex-col gap-y-4">
-            <Button type="submit" className={cn('w-full', buttonVariants())}>
+            <Button type="submit" className="w-full">
               {isMutating ? <Loader className="animate-spin" /> : 'Create a new wallet'}
             </Button>
 

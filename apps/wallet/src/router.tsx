@@ -1,6 +1,7 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createHashRouter } from 'react-router-dom'
 import AppLayout from './pages/layout'
 import CreatePassword from './pages/auth/create-wallet/create-password'
+import ImportCreatePassword from './pages/auth/import-wallet/create-password'
 import SecureWallet from './pages/auth/create-wallet/secure-wallet'
 import CreateConfirmSecret from './pages/auth/create-wallet/confirm-secret'
 import AuthLayout from './pages/auth/layout'
@@ -8,7 +9,7 @@ import Auth from './pages/auth'
 import Home from './pages/home'
 import ImportConfirmSecret from './pages/auth/import-wallet/confirm-secret'
 
-export const router = createBrowserRouter([
+export const router = createHashRouter([
   {
     element: <AppLayout />,
     children: [
@@ -38,6 +39,10 @@ export const router = createBrowserRouter([
           {
             path: '/auth/import/confirm-secret',
             element: <ImportConfirmSecret />
+          },
+          {
+            path: '/auth/import/create-password',
+            element: <ImportCreatePassword />
           }
         ]
       }

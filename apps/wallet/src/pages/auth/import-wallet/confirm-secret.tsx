@@ -1,8 +1,11 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
+import { useNavigate } from 'react-router-dom'
 
 export default function ConfirmSecret() {
+  const navigate = useNavigate()
+
   return (
     <div className="flex flex-col items-center gap-y-5">
       <h1 className="text-3xl font-normal text-center">
@@ -24,7 +27,9 @@ export default function ConfirmSecret() {
         </div>
       </Card>
 
-      <Button className="w-full">Confirm Secret Recovery Phrase</Button>
+      <Button className="w-full" onClick={() => navigate('/auth/import/create-password')}>
+        Confirm Secret Recovery Phrase
+      </Button>
     </div>
   )
 }
