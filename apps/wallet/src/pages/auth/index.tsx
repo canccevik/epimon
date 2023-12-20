@@ -11,14 +11,14 @@ export default function Auth() {
         A lightweight cryptocurrency wallet, ensuring security and accessibility for all users.
       </p>
 
-      <Button className="w-[350px] mt-5" onClick={() => navigate('/auth/create-password')}>
+      <Button className="w-[350px] mt-5" onClick={() => navigate('/auth/create/create-password')}>
         Create a new wallet
       </Button>
 
       <Button
         className="w-[350px]"
         variant={'outline'}
-        onClick={() => navigate('/auth/import-wallet')}
+        onClick={() => navigate('/auth/import/confirm-secret')}
       >
         Import an existing wallet
       </Button>

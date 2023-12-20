@@ -43,7 +43,7 @@ export default function CreatePassword() {
     }
 
     setWallet(data)
-    navigate('/auth/secure-wallet')
+    navigate('/auth/create/secure-wallet')
   }
 
   return (

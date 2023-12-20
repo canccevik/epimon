@@ -91,7 +91,7 @@ export default function ConfirmSecret() {
               <Button
                 variant={'outline'}
                 className="w-full"
-                onClick={() => navigate('/auth/secure-wallet')}
+                onClick={() => navigate('/auth/create/secure-wallet')}
               >
                 Go back
               </Button>

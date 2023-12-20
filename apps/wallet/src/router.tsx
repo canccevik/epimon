@@ -2,10 +2,11 @@ import { createBrowserRouter } from 'react-router-dom'
 import AppLayout from './pages/layout'
 import CreatePassword from './pages/auth/create-wallet/create-password'
 import SecureWallet from './pages/auth/create-wallet/secure-wallet'
-import ConfirmSecret from './pages/auth/create-wallet/confirm-secret'
+import CreateConfirmSecret from './pages/auth/create-wallet/confirm-secret'
 import AuthLayout from './pages/auth/layout'
 import Auth from './pages/auth'
 import Home from './pages/home'
+import ImportConfirmSecret from './pages/auth/import-wallet/confirm-secret'
 
 export const router = createBrowserRouter([
   {
@@ -23,16 +24,20 @@ export const router = createBrowserRouter([
         element: <AuthLayout />,
         children: [
           {
-            path: '/auth/create-password',
+            path: '/auth/create/create-password',
             element: <CreatePassword />
           },
           {
-            path: '/auth/secure-wallet',
+            path: '/auth/create/secure-wallet',
             element: <SecureWallet />
           },
           {
-            path: '/auth/confirm-secret',
-            element: <ConfirmSecret />
+            path: '/auth/create/confirm-secret',
+            element: <CreateConfirmSecret />
+          },
+          {
+            path: '/auth/import/confirm-secret',
+            element: <ImportConfirmSecret />
           }
         ]
       }

@@ -79,7 +79,7 @@ export default function SecureWallet() {
           </a>
         </div>
 
-        <Button className={'w-full'} onClick={() => navigate('/auth/confirm-secret')}>
+        <Button className={'w-full'} onClick={() => navigate('/auth/create/confirm-secret')}>
           Next
         </Button>
       </div>
