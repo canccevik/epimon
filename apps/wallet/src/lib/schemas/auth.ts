@@ -22,3 +22,7 @@ export const confirmSecretSchema = z.object({
   word2: z.string(),
   word3: z.string()
 })
+
+export const unlockSchema = z.object({
+  password: z.string({ required_error: 'You must enter your password.' })
+})

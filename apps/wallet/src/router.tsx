@@ -8,6 +8,7 @@ import AuthLayout from './pages/auth/layout'
 import Auth from './pages/auth'
 import Home from './pages/home'
 import ImportConfirmSecret from './pages/auth/import-wallet/confirm-secret'
+import Unlock from './pages/auth/unlock'
 
 export const router = createHashRouter([
   {
@@ -43,6 +44,10 @@ export const router = createHashRouter([
           {
             path: '/auth/import/create-password',
             element: <ImportCreatePassword />
+          },
+          {
+            path: '/auth/unlock',
+            element: <Unlock />
           }
         ]
       }
