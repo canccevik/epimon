@@ -7,15 +7,16 @@ import { useToast } from '@/hooks/use-toast'
 import { useContext } from 'react'
 import { AuthContext } from '@/context/auth-context'
 import CreatePasswordForm, { FormData } from '@/components/create-password-form'
+import { hashPassword } from '@/lib/utils/crypto'
 
 export default function CreatePassword() {
   const { isMutating, trigger } = useSWRMutation('/wallets', fetcher(HttpMethod.POST))
 
   const navigate = useNavigate()
   const { toast } = useToast()
-  const { setWallet } = useContext(AuthContext)
+  const { setWallet, setPassword } = useContext(AuthContext)
 
-  async function onSubmit(values: FormData) {
+  async function onSubmit({ password }: FormData) {
     const { data, statusCode, message } = await trigger({})
 
     if (statusCode !== 201) {
@@ -23,6 +24,7 @@ export default function CreatePassword() {
     }
 
     setWallet(data)
+    setPassword(hashPassword(password))
     navigate('/auth/create/secure-wallet')
   }
 
@@ -34,7 +36,7 @@ export default function CreatePassword() {
         this password.
       </p>
 
-      <CreatePasswordForm onSubmit={onsubmit}>
+      <CreatePasswordForm onSubmit={(values) => onSubmit(values)}>
         <Button type="submit" className="w-full">
           {isMutating ? <Loader className="animate-spin" /> : 'Create a new wallet'}
         </Button>

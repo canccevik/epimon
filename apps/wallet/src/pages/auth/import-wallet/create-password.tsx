@@ -1,28 +1,20 @@
 import { Button } from '@/components/ui/button'
 import { useNavigate } from 'react-router-dom'
-import useSWRMutation from 'swr/mutation'
-import { HttpMethod, fetcher } from '@/lib/utils/fetcher'
-import { Loader } from 'lucide-react'
-import { useToast } from '@/hooks/use-toast'
 import { useContext } from 'react'
 import { AuthContext } from '@/context/auth-context'
 import CreatePasswordForm, { FormData } from '@/components/create-password-form'
+import { useStorage } from '@/hooks/use-storage'
+import { PASSWORD, SECRET_PHRASE } from '@/lib/constants'
+import { encryptWithPassword } from '@/lib/utils/crypto'
 
 export default function CreatePassword() {
-  const { isMutating, trigger } = useSWRMutation('/wallets', fetcher(HttpMethod.POST))
-
   const navigate = useNavigate()
-  const { toast } = useToast()
-  const { setWallet } = useContext(AuthContext)
+  const { setItem } = useStorage()
+  const { wallet } = useContext(AuthContext)
 
-  async function onSubmit(values: FormData) {
-    const { data, statusCode, message } = await trigger({})
-
-    if (statusCode !== 201) {
-      return toast({ title: 'Error', description: message })
-    }
-
-    setWallet(data)
+  async function onSubmit({ password }: FormData) {
+    await setItem(PASSWORD, password)
+    await setItem(SECRET_PHRASE, encryptWithPassword(wallet!.secretPhrase, password))
     navigate('/')
   }
 
@@ -34,9 +26,9 @@ export default function CreatePassword() {
         this password.
       </p>
 
-      <CreatePasswordForm onSubmit={onSubmit}>
+      <CreatePasswordForm onSubmit={(e) => onSubmit(e)}>
         <Button type="submit" className="w-full">
-          {isMutating ? <Loader className="animate-spin" /> : 'Import my wallet'}
+          Import my wallet
         </Button>
       </CreatePasswordForm>
     </div>
