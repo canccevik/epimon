@@ -23,7 +23,7 @@ export default function Unlock() {
   async function onSubmit(values: FormData) {}
 
   return (
-    <div className="flex flex-col items-center gap-y-5">
+    <div className="w-full flex flex-col items-center gap-y-5">
       <h1 className="text-3xl font-normal text-center">Welcome back!</h1>
       <p className="text-center">Enter your password to unlock your wallet.</p>
 
