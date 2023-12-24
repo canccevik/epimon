@@ -19,12 +19,13 @@ export const router = createHashRouter([
         element: <Home />
       },
       {
-        path: '/auth',
-        element: <Auth />
-      },
-      {
         element: <AuthLayout />,
+
         children: [
+          {
+            path: '/auth',
+            element: <Auth />
+          },
           {
             path: '/auth/create/create-password',
             element: <CreatePassword />
