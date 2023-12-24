@@ -10,11 +10,15 @@ export default function AppLayout() {
   return (
     <div className="w-full h-screen flex justify-center items-center">
       <Card className="w-4/12 px-20 py-5 flex flex-col items-center relative">
-        <ExternalLink
-          className="absolute right-5 cursor-pointer text-gray-500"
-          size={20}
-          onClick={() => openOnNewTab()}
-        />
+        <div className="w-full flex justify-center">
+          <img src="/images/icon.ico" width={60} className="mb-5" />
+
+          <ExternalLink
+            className="absolute right-5 cursor-pointer text-gray-500"
+            size={20}
+            onClick={() => openOnNewTab()}
+          />
+        </div>
 
         <Outlet />
       </Card>
