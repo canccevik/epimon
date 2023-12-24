@@ -567,6 +567,9 @@ importers:
       clsx:
         specifier: ^2.0.0
         version: 2.0.0
+      crypto-js:
+        specifier: ^4.2.0
+        version: 4.2.0
       elliptic:
         specifier: ^6.5.4
         version: 6.5.4
@@ -610,6 +613,9 @@ importers:
       '@types/chrome':
         specifier: ^0.0.254
         version: 0.0.254
+      '@types/crypto-js':
+        specifier: ^4.2.1
+        version: 4.2.1
       '@types/elliptic':
         specifier: ^6.4.18
         version: 6.4.18
@@ -3680,6 +3686,10 @@ packages:
     dependencies:
       '@types/node': 20.10.0
 
+  /@types/crypto-js@4.2.1:
+    resolution: {integrity: sha512-FSPGd9+OcSok3RsM0UZ/9fcvMOXJ1ENE/ZbLfOPlBWj7BgXtEAM8VYfTtT760GiLbQIMoVozwVuisjvsVwqYWw==}
+    dev: true
+
   /@types/elliptic@6.4.18:
     resolution: {integrity: sha512-UseG6H5vjRiNpQvrhy4VF/JXdA3V/Fp5amvveaL+fs28BZ6xIKJBPnUPRlEaZpysD9MbpfaLi8lbl7PGUAkpWw==}
     dependencies:
@@ -5601,6 +5611,10 @@ packages:
       public-encrypt: 4.0.3
       randombytes: 2.1.0
       randomfill: 1.0.4
+    dev: false
+
+  /crypto-js@4.2.0:
+    resolution: {integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==}
     dev: false
 
   /css-select@5.1.0:
