@@ -1,21 +1,12 @@
 import { Button } from '@/components/ui/button'
-import { useNavigate } from 'react-router-dom'
-import { useContext } from 'react'
-import { AuthContext } from '@/context/auth-context'
 import CreatePasswordForm, { FormData } from '@/components/create-password-form'
-import { useStorage } from '@/hooks/use-storage'
-import { PASSWORD, SECRET_PHRASE } from '@/lib/constants'
-import { encryptWithPassword } from '@/lib/utils/crypto'
+import { useAuth } from '@/hooks/use-auth'
 
 export default function CreatePassword() {
-  const navigate = useNavigate()
-  const { setItem } = useStorage()
-  const { wallet } = useContext(AuthContext)
+  const { login } = useAuth()
 
   async function onSubmit({ password }: FormData) {
-    await setItem(PASSWORD, password)
-    await setItem(SECRET_PHRASE, encryptWithPassword(wallet!.secretPhrase, password))
-    navigate('/')
+    await login(password)
   }
 
   return (

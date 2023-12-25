@@ -10,13 +10,13 @@ interface Props {
 export default function TransactionCard({ status, timestamp, amount }: Props) {
   const date = new Date(timestamp)
 
-  const getStatusColor = (type: 'bg' | 'text') =>
-    status === 'Recevied' ? `${type}-green-500` : `${type}-red-500`
-
   return (
     <Card className="w-full flex justify-between px-5 py-3 rounded-md border relative">
       <span
-        className={cn('w-[3px] h-full absolute left-0 top-0 rounded-full', getStatusColor('bg'))}
+        className={cn(
+          'w-[3px] h-full absolute left-0 top-0 rounded-full',
+          status === 'Recevied' ? `bg-green-500` : `bg-red-500`
+        )}
       ></span>
 
       <div className="flex flex-col gap-y-2">
@@ -32,7 +32,12 @@ export default function TransactionCard({ status, timestamp, amount }: Props) {
       </div>
 
       <div className="flex flex-col gap-y-2">
-        <h1 className={cn('text-base font-medium', getStatusColor('text'))}>
+        <h1
+          className={cn(
+            'text-base font-medium',
+            status === 'Recevied' ? `text-green-500` : `text-red-500`
+          )}
+        >
           {status === 'Recevied' ? '+' : '-'}
           {amount} EPM
         </h1>

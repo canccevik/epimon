@@ -17,7 +17,6 @@ type FormData = z.infer<typeof importSecretPhraseSchema>
 export default function ConfirmSecret() {
   const navigate = useNavigate()
   const { setWallet } = useContext(AuthContext)
-
   const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(true)
 
   const form = useForm<FormData>({

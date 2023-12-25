@@ -3,10 +3,8 @@ import { Card } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { AuthContext } from '@/context/auth-context'
-import { useStorage } from '@/hooks/use-storage'
-import { PASSWORD, SECRET_PHRASE } from '@/lib/constants'
+import { useAuth } from '@/hooks/use-auth'
 import { confirmSecretSchema } from '@/lib/schemas/auth'
-import { encryptWithPassword } from '@/lib/utils/crypto'
 import { getRandomWordsFromText } from '@/lib/utils/index'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useContext, useEffect, useState } from 'react'
@@ -18,8 +16,8 @@ type FormData = z.infer<typeof confirmSecretSchema>
 
 export default function ConfirmSecret() {
   const navigate = useNavigate()
-  const { setItem } = useStorage()
 
+  const { login } = useAuth()
   const { wallet, password } = useContext(AuthContext)
   const [isSecretConfirmed, setIsSecretConfirmed] = useState(false)
   const [randomWords, setRandomWords] = useState<string[]>([])
@@ -46,9 +44,7 @@ export default function ConfirmSecret() {
   }, [form, form.watch, randomWords])
 
   async function onSubmit() {
-    await setItem(PASSWORD, password)
-    await setItem(SECRET_PHRASE, encryptWithPassword(wallet!.secretPhrase, password))
-    navigate('/')
+    await login(password)
   }
 
   return (
