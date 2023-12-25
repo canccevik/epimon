@@ -56,14 +56,14 @@ export default function ConfirmSecret() {
       <h1 className="text-3xl font-normal text-center">
         Access your wallet with your Secret Recovery Phrase
       </h1>
-      <p className="text-center">
+      <p className="text-center text-sm">
         Enter the Secret Recovery Phrase that you were given when you created your wallet.
       </p>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
           <Card className="w-full p-5 select-none">
-            <div className="grid grid-cols-3 gap-3 text-center text-sm">
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-center text-sm">
               {Array.from({ length: 12 }).map((_, i) => (
                 <Card key={i} className="p-3 rounded-sm flex items-center gap-x-2 shadow-none">
                   <span className="text-gray-600">{i + 1}.</span>
@@ -83,9 +83,15 @@ export default function ConfirmSecret() {
             </Alert>
           )}
 
-          <Button type="submit" className="w-full" disabled={isConfirmButtonDisabled}>
-            Confirm Secret Recovery Phrase
-          </Button>
+          <div className="flex flex-col gap-y-5">
+            <Button type="submit" className="w-full" disabled={isConfirmButtonDisabled}>
+              Confirm Secret Recovery Phrase
+            </Button>
+
+            <Button className="w-full" variant={'outline'} onClick={() => navigate('/auth')}>
+              Go back
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

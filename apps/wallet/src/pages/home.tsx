@@ -55,7 +55,7 @@ export default function Home() {
         </Card>
       </div>
 
-      <div className="w-full flex gap-x-3">
+      <div className="w-full flex flex-wrap md:flex-nowrap gap-3">
         <Button
           className="w-full font-normal"
           size={'lg'}

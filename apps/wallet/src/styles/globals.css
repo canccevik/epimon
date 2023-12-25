@@ -80,6 +80,10 @@
   font-weight: 200;
 }
 
+html {
+  height: auto;
+}
+
 img {
   user-select: none;
 }

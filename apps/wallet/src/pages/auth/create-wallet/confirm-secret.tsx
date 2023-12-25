@@ -55,7 +55,7 @@ export default function ConfirmSecret() {
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
             <Card className="w-full p-5 select-none">
-              <div className="grid grid-cols-3 gap-3 text-center text-sm">
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-3 text-center text-sm">
                 {wallet.secretPhrase.split(' ').map((word, i) => (
                   <Card key={i} className="p-3 rounded-sm flex items-center shadow-none">
                     <div className="flex items-center gap-x-2 text-gray-600">

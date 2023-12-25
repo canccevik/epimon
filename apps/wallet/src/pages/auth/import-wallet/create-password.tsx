@@ -12,7 +12,7 @@ export default function CreatePassword() {
   return (
     <div className="flex flex-col items-center gap-y-5">
       <h1 className="text-3xl font-normal text-center">Create a password</h1>
-      <p className="text-center">
+      <p className="text-center text-sm">
         This password will unlock your Epimon wallet only on this device. Epimon can not recover
         this password.
       </p>

@@ -7,7 +7,7 @@ export default function Auth() {
   return (
     <div className="flex flex-col items-center gap-y-5">
       <h1 className="text-3xl font-normal">Epimon Wallet</h1>
-      <p className="text-center">
+      <p className="text-center text-sm">
         A lightweight cryptocurrency wallet, ensuring security and accessibility for all users.
       </p>
 
