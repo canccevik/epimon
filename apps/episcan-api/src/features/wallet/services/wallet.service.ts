@@ -1,12 +1,14 @@
 import { TransactionService } from '@features/transaction/services'
 import { paginateArray } from '@common/utils'
 import { Config, ENV } from '@config/index'
+import { Axios } from 'axios'
 import {
   AXIOS_INSTANCE,
   Miner,
   PaginationDto,
   PaginationResult,
   Payload,
+  Wallet,
   createPaginationResult
 } from '@epimon/common'
 import {
@@ -16,7 +18,6 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common'
-import { Axios } from 'axios'
 
 @Injectable()
 export class WalletService {
@@ -25,6 +26,16 @@ export class WalletService {
     @Inject(ENV) private readonly config: Config,
     private readonly transactionService: TransactionService
   ) {}
+
+  public async createWallet(): Promise<Wallet> {
+    const walletEnpoint = this.config.ROOT_NODE_URI + '/wallets'
+    const walletRequest = await this.axios.post<Payload<Wallet>>(walletEnpoint)
+
+    if (walletRequest.status !== HttpStatus.CREATED) {
+      throw new BadRequestException(walletRequest.data.message)
+    }
+    return walletRequest.data.data
+  }
 
   public async getBalanceOfAddress(address: string): Promise<{ balance: number }> {
     const balanceEndpoint = this.config.ROOT_NODE_URI + `/wallets/${address}/balance`
