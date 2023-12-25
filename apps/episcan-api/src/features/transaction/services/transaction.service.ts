@@ -1,6 +1,7 @@
 import { paginateArray } from '@common/utils'
 import { Config, ENV } from '@config/index'
 import { BlockchainService } from '@features/blockchain/services'
+import { CreateTransactionDto, PaginationWithBlockIdDto } from '../dto'
 import {
   BadRequestException,
   HttpStatus,
@@ -8,7 +9,6 @@ import {
   Injectable,
   NotFoundException
 } from '@nestjs/common'
-import { PaginationWithBlockIdDto } from '../dto'
 import { Axios } from 'axios'
 import {
   AXIOS_INSTANCE,
@@ -27,6 +27,23 @@ export class TransactionService {
     @Inject(ENV) private readonly config: Config,
     private readonly blockchainService: BlockchainService
   ) {}
+
+  public async createTransaction(
+    transaction: CreateTransactionDto,
+    privateKey: string
+  ): Promise<Transaction> {
+    const createTxEndpoint = this.config.ROOT_NODE_URI + '/transactions'
+    const createTxRequest = await this.axios.post<Payload<Transaction>>(
+      createTxEndpoint,
+      transaction,
+      { headers: { 'x-private-key': privateKey } }
+    )
+
+    if (createTxRequest.status !== HttpStatus.CREATED) {
+      throw new BadRequestException(createTxRequest.data.message)
+    }
+    return createTxRequest.data.data
+  }
 
   public async getAllTransactions(blockId?: string): Promise<TransactionWithStatus[]> {
     const txsEndpoint = this.config.ROOT_NODE_URI + '/transactions/pool'

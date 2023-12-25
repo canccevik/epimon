@@ -2,20 +2,30 @@ import {
   Message,
   Paginate,
   PaginationResult,
+  RequestHeader,
   Transaction,
   TransactionWithStatus
 } from '@epimon/common'
-import { Controller, Get, Param, Query } from '@nestjs/common'
+import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { TransactionService } from '../services'
-import { PaginationWithBlockIdDto } from '../dto'
+import { CreateTransactionDto, PaginationWithBlockIdDto } from '../dto'
 
 @ApiTags('transactions')
 @Controller('transactions')
 export class TransactionController {
   constructor(private readonly transactionService: TransactionService) {}
 
-  @Get('/')
+  @Post()
+  @Message('Transaction created successfully.')
+  public async createTransaction(
+    @Body() createTxDto: CreateTransactionDto,
+    @RequestHeader('x-private-key') privateKey: string
+  ): Promise<Transaction> {
+    return this.transactionService.createTransaction(createTxDto, privateKey)
+  }
+
+  @Get()
   @Paginate()
   @Message('Transactions fetched successfully.')
   public async getTransactions(
