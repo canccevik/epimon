@@ -8,12 +8,16 @@ export enum HttpMethod {
   DELETE = 'DELETE'
 }
 
-export function fetcher<T = any>(method: HttpMethod = HttpMethod.GET) {
+export function fetcher<T = any>(
+  method: HttpMethod = HttpMethod.GET,
+  headers?: Record<string, string>
+) {
   return async (url: RequestInfo | URL, options?: { arg: Record<string, unknown> }) => {
     const response = await fetch(import.meta.env.VITE_API_URL + url, {
       method,
       headers: {
-        'Content-Type': 'application/json'
+        'Content-Type': 'application/json',
+        ...headers
       },
       body: JSON.stringify(options?.arg)
     })

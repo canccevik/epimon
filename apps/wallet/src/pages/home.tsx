@@ -5,13 +5,15 @@ import { AuthContext } from '@/context/auth-context'
 import { useAuth } from '@/hooks/use-auth'
 import { copyToClipboard } from '@/lib/utils'
 import { fetcher } from '@/lib/utils/fetcher'
-import { Payload, Transaction } from '@epimon/common'
+import { Payload, TransactionWithStatus } from '@epimon/common'
 import { Copy, Loader } from 'lucide-react'
 import { useContext } from 'react'
+import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
 
 export default function Home() {
   const { logout } = useAuth()
+  const navigate = useNavigate()
   const { wallet } = useContext(AuthContext)
 
   const balanceRequest = useSWR<Payload<{ balance: number }>>(
@@ -19,7 +21,7 @@ export default function Home() {
     fetcher()
   )
 
-  const transactionsRequest = useSWR<Payload<Transaction[]>, Payload<null>>(
+  const transactionsRequest = useSWR<Payload<TransactionWithStatus[]>, Payload<null>>(
     `/wallets/${wallet?.publicKey}/transactions?page=1&limit=5`,
     fetcher()
   )
@@ -54,7 +56,11 @@ export default function Home() {
       </div>
 
       <div className="w-full flex gap-x-3">
-        <Button className="w-full font-normal" size={'lg'}>
+        <Button
+          className="w-full font-normal"
+          size={'lg'}
+          onClick={() => navigate('/create-transaction')}
+        >
           Create transaction
         </Button>
 
@@ -72,13 +78,9 @@ export default function Home() {
           ) : !transactionsRequest.data?.data ? (
             <Card className="w-full p-5 text-center">You don't have any transactions.</Card>
           ) : (
+            wallet &&
             transactionsRequest.data.data.map((transaction, i) => (
-              <TransactionCard
-                key={i}
-                status={transaction.senderAddress === wallet?.publicKey ? 'Sent' : 'Recevied'}
-                timestamp={transaction.timestamp}
-                amount={transaction.amount}
-              />
+              <TransactionCard key={i} transaction={transaction} publicAddress={wallet.publicKey} />
             ))
           )}
         </div>

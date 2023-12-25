@@ -17,3 +17,12 @@ export function createWalletFromSecretPhrase(secretPhrase: string): Wallet {
     publicKey
   }
 }
+
+export function isPublicKeyValid(address: string): boolean {
+  try {
+    ec.keyFromPublic(address, 'hex')
+  } catch (error) {
+    return false
+  }
+  return true
+}
