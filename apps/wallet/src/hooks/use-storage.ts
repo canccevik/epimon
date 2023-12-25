@@ -1,14 +1,14 @@
 export function useStorage() {
-  async function getItem(key: string) {
+  const getItem = async (key: string) => {
     const item = await chrome.storage.local.get(key)
     return item[key]
   }
 
-  async function setItem(key: string, value: string) {
+  const setItem = async (key: string, value: string) => {
     await chrome.storage.local.set({ [key]: value })
   }
 
-  async function clearItems() {
+  const clearItems = async () => {
     await chrome.storage.local.clear()
   }
 
