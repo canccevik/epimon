@@ -1,3 +1,88 @@
+import TransactionCard from '@/components/transaction-card'
+import { Button } from '@/components/ui/button'
+import { Card } from '@/components/ui/card'
+import { AuthContext } from '@/context/auth-context'
+import { useAuth } from '@/hooks/use-auth'
+import { copyToClipboard } from '@/lib/utils'
+import { fetcher } from '@/lib/utils/fetcher'
+import { Payload, Transaction } from '@epimon/common'
+import { Copy, Loader } from 'lucide-react'
+import { useContext } from 'react'
+import useSWR from 'swr'
+
 export default function Home() {
-  return <div>Home</div>
+  const { logout } = useAuth()
+  const { wallet } = useContext(AuthContext)
+
+  const balanceRequest = useSWR<Payload<{ balance: number }>>(
+    `/wallets/${wallet?.publicKey}/balance`,
+    fetcher()
+  )
+
+  const transactionsRequest = useSWR<Payload<Transaction[]>, Payload<null>>(
+    `/wallets/${wallet?.publicKey}/transactions?page=1&limit=5`,
+    fetcher()
+  )
+
+  return (
+    <div className="w-full flex flex-col items-center gap-y-5">
+      {balanceRequest.isLoading ? (
+        <Loader className="animate-spin" />
+      ) : (
+        balanceRequest.data && (
+          <h1 className="text-3xl">
+            <span className="font-medium">{balanceRequest.data.data?.balance}</span> EPM
+          </h1>
+        )
+      )}
+
+      <div className="w-full text-center">
+        <h1 className="text-sm font-normal mb-3">Wallet Address</h1>
+
+        <Card className="w-full flex justify-center gap-x-2 p-3 font-normal overflow-hidden">
+          {wallet && (
+            <>
+              {wallet.publicKey.slice(0, 40) + '...'}
+              <Copy
+                className="cursor-pointer"
+                size={16}
+                onClick={() => copyToClipboard(wallet.publicKey)}
+              />
+            </>
+          )}
+        </Card>
+      </div>
+
+      <div className="w-full flex gap-x-3">
+        <Button className="w-full font-normal" size={'lg'}>
+          Create transaction
+        </Button>
+
+        <Button className="w-full font-normal" size={'lg'} onClick={() => logout()}>
+          Logout
+        </Button>
+      </div>
+
+      <div className="w-full">
+        <h1 className="text-base mb-5">Latest Transactions</h1>
+
+        <div className="flex flex-col items-center gap-y-2">
+          {transactionsRequest.isLoading ? (
+            <Loader className="animate-spin" />
+          ) : !transactionsRequest.data?.data ? (
+            <Card className="w-full p-5 text-center">You don't have any transactions.</Card>
+          ) : (
+            transactionsRequest.data.data.map((transaction, i) => (
+              <TransactionCard
+                key={i}
+                status={transaction.senderAddress === wallet?.publicKey ? 'Sent' : 'Recevied'}
+                timestamp={transaction.timestamp}
+                amount={transaction.amount}
+              />
+            ))
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }
