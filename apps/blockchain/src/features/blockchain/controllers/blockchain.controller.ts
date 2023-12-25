@@ -1,10 +1,9 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common'
 import { ApiHeader, ApiTags } from '@nestjs/swagger'
 import { Block, BlockDocument } from '../schemas'
-import { RequestHeader } from '@common/decorators'
 import { BlockService, BlockchainService } from '../services'
 import { AddMinedBlockDto } from '../dto'
-import { Message, Paginate, PaginationResult, PaginationDto } from '@epimon/common'
+import { Message, Paginate, PaginationResult, PaginationDto, RequestHeader } from '@epimon/common'
 
 @ApiTags('chain')
 @Controller('chain')

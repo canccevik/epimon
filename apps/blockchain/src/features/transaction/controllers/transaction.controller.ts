@@ -1,10 +1,9 @@
 import { Body, Controller, Get, Post } from '@nestjs/common'
 import { ApiHeader, ApiTags } from '@nestjs/swagger'
 import { TransactionDocument } from '../schemas'
-import { RequestHeader } from '@common/decorators'
 import { TransactionService } from '../services'
 import { AddTransactionDto, CreateTransactionDto } from '../dto'
-import { Message } from '@epimon/common'
+import { Message, RequestHeader } from '@epimon/common'
 
 @ApiTags('transactions')
 @Controller('transactions')
