@@ -9,7 +9,7 @@ interface Props {
   children: React.ReactNode
 }
 
-export default function ProtectedRoute({ children }: Props) {
+export default function AuthenticatedRoute({ children }: Props) {
   const navigate = useNavigate()
   const { wallet } = useContext(WalletContext)
   const [isLoading, setIsLoading] = useState(true)

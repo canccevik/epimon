@@ -1,7 +1,7 @@
 import { unlockSchema } from '@/lib/schemas/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
+import PasswordInput from '@/components/password-input'
 import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
 import { useAuth } from '@/hooks/use-auth'
@@ -44,7 +44,7 @@ export default function Unlock() {
                 <FormLabel>Password</FormLabel>
 
                 <FormControl>
-                  <Input type="password" placeholder="Password" {...field} />
+                  <PasswordInput placeholder="Password" {...field} />
                 </FormControl>
 
                 <FormMessage />

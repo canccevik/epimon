@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Epimon Wallet",
   "version": "1.0.0",
-  "description": "",
+  "description": "A lightweight cryptocurrency wallet, ensuring security and accessibility for all users.",
   "action": {
     "default_popup": "index.html"
   },
