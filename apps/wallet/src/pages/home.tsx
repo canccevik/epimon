@@ -39,7 +39,7 @@ export default function Home() {
       )}
 
       <div className="w-full text-center">
-        <h1 className="text-sm font-normal mb-3">Wallet Address</h1>
+        <h1 className="text-sm mb-3">Wallet Address</h1>
 
         <Card className="w-full flex justify-center gap-x-2 p-3 font-normal overflow-hidden">
           {wallet && (
@@ -76,7 +76,7 @@ export default function Home() {
           {transactionsRequest.isLoading ? (
             <Loader className="animate-spin" />
           ) : !transactionsRequest.data?.data ? (
-            <Card className="w-full p-5 text-center">You don't have any transactions.</Card>
+            <Card className="w-full p-5 text-center text-sm">You don't have any transactions.</Card>
           ) : (
             wallet &&
             transactionsRequest.data.data.map((transaction, i) => (

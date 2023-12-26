@@ -14,7 +14,7 @@ export default function AppLayout() {
           <img src="/images/icon.ico" width={60} className="mb-5" />
 
           <ExternalLink
-            className="absolute right-5 cursor-pointer text-gray-500"
+            className="block md:hidden absolute right-10 cursor-pointer text-gray-500"
             size={20}
             onClick={() => openOnNewTab()}
           />
