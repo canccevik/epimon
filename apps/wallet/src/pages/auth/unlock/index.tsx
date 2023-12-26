@@ -4,10 +4,7 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useForm } from 'react-hook-form'
 import { z } from 'zod'
-import { useStorage } from '@/hooks/use-storage'
-import { hashPassword } from '@/lib/utils/crypto'
-import { PASSWORD } from '@/lib/constants'
-import { toast } from '@/hooks/use-toast'
+import { useAuth } from '@/hooks/use-auth'
 import { useNavigate } from 'react-router-dom'
 import {
   Form,
@@ -22,20 +19,14 @@ export type FormData = z.infer<typeof unlockSchema>
 
 export default function Unlock() {
   const navigate = useNavigate()
-  const { getItem } = useStorage()
+  const { unlock } = useAuth()
 
   const form = useForm<FormData>({
     resolver: zodResolver(unlockSchema)
   })
 
   async function onSubmit({ password }: FormData) {
-    const hashedPassword = hashPassword(password)
-    const correctPassword = await getItem(PASSWORD)
-
-    if (correctPassword !== hashedPassword) {
-      return toast({ description: 'Wrong password!', variant: 'destructive' })
-    }
-    navigate('/')
+    await unlock(password)
   }
 
   return (

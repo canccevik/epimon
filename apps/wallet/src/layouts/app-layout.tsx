@@ -4,7 +4,7 @@ import { Outlet } from 'react-router-dom'
 
 export default function AppLayout() {
   function openOnNewTab() {
-    chrome.tabs.create({ url: chrome.runtime.getURL('/') })
+    chrome.tabs.create({ url: chrome.runtime.getURL(window.location.href) })
   }
 
   return (

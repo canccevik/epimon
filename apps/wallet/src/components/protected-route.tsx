@@ -13,7 +13,6 @@ export default function ProtectedRoute({ children }: Props) {
   const navigate = useNavigate()
   const { wallet } = useWallet()
   const { getItem } = useStorage()
-
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
