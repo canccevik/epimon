@@ -1,19 +1,20 @@
 import TransactionCard from '@/components/transaction-card'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
+import { WalletContext } from '@/context/wallet-context'
 import { useAuth } from '@/hooks/use-auth'
-import { useWallet } from '@/hooks/use-wallet'
 import { copyToClipboard } from '@/lib/utils'
 import { fetcher } from '@/lib/utils/fetcher'
 import { Payload, TransactionWithStatus } from '@epimon/common'
 import { Copy, Loader } from 'lucide-react'
+import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
 
 export default function Home() {
   const { logout } = useAuth()
   const navigate = useNavigate()
-  const { wallet } = useWallet()
+  const { wallet } = useContext(WalletContext)
 
   const balanceRequest = useSWR<Payload<{ balance: number }>>(
     `/wallets/${wallet?.publicKey}/balance`,

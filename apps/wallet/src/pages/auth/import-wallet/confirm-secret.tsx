@@ -8,15 +8,15 @@ import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 import { z } from 'zod'
 import * as bip39 from 'bip39'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { createWalletFromSecretPhrase } from '@/lib/utils/wallet'
-import { useWallet } from '@/hooks/use-wallet'
+import { WalletContext } from '@/context/wallet-context'
 
 type FormData = z.infer<typeof importSecretPhraseSchema>
 
 export default function ConfirmSecret() {
   const navigate = useNavigate()
-  const { setWallet } = useWallet()
+  const { setWallet } = useContext(WalletContext)
   const [isConfirmButtonDisabled, setIsConfirmButtonDisabled] = useState(true)
 
   const form = useForm<FormData>({

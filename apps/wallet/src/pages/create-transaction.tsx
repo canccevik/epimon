@@ -9,8 +9,9 @@ import useSWRMutation from 'swr/mutation'
 import { Loader } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { z } from 'zod'
-import { useWallet } from '@/hooks/use-wallet'
 import { Alert } from '@/components/ui/alert'
+import { useContext } from 'react'
+import { WalletContext } from '@/context/wallet-context'
 import {
   Form,
   FormControl,
@@ -24,7 +25,7 @@ type FormData = z.infer<typeof createTransactionSchema>
 
 export default function CreateTransaction() {
   const navigate = useNavigate()
-  const { wallet } = useWallet()
+  const { wallet } = useContext(WalletContext)
 
   const { isMutating, trigger } = useSWRMutation(
     '/transactions',

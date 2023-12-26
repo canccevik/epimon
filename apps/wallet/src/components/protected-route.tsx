@@ -1,8 +1,8 @@
-import { useWallet } from '@/hooks/use-wallet'
+import { WalletContext } from '@/context/wallet-context'
 import { PASSWORD, SECRET_PHRASE } from '@/lib/constants'
 import { getItem } from '@/lib/utils/storage'
 import { Loader } from 'lucide-react'
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 interface Props {
@@ -11,7 +11,7 @@ interface Props {
 
 export default function ProtectedRoute({ children }: Props) {
   const navigate = useNavigate()
-  const { wallet } = useWallet()
+  const { wallet } = useContext(WalletContext)
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {

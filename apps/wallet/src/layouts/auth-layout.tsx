@@ -1,11 +1,11 @@
 import { AuthProvider } from '@/context/auth-context'
-import { useWallet } from '@/hooks/use-wallet'
-import { useEffect } from 'react'
+import { WalletContext } from '@/context/wallet-context'
+import { useContext, useEffect } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
 
 export default function AuthLayout() {
   const navigate = useNavigate()
-  const { wallet } = useWallet()
+  const { wallet } = useContext(WalletContext)
 
   useEffect(() => {
     if (wallet) {

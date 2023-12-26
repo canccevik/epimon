@@ -1,14 +1,15 @@
 import { useNavigate } from 'react-router-dom'
 import { PASSWORD, SECRET_PHRASE } from '@/lib/constants'
 import { decryptWithPassword, encryptWithPassword, hashPassword } from '@/lib/utils/crypto'
-import { useWallet } from './use-wallet'
 import { toast } from './use-toast'
 import { createWalletFromSecretPhrase } from '@/lib/utils/wallet'
 import { clearItems, getItem, setItem } from '@/lib/utils/storage'
+import { useContext } from 'react'
+import { WalletContext } from '@/context/wallet-context'
 
 export function useAuth() {
   const navigate = useNavigate()
-  const { wallet, setWallet } = useWallet()
+  const { wallet, setWallet } = useContext(WalletContext)
 
   const logout = async () => {
     setWallet(null)

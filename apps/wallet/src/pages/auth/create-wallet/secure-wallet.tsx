@@ -1,15 +1,15 @@
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
-import { useWallet } from '@/hooks/use-wallet'
+import { WalletContext } from '@/context/wallet-context'
 import { cn, copyToClipboard } from '@/lib/utils'
 import { Check, Copy, Eye, EyeOff } from 'lucide-react'
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 export default function SecureWallet() {
   const navigate = useNavigate()
-  const { wallet } = useWallet()
+  const { wallet } = useContext(WalletContext)
   const [isCopied, setIsCopied] = useState(false)
   const [isSecretVisible, setIsSecretVisible] = useState(true)
 

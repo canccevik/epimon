@@ -3,8 +3,8 @@ import { Card } from '@/components/ui/card'
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { AuthContext } from '@/context/auth-context'
+import { WalletContext } from '@/context/wallet-context'
 import { useAuth } from '@/hooks/use-auth'
-import { useWallet } from '@/hooks/use-wallet'
 import { confirmSecretSchema } from '@/lib/schemas/auth'
 import { getRandomWordsFromText } from '@/lib/utils/index'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -19,7 +19,7 @@ export default function ConfirmSecret() {
   const navigate = useNavigate()
 
   const { login } = useAuth()
-  const { wallet } = useWallet()
+  const { wallet } = useContext(WalletContext)
   const { password } = useContext(AuthContext)
   const [isSecretConfirmed, setIsSecretConfirmed] = useState(false)
   const [randomWords, setRandomWords] = useState<string[]>([])
