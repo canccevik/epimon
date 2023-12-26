@@ -2,12 +2,11 @@ import { useNavigate } from 'react-router-dom'
 import { useStorage } from './use-storage'
 import { PASSWORD, SECRET_PHRASE } from '@/lib/constants'
 import { encryptWithPassword } from '@/lib/utils/crypto'
-import { useContext } from 'react'
-import { AuthContext } from '@/context/auth-context'
+import { useWallet } from './use-wallet'
 
 export function useAuth() {
   const navigate = useNavigate()
-  const { wallet } = useContext(AuthContext)
+  const { wallet } = useWallet()
   const { setItem, clearItems } = useStorage()
 
   const logout = async () => {

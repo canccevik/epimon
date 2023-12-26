@@ -4,15 +4,15 @@ import '@/styles/globals.css'
 import { RouterProvider } from 'react-router-dom'
 import { router } from './router'
 import { Toaster } from './components/ui/toaster'
-import { AuthProvider } from './context/auth-context'
+import { WalletProvider } from './context/wallet-context'
 
 const root = document.getElementById('root')
 
 ReactDOM.createRoot(root!).render(
   <React.StrictMode>
-    <AuthProvider>
+    <WalletProvider>
       <Toaster />
       <RouterProvider router={router} />
-    </AuthProvider>
+    </WalletProvider>
   </React.StrictMode>
 )

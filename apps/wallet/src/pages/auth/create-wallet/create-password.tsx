@@ -8,13 +8,15 @@ import { useContext } from 'react'
 import { AuthContext } from '@/context/auth-context'
 import CreatePasswordForm, { FormData } from '@/components/create-password-form'
 import { hashPassword } from '@/lib/utils/crypto'
+import { useWallet } from '@/hooks/use-wallet'
 
 export default function CreatePassword() {
   const { isMutating, trigger } = useSWRMutation('/wallets', fetcher(HttpMethod.POST))
 
   const navigate = useNavigate()
   const { toast } = useToast()
-  const { setWallet, setPassword } = useContext(AuthContext)
+  const { setWallet } = useWallet()
+  const { setPassword } = useContext(AuthContext)
 
   async function onSubmit({ password }: FormData) {
     const { data, statusCode, message } = await trigger({})
