@@ -3,7 +3,7 @@ import { createContext, useState } from 'react'
 
 export interface WalletContextType {
   readonly wallet: Wallet | null
-  readonly setWallet: (wallet: Wallet) => void
+  readonly setWallet: (wallet: Wallet | null) => void
 }
 
 export const WalletContext = createContext<WalletContextType>({

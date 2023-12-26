@@ -41,7 +41,7 @@ export default function Unlock() {
   return (
     <div className="w-full flex flex-col items-center gap-y-5">
       <h1 className="text-3xl font-normal text-center">Welcome back!</h1>
-      <p className="text-center">Enter your password to unlock your wallet.</p>
+      <p className="text-center text-sm">Enter your password to unlock your wallet.</p>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-8">
@@ -61,9 +61,20 @@ export default function Unlock() {
             )}
           />
 
-          <Button type="submit" className="w-full">
-            Unlock
-          </Button>
+          <div className="flex flex-col gap-y-5">
+            <Button type="submit" className="w-full">
+              Unlock
+            </Button>
+
+            <Button
+              type="submit"
+              className="w-full"
+              variant={'outline'}
+              onClick={() => navigate('/auth')}
+            >
+              Go back
+            </Button>
+          </div>
         </form>
       </Form>
     </div>

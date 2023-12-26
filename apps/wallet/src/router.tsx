@@ -10,6 +10,7 @@ import Home from './pages/home'
 import ImportConfirmSecret from './pages/auth/import-wallet/confirm-secret'
 import Unlock from './pages/auth/unlock'
 import CreateTransaction from './pages/create-transaction'
+import ProtectedRoute from './components/protected-route'
 
 export const router = createHashRouter([
   {
@@ -17,11 +18,11 @@ export const router = createHashRouter([
     children: [
       {
         path: '/',
-        element: <Home />
+        element: <ProtectedRoute children={<Home />} />
       },
       {
         path: '/create-transaction',
-        element: <CreateTransaction />
+        element: <ProtectedRoute children={<CreateTransaction />} />
       },
       {
         element: <AuthLayout />,

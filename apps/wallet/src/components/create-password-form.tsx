@@ -2,6 +2,7 @@ import { createPasswordSchema } from '@/lib/schemas/auth'
 import { zodResolver } from '@hookform/resolvers/zod'
 import PasswordInput from './password-input'
 import { useForm } from 'react-hook-form'
+import { z } from 'zod'
 import {
   Form,
   FormControl,
@@ -11,7 +12,6 @@ import {
   FormLabel,
   FormMessage
 } from './ui/form'
-import { z } from 'zod'
 
 interface Props {
   onSubmit: (values: FormData) => void
