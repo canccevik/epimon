@@ -10,16 +10,12 @@ import { Copy, Loader } from 'lucide-react'
 import { useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
 import useSWR from 'swr'
+import BalanceTitle from './balance-title'
 
 export default function Home() {
   const { logout } = useAuth()
   const navigate = useNavigate()
   const { wallet } = useContext(WalletContext)
-
-  const balanceRequest = useSWR<Payload<{ balance: number }>>(
-    `/wallets/${wallet?.publicKey}/balance`,
-    fetcher()
-  )
 
   const transactionsRequest = useSWR<Payload<TransactionWithStatus[]>, Payload<null>>(
     `/wallets/${wallet?.publicKey}/transactions?page=1&limit=5`,
@@ -28,17 +24,9 @@ export default function Home() {
 
   return (
     <div className="w-full flex flex-col items-center gap-y-5">
-      {balanceRequest.isLoading ? (
-        <Loader className="animate-spin" />
-      ) : (
-        balanceRequest.data && (
-          <h1 className="text-3xl">
-            <span className="font-medium">{balanceRequest.data.data?.balance}</span> EPM
-          </h1>
-        )
-      )}
-
       <div className="w-full text-center">
+        <BalanceTitle />
+
         <h1 className="text-sm mb-3">Wallet Address</h1>
 
         <Card className="w-full flex justify-center gap-x-2 p-3 font-normal overflow-hidden">
