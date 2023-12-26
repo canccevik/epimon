@@ -6,7 +6,7 @@ import { Loader } from 'lucide-react'
 import { useToast } from '@/hooks/use-toast'
 import { useContext } from 'react'
 import { AuthContext } from '@/context/auth-context'
-import CreatePasswordForm, { FormData } from '@/components/create-password-form'
+import CreatePasswordPage, { FormData } from '@/components/create-password-page'
 import { hashPassword } from '@/lib/utils/crypto'
 import { WalletContext } from '@/context/wallet-context'
 
@@ -22,7 +22,7 @@ export default function CreatePassword() {
     const { data, statusCode, message } = await trigger({})
 
     if (statusCode !== 201) {
-      return toast({ title: 'Error', description: message })
+      return toast({ description: message })
     }
 
     setWallet(data)
@@ -31,22 +31,14 @@ export default function CreatePassword() {
   }
 
   return (
-    <div className="flex flex-col items-center gap-y-5">
-      <h1 className="text-3xl font-normal text-center">Create a password</h1>
-      <p className="text-center text-sm">
-        This password will unlock your Epimon wallet only on this device. Epimon can not recover
-        this password.
-      </p>
+    <CreatePasswordPage onSubmit={(values) => onSubmit(values)}>
+      <Button type="submit" className="w-full">
+        {isMutating ? <Loader className="animate-spin" /> : 'Create a new wallet'}
+      </Button>
 
-      <CreatePasswordForm onSubmit={(values) => onSubmit(values)}>
-        <Button type="submit" className="w-full">
-          {isMutating ? <Loader className="animate-spin" /> : 'Create a new wallet'}
-        </Button>
-
-        <Button className="w-full" variant={'outline'} onClick={() => navigate('/auth')}>
-          Go back
-        </Button>
-      </CreatePasswordForm>
-    </div>
+      <Button className="w-full" variant={'outline'} onClick={() => navigate('/auth')}>
+        Go back
+      </Button>
+    </CreatePasswordPage>
   )
 }
