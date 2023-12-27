@@ -90,6 +90,8 @@ The Node serves as a vital participant within the blockchain network. By activel
 
 This project is designed to simplify blockchain for users. With its straightforward layout, anyone can easily view transactions, inspect blocks, and manage their wallet. Whether you're new to blockchain or experienced, this tool offers a user-friendly experience for all.
 
+**Tech stack:**
+
 - [Next.js](https://github.com/vercel/next.js)
 - [Next Themes](https://github.com/pacocoursey/next-themes)
 - [Shadcn UI](https://github.com/shadcn-ui/ui)
@@ -116,6 +118,8 @@ This project is designed to simplify blockchain for users. With its straightforw
 ### 5. [Episcan API](https://github.com/canccevik/epimon/tree/main/apps/episcan-api)
 
 This API has been exclusively crafted for the Episcan project, leveraging the core features of the main blockchain API. This integration, it aims to address and fulfill all the specific requirements and functionalities that Episcan demands.
+
+**Tech stack:**
 
 - [NestJS](https://github.com/nestjs/nest)
 - [Axios](https://github.com/axios/axios)
