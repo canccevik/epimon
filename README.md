@@ -117,7 +117,7 @@ This project is designed to simplify blockchain for users. With its straightforw
 
 ### 5. [Episcan API](https://github.com/canccevik/epimon/tree/main/apps/episcan-api)
 
-This API has been exclusively crafted for the Episcan project, leveraging the core features of the main blockchain API. This integration, it aims to address and fulfill all the specific requirements and functionalities that Episcan demands.
+This API has been exclusively crafted for the Episcan project, leveraging the core features of the main blockchain API. This integration aims to fulfil all the specific requirements and functionalities Episcan needs.
 
 **Tech stack:**
 
