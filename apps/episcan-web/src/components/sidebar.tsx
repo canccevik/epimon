@@ -74,7 +74,7 @@ export default function Sidebar() {
               key={i}
             >
               <span className="lg:text-6xl">{item.icon}</span>
-              <span className="mt-2 hidden lg:block">{item.title}</span>
+              <span className="mt-1 hidden lg:block">{item.title}</span>
             </Link>
           ))}
         </div>
